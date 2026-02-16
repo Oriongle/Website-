@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Orion GLE Ltd</title>
+<meta name="description" content="Contact Orion GLE Ltd for general questions, project enquiries, and TestFlight access requests.">
+
+<style>
+:root{
+  --bg:#05070d;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.72);
+  --line:rgba(255,255,255,.10);
+  --a1:#7c3aed;
+  --a2:#22d3ee;
+  --max:960px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--line)}
+.brand img{height:40px;width:auto;display:block}
+.links{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.links a{color:rgba(255,255,255,.78);text-decoration:none;font-size:14px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.links a:hover{border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.05)}
+
+.hero{padding:46px 0 16px}
+h1{margin:0 0 12px;font-size:42px;line-height:1.12}
+.lead{margin:0;max-width:760px;color:var(--muted);line-height:1.7;font-size:17px}
+
+.layout{display:grid;gap:16px;margin-top:20px}
+@media(min-width:920px){.layout{grid-template-columns:2fr 1fr}}
+.card{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:20px}
+
+form{display:grid;gap:12px}
+label{font-size:13px;color:rgba(255,255,255,.78)}
+input,select,textarea{
+  width:100%;
+  margin-top:6px;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.03);
+  color:var(--text);
+  font:inherit;
+}
+textarea{min-height:140px;resize:vertical}
+button{
+  margin-top:6px;
+  padding:12px 16px;
+  border:none;
+  border-radius:12px;
+  font-weight:700;
+  background:linear-gradient(135deg,var(--a1),var(--a2));
+  color:#071019;
+  cursor:pointer;
+}
+button:hover{filter:brightness(1.05)}
+.note{font-size:13px;color:rgba(255,255,255,.58);line-height:1.6}
+
+.side h2{margin:0 0 10px;font-size:20px}
+.side p{margin:0 0 10px;color:var(--muted);line-height:1.7}
+.side a{color:#fff;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35)}
+
+.footer{border-top:1px solid var(--line);padding:28px 0;margin-top:44px;color:rgba(255,255,255,.55);text-align:center;font-size:13px}
+.footerLegal{margin-top:8px;color:rgba(255,255,255,.48);line-height:1.55}
+@media(max-width:920px){h1{font-size:35px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav">
+    <a class="brand" href="index.html"><img src="orion-logo.jpg" alt="Orion GLE Ltd"></a>
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="applications.html">Applications</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <h1>Contact Orion GLE Ltd</h1>
+    <p class="lead">Use this form to send a general question, discuss project work, or request TestFlight access for one of our apps.</p>
+  </section>
+
+  <section class="layout">
+    <div class="card">
+      <form id="contactForm">
+        <label>
+          Your name
+          <input type="text" id="name" name="name" required>
+        </label>
+
+        <label>
+          Your email
+          <input type="email" id="email" name="email" required>
+        </label>
+
+        <label>
+          Request type
+          <select id="requestType" name="requestType" required>
+            <option value="General Question">General Question</option>
+            <option value="Project Enquiry">Project Enquiry</option>
+            <option value="TestFlight Request">TestFlight Request</option>
+          </select>
+        </label>
+
+        <label>
+          App (for TestFlight)
+          <select id="app" name="app">
+            <option value="Not specified">Not specified</option>
+            <option value="VOW">VOW</option>
+            <option value="Site Survey Pro">Site Survey Pro</option>
+            <option value="TaskHawk">TaskHawk</option>
+          </select>
+        </label>
+
+        <label>
+          Message
+          <textarea id="message" name="message" placeholder="Tell us what you need..." required></textarea>
+        </label>
+
+        <button type="submit">Submit Request</button>
+        <p class="note">Submitting opens your email app with a pre-filled message to support@oriongle.co.uk.</p>
+      </form>
+    </div>
+
+    <aside class="card side">
+      <h2>Direct email</h2>
+      <p><a href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a></p>
+      <p>Typical topics:</p>
+      <p>- Product questions<br>- Build/alteration enquiries<br>- TestFlight access requests</p>
+    </aside>
+  </section>
+
+  <div class="footer">
+    © <span id="year"></span> Orion GLE Ltd
+    <div class="footerLegal">Company information: ORION GLE LTD (Company No. 16933963), registered in England and Wales. Registered office: 23a Meadowgate Croft, Wakefield, WF3 3SS.</div>
+  </div>
+</div>
+
+<script>
+const form = document.getElementById("contactForm");
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const requestType = document.getElementById("requestType").value;
+  const app = document.getElementById("app").value;
+  const message = document.getElementById("message").value.trim();
+
+  const subject = `[Website] ${requestType} - ${name}`;
+  const body = [
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Request Type: ${requestType}`,
+    `App: ${app}`,
+    "",
+    "Message:",
+    message
+  ].join("\n");
+
+  window.location.href = `mailto:support@oriongle.co.uk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

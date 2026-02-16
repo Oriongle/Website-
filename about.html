@@ -4,26 +4,51 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About — Orion GLE Ltd</title>
+<meta name="description" content="About Orion GLE Ltd: app development, product improvement, and practical delivery.">
 
 <style>
-:root{--bg:#05070d;--text:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.10);--a1:#7c3aed;--a2:#22d3ee;--max:1000px;}
+:root{
+  --bg:#05070d;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.72);
+  --line:rgba(255,255,255,.10);
+  --a1:#7c3aed;
+  --a2:#22d3ee;
+  --max:1100px;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);}
-.wrap{max-width:var(--max);margin:0 auto;padding:0 22px;}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--line);}
-.brand{display:flex;gap:12px;align-items:center;text-decoration:none;color:var(--text);}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--line)}
 .brand img{height:40px;width:auto;display:block}
 .links{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.links a{color:rgba(255,255,255,.78);text-decoration:none;font-size:14px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);}
-.links a:hover{border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.05);}
-.hero{padding:44px 0 18px;}
-h1{margin:0 0 12px;font-size:40px;}
-p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
-.card{margin:22px 0 0;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:18px;}
-.grid{display:grid;gap:14px;margin-top:14px;}
-@media(min-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
-.footer{border-top:1px solid var(--line);padding:28px 0;margin-top:44px;color:rgba(255,255,255,.55);text-align:center;font-size:13px;}
-.footerLegal{margin-top:8px;color:rgba(255,255,255,.48);line-height:1.55;}
+.links a{color:rgba(255,255,255,.78);text-decoration:none;font-size:14px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.links a:hover{border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.05)}
+
+.hero{padding:48px 0 24px}
+.kicker{display:inline-block;padding:7px 12px;font-size:12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.72);letter-spacing:.06em}
+h1{margin:16px 0 14px;font-size:46px;line-height:1.1}
+.lead{max-width:840px;margin:0;color:var(--muted);font-size:18px;line-height:1.7}
+
+.grid{display:grid;gap:16px;margin-top:24px}
+@media(min-width:900px){.grid.two{grid-template-columns:repeat(2,1fr)}.grid.three{grid-template-columns:repeat(3,1fr)}}
+.card{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:20px}
+.card h2,.card h3{margin:0 0 10px}
+.card h2{font-size:24px}
+.card h3{font-size:18px}
+.card p{margin:0;color:var(--muted);line-height:1.7}
+.list{margin:10px 0 0;padding-left:18px;color:var(--muted);line-height:1.8}
+.stat{font-size:30px;font-weight:700;line-height:1}
+.statLabel{margin-top:8px;color:var(--muted);font-size:14px}
+
+.cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:600;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text)}
+.btn.primary{border:none;background:linear-gradient(135deg,var(--a1),var(--a2));color:#071019}
+.btn:hover{transform:translateY(-1px)}
+
+.footer{border-top:1px solid var(--line);padding:28px 0;margin-top:48px;color:rgba(255,255,255,.55);text-align:center;font-size:13px}
+.footerLegal{margin-top:8px;color:rgba(255,255,255,.48);line-height:1.55}
+@media(max-width:920px){h1{font-size:38px}}
 </style>
 </head>
 <body>
@@ -33,37 +58,61 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
     <div class="links">
       <a href="index.html">Home</a>
       <a href="applications.html">Applications</a>
-      <a href="mailto:support@oriongle.co.uk">Contact</a>
+      <a href="contact.html">Contact</a>
     </div>
   </div>
 
-  <div class="hero">
-    <h1>About Orion GLE Ltd</h1>
-    <p>
-      Orion GLE Ltd is a family-run business focused on app development and app alterations.
-      We build new app-led products and improve existing ones — adding features, refining user experience,
-      and strengthening performance and stability.
+  <section class="hero">
+    <span class="kicker">ORION GLE LTD</span>
+    <h1>Professional app development with practical delivery.</h1>
+    <p class="lead">
+      Orion GLE Ltd is a UK company focused on building app-led products and improving existing software.
+      We help teams move from ideas to reliable releases with clear scope, quality execution, and support that continues after launch.
     </p>
+  </section>
 
-    <div class="card">
-      <p><strong>How we work</strong></p>
-      <div class="grid">
-        <div class="card">
-          <p><strong>Practical delivery</strong></p>
-          <p>Clear scope, fast iteration, and shipping improvements without unnecessary complexity.</p>
-        </div>
-        <div class="card">
-          <p><strong>Quality first</strong></p>
-          <p>We prioritise reliability, usability, and clean releases — built for the long term.</p>
-        </div>
-      </div>
-    </div>
+  <section class="grid two">
+    <article class="card">
+      <h2>What we do</h2>
+      <ul class="list">
+        <li>Build new mobile and web apps.</li>
+        <li>Upgrade existing products with better UX and performance.</li>
+        <li>Plan releases, QA, and post-launch support.</li>
+      </ul>
+    </article>
+    <article class="card">
+      <h2>How we work</h2>
+      <ul class="list">
+        <li>Clear communication and realistic timelines.</li>
+        <li>Fast iteration with measurable progress.</li>
+        <li>Decisions based on product outcomes, not noise.</li>
+      </ul>
+    </article>
+  </section>
 
-    <div class="card">
-      <p><strong>Get in touch</strong></p>
-      <p>Support, partnerships, and enquiries: <a href="mailto:support@oriongle.co.uk" style="color:#fff">support@oriongle.co.uk</a></p>
+  <section class="grid three">
+    <article class="card">
+      <div class="stat">Family-run</div>
+      <div class="statLabel">Independent and accountable delivery.</div>
+    </article>
+    <article class="card">
+      <div class="stat">Product-led</div>
+      <div class="statLabel">Focused on usability, reliability, and long-term value.</div>
+    </article>
+    <article class="card">
+      <div class="stat">UK-based</div>
+      <div class="statLabel">Working with clients and teams across sectors.</div>
+    </article>
+  </section>
+
+  <section class="card">
+    <h3>Talk to us</h3>
+    <p>Need app development, product improvements, or access requests for upcoming releases? Send your details and we will come back to you.</p>
+    <div class="cta">
+      <a class="btn primary" href="contact.html">Submit a question</a>
+      <a class="btn" href="applications.html">View applications</a>
     </div>
-  </div>
+  </section>
 
   <div class="footer">
     © <span id="year"></span> Orion GLE Ltd
