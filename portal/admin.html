@@ -50,6 +50,9 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
         <label>Project<input id="newProject" type="text" placeholder="Project"></label>
         <label>Role<select id="newRole"><option value="client">Client</option><option value="admin">Admin</option></select></label>
         <label style="grid-column:1 / span 3">Notes<textarea id="newNotes" placeholder="Notes"></textarea></label>
+        <label style="grid-column:1 / span 2">Portal headline<input id="newPortalTitle" type="text" placeholder="e.g. February rollout pack"></label>
+        <label style="grid-column:1 / span 4">Portal info<textarea id="newPortalMessage" placeholder="Visible to this client inside their portal"></textarea></label>
+        <label style="grid-column:1 / span 4">Download links<textarea id="newPortalDownloads" placeholder="One per line: Label | https://file-url | optional note"></textarea></label>
         <button class="btn primary" type="submit">Create</button>
       </form>
       <p class="status" id="addStatus"></p>
@@ -100,6 +103,34 @@ async function api(path, options){
   return data;
 }
 let currentUsersById = {};
+
+function downloadsToText(downloads) {
+  if (!Array.isArray(downloads) || !downloads.length) return '';
+  return downloads
+    .map((d) => {
+      const label = (d && d.label ? String(d.label) : '').trim();
+      const url = (d && d.url ? String(d.url) : '').trim();
+      const note = (d && d.note ? String(d.note) : '').trim();
+      return `${label} | ${url} | ${note}`.trim();
+    })
+    .join('\n');
+}
+
+function textToDownloads(text) {
+  return String(text || '')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const parts = line.split('|');
+      return {
+        label: (parts[0] || '').trim(),
+        url: (parts[1] || '').trim(),
+        note: (parts[2] || '').trim()
+      };
+    })
+    .filter((item) => item.url);
+}
 
 async function loadUsers(){
   const body = document.getElementById('usersBody');
@@ -169,6 +200,9 @@ addForm.addEventListener('submit', async function(e){
         phone: document.getElementById('newPhone').value.trim(),
         project: document.getElementById('newProject').value.trim(),
         notes: document.getElementById('newNotes').value.trim(),
+        portalTitle: document.getElementById('newPortalTitle').value.trim(),
+        portalMessage: document.getElementById('newPortalMessage').value.trim(),
+        portalDownloads: textToDownloads(document.getElementById('newPortalDownloads').value),
         role: document.getElementById('newRole').value
       })
     });
@@ -201,7 +235,27 @@ document.getElementById('usersBody').addEventListener('click', async function(e)
       if(project === null) { tableStatus.textContent = ''; return; }
       const notes = prompt('Notes:', u.notes || '');
       if(notes === null) { tableStatus.textContent = ''; return; }
-      await api('/api/admin/users', {method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id, fullName, company, phone, project, notes})});
+      const portalTitle = prompt('Portal headline:', u.portalTitle || '');
+      if(portalTitle === null) { tableStatus.textContent = ''; return; }
+      const portalMessage = prompt('Portal info:', u.portalMessage || '');
+      if(portalMessage === null) { tableStatus.textContent = ''; return; }
+      const portalDownloadsText = prompt('Download links (Label | URL | note, one per line):', downloadsToText(u.portalDownloads));
+      if(portalDownloadsText === null) { tableStatus.textContent = ''; return; }
+      await api('/api/admin/users', {
+        method:'PATCH',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          id,
+          fullName,
+          company,
+          phone,
+          project,
+          notes,
+          portalTitle,
+          portalMessage,
+          portalDownloads: textToDownloads(portalDownloadsText)
+        })
+      });
     }
     if(action === 'toggle') {
       const active = btn.getAttribute('data-active') === 'true';

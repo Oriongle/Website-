@@ -1,5 +1,6 @@
 const { verifyToken } = require("./_token");
 const { getPortalSecret } = require("./config");
+const { getUsers } = require("./user-store");
 
 function getCookieValue(cookieHeader, key) {
   const raw = String(cookieHeader || "");
@@ -21,5 +22,35 @@ module.exports = async function handler(req, res) {
   const payload = verifyToken(token, secret);
   if (!payload) return res.status(401).json({ error: "Unauthorized" });
 
-  return res.status(200).json({ ok: true, role: payload.role, email: payload.email });
+  let profile = null;
+  if (payload.src === "kv" && payload.uid) {
+    try {
+      const store = await getUsers();
+      const user = (store.users || []).find((u) => u.id === payload.uid && u.active !== false);
+      if (!user) return res.status(401).json({ error: "Unauthorized" });
+
+      profile = {
+        id: user.id,
+        fullName: user.fullName || "",
+        company: user.company || "",
+        phone: user.phone || "",
+        project: user.project || "",
+        notes: user.notes || "",
+        portalTitle: user.portalTitle || "",
+        portalMessage: user.portalMessage || "",
+        portalDownloads: Array.isArray(user.portalDownloads) ? user.portalDownloads : []
+      };
+    } catch {
+      profile = null;
+    }
+  }
+
+  return res.status(200).json({
+    ok: true,
+    role: payload.role,
+    email: payload.email,
+    uid: payload.uid || "",
+    src: payload.src || "",
+    profile
+  });
 };

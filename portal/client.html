@@ -8,16 +8,87 @@
 :root{--bg:#05070d;--text:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.1)}*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:#fff}
 .wrap{max-width:980px;margin:0 auto;padding:22px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.btn{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff;text-decoration:none;cursor:pointer}
 .card{margin-top:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);padding:16px}h1{margin:0 0 8px}p,li{color:var(--muted);line-height:1.7}
+.list{display:grid;gap:8px;margin-top:8px}
+.item{border:1px solid var(--line);border-radius:10px;padding:10px;background:rgba(255,255,255,.02)}
+.meta{font-size:13px;color:var(--muted)}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:8px;margin-top:6px}
+@media(max-width:700px){.kv{grid-template-columns:1fr}}
 </style>
 </head><body><div class="wrap">
 <div id="guard" class="card"><p>Checking session...</p></div>
 <div id="portalContent" style="display:none">
   <div class="top"><h1>Client Portal</h1><div><a class="btn" href="/status.html">Project Status</a> <button class="btn" id="logout">Logout</button></div></div>
-  <div class="card"><p>Welcome to the Orion GLE client portal.</p><ul><li>Track high-level status from the public-safe dashboard.</li><li>Use the contact form for change requests and TestFlight access.</li><li>Ask for private reporting access if your project needs it.</li></ul></div>
+  <div class="card">
+    <p id="welcomeText">Welcome to the Orion GLE client portal.</p>
+    <ul><li>Track high-level status from the public-safe dashboard.</li><li>Use the contact form for change requests and TestFlight access.</li><li>Ask for private reporting access if your project needs it.</li></ul>
+  </div>
+  <div class="card" id="accountCard" style="display:none">
+    <h2 id="portalTitle" style="margin-top:0;font-size:20px"></h2>
+    <p id="portalMessage"></p>
+    <div class="kv">
+      <div class="meta">Company</div><div id="companyValue">-</div>
+      <div class="meta">Project</div><div id="projectValue">-</div>
+      <div class="meta">Contact</div><div id="phoneValue">-</div>
+    </div>
+    <div id="notesWrap" style="margin-top:10px;display:none">
+      <div class="meta">Account notes</div>
+      <p id="notesValue"></p>
+    </div>
+  </div>
+  <div class="card" id="downloadsCard" style="display:none">
+    <h2 style="margin-top:0;font-size:20px">Downloads</h2>
+    <div id="downloadsList" class="list"></div>
+  </div>
   <div class="card"><a class="btn" href="/contact.html">Send a request</a></div>
 </div>
 </div>
 <script>
+function renderClientProfile(profile) {
+  if (!profile) return;
+  const accountCard = document.getElementById('accountCard');
+  const downloadsCard = document.getElementById('downloadsCard');
+  const name = (profile.fullName || '').trim();
+  if (name) {
+    document.getElementById('welcomeText').textContent = `Welcome ${name}.`;
+  }
+  const title = (profile.portalTitle || '').trim();
+  const message = (profile.portalMessage || '').trim();
+  const company = (profile.company || '').trim();
+  const project = (profile.project || '').trim();
+  const phone = (profile.phone || '').trim();
+  const notes = (profile.notes || '').trim();
+  const downloads = Array.isArray(profile.portalDownloads) ? profile.portalDownloads : [];
+
+  if (title || message || company || project || phone || notes) {
+    accountCard.style.display = 'block';
+    document.getElementById('portalTitle').textContent = title || 'Your account';
+    document.getElementById('portalMessage').textContent = message || 'Your project access details are shown below.';
+    document.getElementById('companyValue').textContent = company || '-';
+    document.getElementById('projectValue').textContent = project || '-';
+    document.getElementById('phoneValue').textContent = phone || '-';
+    if (notes) {
+      document.getElementById('notesWrap').style.display = 'block';
+      document.getElementById('notesValue').textContent = notes;
+    }
+  }
+
+  if (downloads.length) {
+    downloadsCard.style.display = 'block';
+    const list = document.getElementById('downloadsList');
+    list.innerHTML = '';
+    downloads.forEach((item) => {
+      const label = (item && item.label ? String(item.label) : '').trim() || 'Download file';
+      const url = (item && item.url ? String(item.url) : '').trim();
+      const note = (item && item.note ? String(item.note) : '').trim();
+      if (!url) return;
+      const row = document.createElement('div');
+      row.className = 'item';
+      row.innerHTML = `<div><strong>${label}</strong></div><div class="meta">${note || ''}</div><p><a class="btn" href="${url}" target="_blank" rel="noopener">Open / Download</a></p>`;
+      list.appendChild(row);
+    });
+  }
+}
+
 async function init() {
   try {
     const res = await fetch('/api/auth/me');
@@ -28,6 +99,7 @@ async function init() {
     }
     document.getElementById('guard').remove();
     document.getElementById('portalContent').style.display = 'block';
+    renderClientProfile(data.profile || null);
     document.getElementById('logout').addEventListener('click', async function(){
       await fetch('/api/auth/logout', {method:'POST'});
       window.location.assign('/portal/login.html');

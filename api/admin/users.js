@@ -14,6 +14,9 @@ function sanitizeUserForClient(u) {
     phone: u.phone || "",
     project: u.project || "",
     notes: u.notes || "",
+    portalTitle: u.portalTitle || "",
+    portalMessage: u.portalMessage || "",
+    portalDownloads: Array.isArray(u.portalDownloads) ? u.portalDownloads : [],
     email: u.email,
     role: u.role,
     active: u.active !== false,
@@ -21,6 +24,36 @@ function sanitizeUserForClient(u) {
     lastLoginAt: u.lastLoginAt || null,
     source: u.source || "kv"
   };
+}
+
+function normalizePortalDownloads(raw) {
+  if (Array.isArray(raw)) {
+    return raw
+      .map((item) => ({
+        label: String(item && item.label ? item.label : "").trim(),
+        url: String(item && item.url ? item.url : "").trim(),
+        note: String(item && item.note ? item.note : "").trim()
+      }))
+      .filter((item) => item.url);
+  }
+
+  if (typeof raw === "string") {
+    return raw
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line) => {
+        const parts = line.split("|");
+        return {
+          label: String(parts[0] || "").trim(),
+          url: String(parts[1] || "").trim(),
+          note: String(parts[2] || "").trim()
+        };
+      })
+      .filter((item) => item.url);
+  }
+
+  return [];
 }
 
 module.exports = async function handler(req, res) {
@@ -69,6 +102,9 @@ module.exports = async function handler(req, res) {
     const phone = String(body.phone || "").trim();
     const project = String(body.project || "").trim();
     const notes = String(body.notes || "").trim();
+    const portalTitle = String(body.portalTitle || "").trim();
+    const portalMessage = String(body.portalMessage || "").trim();
+    const portalDownloads = normalizePortalDownloads(body.portalDownloads);
     const email = String(body.email || "").trim().toLowerCase();
     const password = String(body.password || "");
     const role = String(body.role || "client").trim().toLowerCase();
@@ -86,6 +122,9 @@ module.exports = async function handler(req, res) {
       phone,
       project,
       notes,
+      portalTitle,
+      portalMessage,
+      portalDownloads,
       email,
       role,
       passwordHash: hashPassword(password),
@@ -116,6 +155,15 @@ module.exports = async function handler(req, res) {
     const notes = Object.prototype.hasOwnProperty.call(body, "notes")
       ? String(body.notes || "").trim()
       : null;
+    const portalTitle = Object.prototype.hasOwnProperty.call(body, "portalTitle")
+      ? String(body.portalTitle || "").trim()
+      : null;
+    const portalMessage = Object.prototype.hasOwnProperty.call(body, "portalMessage")
+      ? String(body.portalMessage || "").trim()
+      : null;
+    const portalDownloads = Object.prototype.hasOwnProperty.call(body, "portalDownloads")
+      ? normalizePortalDownloads(body.portalDownloads)
+      : null;
     const email = String(body.email || "").trim().toLowerCase();
     const password = String(body.password || "");
     const role = body.role ? String(body.role).trim().toLowerCase() : "";
@@ -142,6 +190,9 @@ module.exports = async function handler(req, res) {
     if (phone !== null) user.phone = phone;
     if (project !== null) user.project = project;
     if (notes !== null) user.notes = notes;
+    if (portalTitle !== null) user.portalTitle = portalTitle;
+    if (portalMessage !== null) user.portalMessage = portalMessage;
+    if (portalDownloads !== null) user.portalDownloads = portalDownloads;
     if (hasActive) user.active = body.active;
 
     await saveUsers(users);
