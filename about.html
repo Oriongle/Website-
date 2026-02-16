@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — Orion GLE Ltd</title>
+
+<style>
+:root{--bg:#05070d;--text:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.10);--a1:#7c3aed;--a2:#22d3ee;--max:1000px;}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 22px;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--line);}
+.brand{display:flex;gap:12px;align-items:center;text-decoration:none;color:var(--text);}
+.brand img{height:40px;width:auto;display:block}
+.links{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.links a{color:rgba(255,255,255,.78);text-decoration:none;font-size:14px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);}
+.links a:hover{border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.05);}
+.hero{padding:44px 0 18px;}
+h1{margin:0 0 12px;font-size:40px;}
+p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
+.card{margin:22px 0 0;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:18px;}
+.grid{display:grid;gap:14px;margin-top:14px;}
+@media(min-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
+.footer{border-top:1px solid var(--line);padding:28px 0;margin-top:44px;color:rgba(255,255,255,.55);text-align:center;font-size:13px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav">
+    <a class="brand" href="index.html"><img src="orion-logo.jpg" alt="Orion GLE Ltd"></a>
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="applications.html">Applications</a>
+      <a href="mailto:support@oriongle.co.uk">Contact</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>About Orion GLE Ltd</h1>
+    <p>
+      Orion GLE Ltd is a family-run business focused on app development and app alterations.
+      We build new app-led products and improve existing ones — adding features, refining user experience,
+      and strengthening performance and stability.
+    </p>
+
+    <div class="card">
+      <p><strong>How we work</strong></p>
+      <div class="grid">
+        <div class="card">
+          <p><strong>Practical delivery</strong></p>
+          <p>Clear scope, fast iteration, and shipping improvements without unnecessary complexity.</p>
+        </div>
+        <div class="card">
+          <p><strong>Quality first</strong></p>
+          <p>We prioritise reliability, usability, and clean releases — built for the long term.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Get in touch</strong></p>
+      <p>Support, partnerships, and enquiries: <a href="mailto:support@oriongle.co.uk" style="color:#fff">support@oriongle.co.uk</a></p>
+    </div>
+  </div>
+
+  <div class="footer">© <span id="year"></span> Orion GLE Ltd</div>
+</div>
+<script>document.getElementById("year").textContent=new Date().getFullYear();</script>
+</body>
+</html>
