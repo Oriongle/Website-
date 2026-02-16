@@ -30,7 +30,7 @@
   banner.className = "cookieBanner";
   banner.innerHTML =
     '<div class="cookieBannerInner">' +
-      '<p class="cookieText">We use essential cookies to run this site. Optional analytics cookies help us improve performance. Read our <a href="/vow/privacy.html">Privacy Policy</a>.</p>' +
+      '<p class="cookieText">We use essential cookies to run this site. Optional analytics cookies help us improve performance. Read our <a href="/privacy.html">Privacy Policy</a> and <a href="/cookies.html">Cookie Policy</a>.</p>' +
       '<div class="cookieActions">' +
         '<button class="cookieBtn" type="button" data-action="reject">Reject Optional</button>' +
         '<button class="cookieBtn cookieBtnPrimary" type="button" data-action="accept">Accept All</button>' +

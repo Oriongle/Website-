@@ -6,6 +6,18 @@ function sanitize(value) {
   return String(value || "").replace(/[<>]/g, "").trim();
 }
 
+const rateWindowMs = 5 * 60 * 1000;
+const maxPerWindow = 5;
+const buckets = new Map();
+
+function getClientIp(req) {
+  const fwd = req.headers["x-forwarded-for"];
+  if (typeof fwd === "string" && fwd.length > 0) {
+    return fwd.split(",")[0].trim();
+  }
+  return req.socket?.remoteAddress || "unknown";
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -18,12 +30,23 @@ module.exports = async function handler(req, res) {
     requestType = "",
     app = "Not specified",
     message = "",
-    company = ""
+    company = "",
+    turnstileToken = ""
   } = req.body || {};
 
   if (company) {
     return res.status(200).json({ ok: true });
   }
+
+  const ip = getClientIp(req);
+  const now = Date.now();
+  const record = buckets.get(ip) || [];
+  const recent = record.filter((ts) => now - ts < rateWindowMs);
+  if (recent.length >= maxPerWindow) {
+    return res.status(429).json({ error: "Too many requests. Try again in a few minutes." });
+  }
+  recent.push(now);
+  buckets.set(ip, recent);
 
   const cleanName = sanitize(name);
   const cleanEmail = sanitize(email);
@@ -52,6 +75,31 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({
       error: "Server is not configured for email yet. Missing RESEND_API_KEY."
     });
+  }
+
+  const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+  if (turnstileSecret) {
+    if (!turnstileToken) {
+      return res.status(400).json({ error: "Captcha validation is required." });
+    }
+    try {
+      const verifyBody = new URLSearchParams({
+        secret: turnstileSecret,
+        response: turnstileToken,
+        remoteip: ip
+      });
+      const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: verifyBody.toString()
+      });
+      const verifyJson = await verifyRes.json();
+      if (!verifyJson.success) {
+        return res.status(400).json({ error: "Captcha verification failed." });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: "Captcha verification error." });
+    }
   }
 
   const to = process.env.CONTACT_TO || "support@oriongle.co.uk";

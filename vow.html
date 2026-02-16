@@ -120,6 +120,7 @@ p{
 }
 </style>
 <link rel="stylesheet" href="/assets/cookie-consent.css">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
 
 <body>
@@ -131,7 +132,7 @@ p{
   </div>
 
   <div class="hero">
-    <img class="icon" src="assets/apps/vow.png" alt="VOW icon">
+    <img class="icon" src="assets/apps/vow.png" alt="VOW icon" loading="lazy" decoding="async">
     <h1>VOW</h1>
     <div class="badge">Pre-Release • In Development</div>
 
@@ -157,6 +158,8 @@ p{
 
 </div>
 <script>document.getElementById("year").textContent=new Date().getFullYear();</script>
+<script src="/assets/site-config.js"></script>
+<script src="/assets/analytics.js" defer></script>
 <script src="/assets/cookie-consent.js" defer></script>
 </body>
 </html>

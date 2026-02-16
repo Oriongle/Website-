@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Updates Admin Helper — Orion GLE Ltd</title>
+<meta name="description" content="Helper tool to generate updates JSON entries.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#05070d;--text:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.10)}*{box-sizing:border-box}
+body{margin:0;padding:24px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:920px;margin:0 auto}.card{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:20px}
+label{display:block;margin:10px 0 0;font-size:13px;color:rgba(255,255,255,.82)}input,textarea{width:100%;margin-top:6px;padding:10px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff}
+textarea{min-height:120px}button{margin-top:12px;padding:10px 12px;border:none;border-radius:10px;background:#22d3ee;color:#061019;font-weight:700;cursor:pointer}
+pre{white-space:pre-wrap;color:var(--muted);background:rgba(255,255,255,.02);padding:12px;border-radius:10px;border:1px solid var(--line)}
+</style>
+</head><body><div class="wrap"><div class="card"><h1>Updates Admin Helper</h1><p>Generate a JSON entry for <code>/data/updates.json</code>.</p>
+<label>Date<input id="date" type="date"></label>
+<label>Category<input id="category" value="Website"></label>
+<label>Title<input id="title"></label>
+<label>Body<textarea id="body"></textarea></label>
+<label>CTA Label (optional)<input id="ctaLabel"></label>
+<label>CTA Link (optional)<input id="ctaHref" placeholder="/contact.html"></label>
+<button id="build">Generate JSON</button>
+<pre id="out">Output will appear here.</pre>
+</div></div>
+<script>
+document.getElementById('build').onclick=function(){
+  const v=id=>document.getElementById(id).value.trim();
+  const obj={date:v('date')||new Date().toISOString().slice(0,10),category:v('category'),title:v('title'),body:v('body')};
+  if(v('ctaLabel')&&v('ctaHref')){obj.cta_label=v('ctaLabel');obj.cta_href=v('ctaHref');}
+  document.getElementById('out').textContent=JSON.stringify(obj,null,2);
+};
+</script>
+</body></html>

@@ -1,0 +1,26 @@
+{
+  "updated_at": "2026-02-16",
+  "projects": [
+    {
+      "name": "VOW",
+      "phase": "Pre-release hardening",
+      "status": "in_progress",
+      "last_update": "2026-02-16",
+      "next_milestone": "Beta access review"
+    },
+    {
+      "name": "Site Survey Pro",
+      "phase": "Feature validation",
+      "status": "in_progress",
+      "last_update": "2026-02-16",
+      "next_milestone": "Pilot build packaging"
+    },
+    {
+      "name": "TaskHawk",
+      "phase": "Workflow refinement",
+      "status": "pending_review",
+      "last_update": "2026-02-16",
+      "next_milestone": "Internal QA sign-off"
+    }
+  ]
+}

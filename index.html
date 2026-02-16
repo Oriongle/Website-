@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Orion GLE Ltd</title>
 <meta name="description" content="Orion GLE Ltd — a family-run business building and improving app-led products." />
+<meta property="og:title" content="Orion GLE Ltd">
+<meta property="og:description" content="Family-run business building and improving app-led products.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://website-kappa-six-45.vercel.app/">
+<meta property="og:image" content="https://website-kappa-six-45.vercel.app/orion-logo.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://website-kappa-six-45.vercel.app/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/cookie-consent.css">
 
 <style>
@@ -26,6 +34,9 @@ body{
   background:var(--bg);
   color:var(--text);
 }
+.skip{position:absolute;left:-9999px;top:8px;background:#fff;color:#000;padding:8px 10px;border-radius:8px;text-decoration:none}
+.skip:focus{left:12px;z-index:10000}
+a:focus,button:focus{outline:2px solid #22d3ee;outline-offset:2px}
 
 /* ===== Background ===== */
 .bg{
@@ -201,12 +212,14 @@ canvas#stars{position:absolute; inset:0; width:100%; height:100%; opacity:.85}
 </head>
 
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <div class="bg">
   <div class="aurora"></div>
   <canvas id="stars"></canvas>
 </div>
 
 <div class="wrap">
+  <main id="main">
   <div class="nav">
     <div></div>
     <div class="navLinks">
@@ -222,7 +235,7 @@ canvas#stars{position:absolute; inset:0; width:100%; height:100%; opacity:.85}
     <div class="parallax" id="parallax">
       <div class="glow"></div>
       <div class="logoPlate">
-        <img class="logoHero" src="orion-logo.jpg" alt="Orion GLE Ltd Logo">
+        <img class="logoHero" src="orion-logo.jpg" alt="Orion GLE Ltd Logo" loading="eager" fetchpriority="high" decoding="async">
       </div>
     </div>
     <h1>Family-run. Product-led. Built to last.</h1>
@@ -276,6 +289,7 @@ canvas#stars{position:absolute; inset:0; width:100%; height:100%; opacity:.85}
     © <span id="year"></span> Orion GLE Ltd. All rights reserved.
     <div class="footerLegal">Company information: ORION GLE LTD (Company No. 16933963), registered in England and Wales. Registered office: 23a Meadowgate Croft, Wakefield, WF3 3SS.</div>
   </div>
+  </main>
 </div>
 
 <script>
@@ -334,6 +348,8 @@ if(!isTouch){
 
 document.getElementById("year").textContent = new Date().getFullYear();
 </script>
+<script src="/assets/site-config.js"></script>
+<script src="/assets/analytics.js" defer></script>
 <script src="/assets/cookie-consent.js" defer></script>
 </body>
 </html>

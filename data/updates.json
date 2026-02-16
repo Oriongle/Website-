@@ -1,0 +1,24 @@
+[
+  {
+    "date": "2026-02-16",
+    "category": "Website",
+    "title": "Contact system upgraded",
+    "body": "The contact form now submits directly from the website via secure API handling, including request types for general enquiries, project work, and TestFlight access.",
+    "cta_label": "Submit a request",
+    "cta_href": "/contact.html"
+  },
+  {
+    "date": "2026-02-16",
+    "category": "Compliance",
+    "title": "Legal footer information published",
+    "body": "Company registration details and registered office information are now present across public pages to improve clarity and disclosure compliance."
+  },
+  {
+    "date": "2026-02-16",
+    "category": "VOW",
+    "title": "Privacy and Terms pages polished",
+    "body": "VOW policy pages were refined for wording consistency, clearer navigation, and stronger legal readability for launch readiness.",
+    "cta_label": "Open VOW page",
+    "cta_href": "/vow/"
+  }
+]
