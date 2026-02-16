@@ -1,55 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 :root {
-  --pt-bg: #070b12;
-  --pt-bg-2: #0d1422;
-  --pt-panel: rgba(12, 18, 30, 0.82);
-  --pt-panel-2: rgba(18, 28, 44, 0.86);
-  --pt-line: rgba(138, 168, 209, 0.28);
-  --pt-line-soft: rgba(138, 168, 209, 0.16);
-  --pt-text: #ecf4ff;
-  --pt-muted: rgba(217, 233, 255, 0.78);
-  --pt-accent: #4cc9ff;
-  --pt-accent-2: #34e0a1;
-  --pt-accent-3: #8aa0ff;
-  --pt-danger: #ff6e7f;
+  --pt-bg: #0a1020;
+  --pt-bg-2: #101a32;
+  --pt-surface: rgba(18, 28, 48, 0.82);
+  --pt-surface-2: rgba(25, 38, 63, 0.82);
+  --pt-line: rgba(164, 189, 232, 0.24);
+  --pt-line-soft: rgba(164, 189, 232, 0.14);
+  --pt-text: #eff5ff;
+  --pt-muted: rgba(220, 233, 252, 0.8);
+  --pt-accent: #69b7ff;
+  --pt-accent-2: #45d4a5;
 }
 
 html,
 body {
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   color: var(--pt-text) !important;
   background:
-    radial-gradient(circle at 8% 8%, rgba(52, 224, 161, 0.12), transparent 28%),
-    radial-gradient(circle at 92% 10%, rgba(76, 201, 255, 0.12), transparent 30%),
-    linear-gradient(160deg, var(--pt-bg), var(--pt-bg-2));
+    radial-gradient(circle at 8% 8%, rgba(69, 212, 165, 0.1), transparent 28%),
+    radial-gradient(circle at 92% 10%, rgba(105, 183, 255, 0.12), transparent 30%),
+    linear-gradient(150deg, var(--pt-bg), var(--pt-bg-2));
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(138, 168, 209, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(138, 168, 209, 0.06) 1px, transparent 1px);
-  background-size: 26px 26px;
-  mask-image: radial-gradient(ellipse at center, black 45%, transparent 90%);
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.22), transparent);
-  mix-blend-mode: soft-light;
+/* Disable older index-only effects for a cleaner feel */
+.bg,
+.aurora,
+#stars,
+.glow,
+.logoPlate,
+.devWindow {
+  display: none !important;
 }
 
 .wrap {
-  max-width: 1220px !important;
+  max-width: 1160px !important;
 }
 
 .nav,
@@ -60,19 +45,9 @@ body::after {
   border: 1px solid var(--pt-line) !important;
   border-radius: 14px;
   padding: 12px 14px !important;
-  background: linear-gradient(145deg, rgba(10, 15, 26, 0.86), rgba(14, 22, 36, 0.76)) !important;
+  background: linear-gradient(145deg, rgba(12, 19, 34, 0.86), rgba(16, 26, 45, 0.8)) !important;
   backdrop-filter: blur(10px);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
-}
-
-.nav::before,
-.nav[aria-label='Primary']::before {
-  content: 'ORION // DEV STUDIO';
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: rgba(183, 208, 240, 0.72);
-  margin-right: auto;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
 }
 
 .links,
@@ -85,14 +60,14 @@ body::after {
 a.cta,
 a.btn,
 button.btn {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
   font-size: 12px !important;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   border: 1px solid var(--pt-line) !important;
   color: #dff0ff !important;
-  background: rgba(16, 25, 42, 0.74) !important;
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+  background: rgba(18, 29, 48, 0.78) !important;
+  transition: border-color 0.2s ease, transform 0.2s ease !important;
 }
 
 .links a:hover,
@@ -100,17 +75,16 @@ button.btn {
 a.cta:hover,
 a.btn:hover,
 button.btn:hover {
-  border-color: rgba(76, 201, 255, 0.72) !important;
+  border-color: rgba(105, 183, 255, 0.72) !important;
   transform: translateY(-1px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.34);
 }
 
 a.cta.primary,
 a.btn.primary,
 button.btn.primary {
-  border: 1px solid rgba(52, 224, 161, 0.7) !important;
-  background: linear-gradient(135deg, rgba(52, 224, 161, 0.22), rgba(76, 201, 255, 0.24)) !important;
-  color: #e8fff6 !important;
+  border: 1px solid rgba(69, 212, 165, 0.72) !important;
+  background: linear-gradient(135deg, rgba(69, 212, 165, 0.25), rgba(105, 183, 255, 0.24)) !important;
+  color: #edfff8 !important;
 }
 
 .hero,
@@ -119,100 +93,38 @@ div.hero {
   position: relative;
   border: 1px solid var(--pt-line) !important;
   border-radius: 18px;
-  background: linear-gradient(150deg, var(--pt-panel), var(--pt-panel-2)) !important;
-  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.35);
-  overflow: hidden;
+  background: linear-gradient(155deg, var(--pt-surface), var(--pt-surface-2)) !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.32);
 }
 
 .hero::before,
 section.hero::before,
-div.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(120deg, rgba(76, 201, 255, 0.08), transparent 32%, rgba(52, 224, 161, 0.06) 68%, transparent);
-}
-
+div.hero::before,
 .hero::after,
 section.hero::after,
 div.hero::after {
-  content: '<build mode="production">';
-  position: absolute;
-  right: 14px;
-  bottom: 10px;
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 11px;
-  color: rgba(176, 202, 241, 0.55);
+  content: none !important;
 }
-
-.devWindow {
-  max-width: 760px;
-  margin: 0 auto 22px;
-  border: 1px solid rgba(76, 201, 255, 0.36);
-  border-radius: 12px;
-  background: rgba(8, 14, 24, 0.92);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.36);
-  overflow: hidden;
-  text-align: left;
-}
-
-.devWindowBar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 9px 12px;
-  border-bottom: 1px solid rgba(138, 168, 209, 0.2);
-  background: rgba(17, 27, 42, 0.92);
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 11px;
-  color: rgba(208, 226, 252, 0.84);
-}
-
-.devWindowCode {
-  margin: 0;
-  padding: 14px 14px 16px;
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 12px;
-  line-height: 1.65;
-  color: #d6e9ff;
-  overflow-x: auto;
-}
-
-.tok-key { color: #72f4c4; }
-.tok-str { color: #a8c9ff; }
-.tok-num { color: #ffd089; }
 
 h1 {
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-weight: 800 !important;
-  text-transform: none;
-  letter-spacing: 0.005em;
-  line-height: 1.12 !important;
-  color: #f2f8ff !important;
-  text-shadow: none;
-}
-
-.hero h1 {
-  font-size: clamp(2rem, 4.2vw, 3.2rem);
-  max-width: 920px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.heroTitle {
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   font-weight: 800 !important;
   text-transform: none !important;
   letter-spacing: 0 !important;
+  line-height: 1.12 !important;
+  color: #f3f8ff !important;
+  text-shadow: none !important;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 4vw, 3.1rem);
 }
 
 h2,
 h3,
 .kicker,
 .stat {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
@@ -236,11 +148,10 @@ article.card,
 section.card,
 form,
 table {
-  position: relative;
   border: 1px solid var(--pt-line-soft) !important;
   border-radius: 14px;
-  background: linear-gradient(165deg, rgba(13, 20, 33, 0.86), rgba(16, 25, 40, 0.84)) !important;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+  background: linear-gradient(165deg, rgba(14, 22, 36, 0.84), rgba(18, 28, 45, 0.84)) !important;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
 }
 
 .card::before,
@@ -249,30 +160,12 @@ table {
 article.card::before,
 section.card::before,
 form::before {
-  content: '';
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 44px;
-  height: 8px;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle at 4px 4px, var(--pt-danger) 3px, transparent 4px),
-    radial-gradient(circle at 20px 4px, #ffc24a 3px, transparent 4px),
-    radial-gradient(circle at 36px 4px, var(--pt-accent-2) 3px, transparent 4px);
-  opacity: 0.72;
-  pointer-events: none;
+  content: none !important;
 }
 
 .grid .card:hover {
-  border-color: rgba(76, 201, 255, 0.5) !important;
+  border-color: rgba(105, 183, 255, 0.42) !important;
   transform: translateY(-2px);
-}
-
-.kicker,
-.smallNote,
-.meta {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
 }
 
 .funkyChips {
@@ -284,14 +177,14 @@ form::before {
 }
 
 .chip {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 11px;
   text-transform: uppercase;
-  color: #d6e9ff;
-  background: rgba(17, 30, 49, 0.86);
-  border: 1px solid rgba(76, 201, 255, 0.34);
+  color: #d7e9ff;
+  background: rgba(18, 29, 48, 0.82);
+  border: 1px solid rgba(105, 183, 255, 0.34);
   border-radius: 999px;
-  padding: 7px 11px;
+  padding: 6px 11px;
 }
 
 input,
@@ -299,28 +192,28 @@ textarea,
 select {
   border: 1px solid var(--pt-line) !important;
   border-radius: 10px;
-  background: rgba(10, 18, 30, 0.86) !important;
+  background: rgba(12, 21, 36, 0.86) !important;
   color: var(--pt-text) !important;
-  font-family: 'Manrope', sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
 table th {
-  color: #ddedff !important;
+  color: #deedff !important;
   border-color: var(--pt-line) !important;
-  background: rgba(23, 36, 57, 0.76);
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: rgba(22, 34, 56, 0.74);
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 12px;
   text-transform: uppercase;
 }
 
 table td {
-  border-color: rgba(138, 168, 209, 0.14) !important;
+  border-color: rgba(164, 189, 232, 0.14) !important;
 }
 
 .reveal {
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.52s ease, transform 0.52s ease;
+  transform: translateY(10px);
+  transition: opacity 0.48s ease, transform 0.48s ease;
 }
 
 .reveal.in {
@@ -334,8 +227,9 @@ table td {
     position: static;
   }
 
-  .nav::before,
-  .nav[aria-label='Primary']::before {
-    display: none;
+  .hero,
+  section.hero,
+  div.hero {
+    padding: 22px 18px !important;
   }
 }
