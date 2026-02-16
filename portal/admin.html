@@ -16,31 +16,73 @@ form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:en
 table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;font-size:13px}th{color:rgba(255,255,255,.58);font-size:12px;text-transform:uppercase}
 .badge{display:inline-block;padding:5px 8px;border-radius:999px;border:1px solid var(--line);font-size:11px}.ok{color:#7ef0a8}.dim{color:#f5b274}
 .actions{display:flex;gap:6px;flex-wrap:wrap}
+.sectionTabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.sectionTabs .btn.active{background:linear-gradient(135deg,var(--a1),var(--a2));border:none;color:#061019;font-weight:700}
+.sectionPane{display:none}
+.sectionPane.active{display:block}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:12px;background:rgba(255,255,255,.02)}
+.kpi strong{display:block;font-size:24px;line-height:1.1}
+.kpi span{color:var(--muted);font-size:12px}
 @media(max-width:920px){form{grid-template-columns:1fr}}
+@media(max-width:800px){.kpis{grid-template-columns:1fr}}
 </style>
 </head><body><div class="wrap">
 <div id="guard" class="card"><p>Checking session...</p></div>
 <div id="portalContent" style="display:none">
   <div class="top"><h1>Admin Portal</h1><div><a class="btn" href="/update-admin.html">Updates Helper</a> <button class="btn" id="logout">Logout</button></div></div>
 
-  <div class="card">
-    <p><strong>Add user</strong></p>
-    <form id="addForm">
-      <label>Email<input id="newEmail" type="email" required></label>
-      <label>Password<input id="newPassword" type="password" minlength="8" required></label>
-      <label>Role<select id="newRole"><option value="client">Client</option><option value="admin">Admin</option></select></label>
-      <button class="btn primary" type="submit">Create</button>
-    </form>
-    <p class="status" id="addStatus"></p>
+  <div class="sectionTabs" role="tablist" aria-label="Admin sections">
+    <button class="btn active" id="tabUsers" data-tab="users" role="tab" aria-selected="true">Users</button>
+    <button class="btn" id="tabGeneral" data-tab="general" role="tab" aria-selected="false">General</button>
   </div>
 
+  <section class="sectionPane active" id="paneUsers" role="tabpanel" aria-labelledby="tabUsers">
+    <div class="card">
+      <p><strong>Add user</strong></p>
+      <form id="addForm">
+        <label>Email<input id="newEmail" type="email" required></label>
+        <label>Password<input id="newPassword" type="password" minlength="8" required></label>
+        <label>Role<select id="newRole"><option value="client">Client</option><option value="admin">Admin</option></select></label>
+        <button class="btn primary" type="submit">Create</button>
+      </form>
+      <p class="status" id="addStatus"></p>
+    </div>
+
+    <div class="card">
+      <p><strong>Users</strong></p>
+      <table>
+        <thead><tr><th>Email</th><th>Role</th><th>Status</th><th>Last login</th><th>Actions</th></tr></thead>
+        <tbody id="usersBody"><tr><td colspan="5">Loading...</td></tr></tbody>
+      </table>
+      <p class="status" id="tableStatus"></p>
+    </div>
+  </section>
+
+  <section class="sectionPane" id="paneGeneral" role="tabpanel" aria-labelledby="tabGeneral">
+    <div class="card">
+      <p><strong>Overview</strong></p>
+      <div class="kpis">
+        <div class="kpi"><strong id="kpiTotal">0</strong><span>Total users</span></div>
+        <div class="kpi"><strong id="kpiActive">0</strong><span>Active users</span></div>
+        <div class="kpi"><strong id="kpiAdmins">0</strong><span>Admin users</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <p><strong>Quick actions</strong></p>
+      <p><a class="btn" href="/status.html">Open Status Page</a> <a class="btn" href="/updates.html">Open Updates Page</a> <a class="btn" href="/update-admin.html">Updates Helper</a></p>
+      <p>Use the <strong>Users</strong> section to create client logins, disable access, reset passwords, or remove users.</p>
+    </div>
+  </section>
+  
   <div class="card">
-    <p><strong>Users</strong></p>
-    <table>
-      <thead><tr><th>Email</th><th>Role</th><th>Status</th><th>Last login</th><th>Actions</th></tr></thead>
-      <tbody id="usersBody"><tr><td colspan="5">Loading...</td></tr></tbody>
-    </table>
-    <p class="status" id="tableStatus"></p>
+    <p><strong>How this is used day-to-day</strong></p>
+    <ul>
+      <li>Create one login per client team or stakeholder.</li>
+      <li>Disable users temporarily when needed without deleting them.</li>
+      <li>Rotate passwords using Reset Password for access control.</li>
+      <li>Keep only active users needed for current projects.</li>
+    </ul>
   </div>
 </div>
 </div>
@@ -58,6 +100,12 @@ async function loadUsers(){
   try {
     const data = await api('/api/admin/users');
     const rows = data.users || [];
+    const total = rows.length;
+    const activeCount = rows.filter((u) => u.active).length;
+    const adminCount = rows.filter((u) => u.role === 'admin').length;
+    document.getElementById('kpiTotal').textContent = String(total);
+    document.getElementById('kpiActive').textContent = String(activeCount);
+    document.getElementById('kpiAdmins').textContent = String(adminCount);
     body.innerHTML = '';
     rows.forEach(u=>{
       const tr = document.createElement('tr');
@@ -71,6 +119,16 @@ async function loadUsers(){
   } catch (e) {
     body.innerHTML = `<tr><td colspan="5">${e.message}</td></tr>`;
   }
+}
+
+function setActiveTab(tab) {
+  const isUsers = tab === 'users';
+  document.getElementById('tabUsers').classList.toggle('active', isUsers);
+  document.getElementById('tabGeneral').classList.toggle('active', !isUsers);
+  document.getElementById('tabUsers').setAttribute('aria-selected', isUsers ? 'true' : 'false');
+  document.getElementById('tabGeneral').setAttribute('aria-selected', isUsers ? 'false' : 'true');
+  document.getElementById('paneUsers').classList.toggle('active', isUsers);
+  document.getElementById('paneGeneral').classList.toggle('active', !isUsers);
 }
 
 async function boot(){
@@ -141,6 +199,9 @@ document.getElementById('logout').addEventListener('click', async function(){
   await fetch('/api/auth/logout', {method:'POST'});
   window.location.assign('/portal/login.html');
 });
+
+document.getElementById('tabUsers').addEventListener('click', function(){ setActiveTab('users'); });
+document.getElementById('tabGeneral').addEventListener('click', function(){ setActiveTab('general'); });
 
 boot();
 </script>
