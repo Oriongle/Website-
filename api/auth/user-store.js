@@ -3,15 +3,35 @@ const crypto = require("crypto");
 const USERS_KEY = "portal_users_v1";
 
 function hasKvConfig() {
-  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  const url =
+    process.env.KV_REST_API_URL ||
+    process.env.UPSTASH_REDIS_REST_URL ||
+    process.env.STORAGE_REST_API_URL ||
+    process.env.STORAGE_URL ||
+    process.env.STORAGE_REDIS_REST_URL;
+  const token =
+    process.env.KV_REST_API_TOKEN ||
+    process.env.UPSTASH_REDIS_REST_TOKEN ||
+    process.env.STORAGE_REST_API_TOKEN ||
+    process.env.STORAGE_TOKEN ||
+    process.env.STORAGE_REDIS_REST_TOKEN;
   return Boolean(url && token);
 }
 
 function getStoreConfig() {
   return {
-    url: process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN
+    url:
+      process.env.KV_REST_API_URL ||
+      process.env.UPSTASH_REDIS_REST_URL ||
+      process.env.STORAGE_REST_API_URL ||
+      process.env.STORAGE_URL ||
+      process.env.STORAGE_REDIS_REST_URL,
+    token:
+      process.env.KV_REST_API_TOKEN ||
+      process.env.UPSTASH_REDIS_REST_TOKEN ||
+      process.env.STORAGE_REST_API_TOKEN ||
+      process.env.STORAGE_TOKEN ||
+      process.env.STORAGE_REDIS_REST_TOKEN
   };
 }
 
