@@ -1,4 +1,5 @@
 const { verifyToken } = require("./_token");
+const { getPortalSecret } = require("./config");
 
 function getCookieValue(cookieHeader, key) {
   const raw = String(cookieHeader || "");
@@ -13,7 +14,7 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const secret = process.env.PORTAL_JWT_SECRET;
+  const secret = getPortalSecret();
   if (!secret) return res.status(500).json({ error: "Portal is not configured yet." });
 
   const token = getCookieValue(req.headers.cookie, "orion_portal_session");

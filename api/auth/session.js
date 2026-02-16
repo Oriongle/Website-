@@ -1,4 +1,5 @@
 const { verifyToken } = require("./_token");
+const { getPortalSecret } = require("./config");
 
 function getCookieValue(cookieHeader, key) {
   const raw = String(cookieHeader || "");
@@ -8,7 +9,7 @@ function getCookieValue(cookieHeader, key) {
 }
 
 function getSession(req) {
-  const secret = process.env.PORTAL_JWT_SECRET;
+  const secret = getPortalSecret();
   if (!secret) return null;
   const token = getCookieValue(req.headers.cookie, "orion_portal_session");
   if (!token) return null;

@@ -1,4 +1,5 @@
 const { signToken } = require("./_token");
+const { getPortalSecret } = require("./config");
 const { verifyPassword } = require("./password");
 const { getUsers, saveUsers } = require("./user-store");
 
@@ -8,7 +9,7 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const secret = process.env.PORTAL_JWT_SECRET;
+  const secret = getPortalSecret();
   if (!secret) return res.status(500).json({ error: "Portal is not configured yet." });
 
   const { role = "", email = "", password = "" } = req.body || {};
