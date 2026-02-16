@@ -44,9 +44,14 @@ module.exports = async function handler(req, res) {
     return badRequest(res, "Please add a longer message.");
   }
 
-  const resendKey = process.env.RESEND_API_KEY;
+  const resendKey =
+    process.env.RESEND_API_KEY ||
+    process.env.RESEND_KEY ||
+    process.env.resend_api_key;
   if (!resendKey) {
-    return res.status(500).json({ error: "Server is not configured for email yet." });
+    return res.status(500).json({
+      error: "Server is not configured for email yet. Missing RESEND_API_KEY."
+    });
   }
 
   const to = process.env.CONTACT_TO || "support@oriongle.co.uk";
