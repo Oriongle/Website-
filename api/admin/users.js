@@ -22,6 +22,8 @@ function sanitizeUserForClient(u) {
     active: u.active !== false,
     createdAt: u.createdAt || null,
     lastLoginAt: u.lastLoginAt || null,
+    lastPasswordResetAt: u.lastPasswordResetAt || null,
+    inactivityResetRequiredAt: u.inactivityResetRequiredAt || null,
     source: u.source || "kv"
   };
 }

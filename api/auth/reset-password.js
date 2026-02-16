@@ -64,6 +64,7 @@ module.exports = async function handler(req, res) {
   user.passwordHash = hashPassword(cleanPassword);
   user.resetTokenHash = "";
   user.resetTokenExpiresAt = "";
+  user.inactivityResetRequiredAt = "";
   user.lastPasswordResetAt = new Date().toISOString();
   appendAudit(user, {
     at: user.lastPasswordResetAt,
