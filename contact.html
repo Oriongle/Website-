@@ -57,7 +57,11 @@ button{
   cursor:pointer;
 }
 button:hover{filter:brightness(1.05)}
+button[disabled]{opacity:.65;cursor:not-allowed}
 .note{font-size:13px;color:rgba(255,255,255,.58);line-height:1.6}
+.status{margin-top:8px;min-height:20px;font-size:13px;line-height:1.4}
+.status.ok{color:#7ef0a8}
+.status.err{color:#ff9aa2}
 
 .side h2{margin:0 0 10px;font-size:20px}
 .side p{margin:0 0 10px;color:var(--muted);line-height:1.7}
@@ -121,8 +125,10 @@ button:hover{filter:brightness(1.05)}
           <textarea id="message" name="message" placeholder="Tell us what you need..." required></textarea>
         </label>
 
+        <input type="text" id="company" name="company" style="display:none" tabindex="-1" autocomplete="off">
         <button type="submit">Submit Request</button>
-        <p class="note">Submitting opens your email app with a pre-filled message to support@oriongle.co.uk.</p>
+        <p class="note">Your request is sent securely from this website to support@oriongle.co.uk.</p>
+        <p id="formStatus" class="status" aria-live="polite"></p>
       </form>
     </div>
 
@@ -142,26 +148,39 @@ button:hover{filter:brightness(1.05)}
 
 <script>
 const form = document.getElementById("contactForm");
-form.addEventListener("submit", function (e) {
+const formStatus = document.getElementById("formStatus");
+const submitButton = form.querySelector("button[type='submit']");
+
+form.addEventListener("submit", async function (e) {
   e.preventDefault();
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const requestType = document.getElementById("requestType").value;
   const app = document.getElementById("app").value;
   const message = document.getElementById("message").value.trim();
+  const company = document.getElementById("company").value.trim();
 
-  const subject = `[Website] ${requestType} - ${name}`;
-  const body = [
-    `Name: ${name}`,
-    `Email: ${email}`,
-    `Request Type: ${requestType}`,
-    `App: ${app}`,
-    "",
-    "Message:",
-    message
-  ].join("\n");
+  formStatus.textContent = "Sending...";
+  formStatus.className = "status";
+  submitButton.disabled = true;
 
-  window.location.href = `mailto:support@oriongle.co.uk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  try {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({name, email, requestType, app, message, company})
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Unable to send");
+    formStatus.textContent = "Request sent successfully. We will get back to you soon.";
+    formStatus.className = "status ok";
+    form.reset();
+  } catch (error) {
+    formStatus.textContent = error.message || "Sorry, your request could not be sent.";
+    formStatus.className = "status err";
+  } finally {
+    submitButton.disabled = false;
+  }
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
