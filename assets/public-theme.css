@@ -185,13 +185,27 @@ div.hero::after {
 .tok-num { color: #ffd089; }
 
 h1 {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
-  font-weight: 700 !important;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  line-height: 1.08 !important;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-weight: 800 !important;
+  text-transform: none;
+  letter-spacing: 0.005em;
+  line-height: 1.12 !important;
   color: #f2f8ff !important;
   text-shadow: none;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heroTitle {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-weight: 800 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
 }
 
 h2,
