@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Orion GLE Ltd</title>
 
 <style>
@@ -10,65 +10,130 @@
   --bg:#05070d;
   --text:#ffffff;
   --muted:rgba(255,255,255,.7);
-  --line:rgba(255,255,255,.08);
+  --line:rgba(255,255,255,.1);
+  --a1:#7c3aed;
+  --a2:#22d3ee;
+  --a3:#f472b6;
   --max:1200px;
 }
 
 *{box-sizing:border-box}
-
+html,body{margin:0;height:100%;overflow-x:hidden}
 body{
-  margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  background:radial-gradient(circle at 30% 20%, rgba(255,255,255,.05), transparent 50%), var(--bg);
+  background:var(--bg);
   color:var(--text);
 }
 
-.wrap{
-  max-width:var(--max);
-  margin:0 auto;
-  padding:0 24px;
+/* ===== Background ===== */
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-10;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(124,58,237,.18), transparent 50%),
+    radial-gradient(circle at 80% 30%, rgba(34,211,238,.14), transparent 55%),
+    var(--bg);
 }
 
-/* NAV */
+.aurora{
+  position:absolute;
+  inset:-20%;
+  background:
+    radial-gradient(closest-side at 30% 40%, rgba(124,58,237,.25), transparent 60%),
+    radial-gradient(closest-side at 70% 30%, rgba(34,211,238,.20), transparent 60%),
+    radial-gradient(closest-side at 60% 80%, rgba(244,114,182,.15), transparent 60%);
+  filter:blur(40px);
+  animation:drift 20s ease-in-out infinite alternate;
+  mix-blend-mode:screen;
+}
+
+@keyframes drift{
+  from{transform:translate(-3%,0) scale(1.05);}
+  to{transform:translate(3%,2%) scale(1.1);}
+}
+
+canvas{
+  position:absolute;
+  inset:0;
+}
+
+/* ===== Layout ===== */
+
+.wrap{
+  max-width:var(--max);
+  margin:auto;
+  padding:0 24px;
+}
 
 .nav{
   display:flex;
   justify-content:flex-end;
-  padding:30px 0;
+  padding:28px 0;
 }
 
 .nav a{
   text-decoration:none;
   color:var(--muted);
   font-size:14px;
+  padding:10px 16px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.03);
+  transition:.2s ease;
 }
 
 .nav a:hover{
-  color:white;
+  transform:translateY(-2px);
+  border-color:rgba(255,255,255,.3);
 }
 
-/* HERO */
+/* ===== Hero ===== */
 
 .hero{
   text-align:center;
   padding:40px 0 100px;
+  position:relative;
+}
+
+.parallax{
+  position:relative;
+  display:inline-block;
+  transform-style:preserve-3d;
+  transition:transform .15s ease-out;
+}
+
+.glow{
+  position:absolute;
+  inset:-25%;
+  background:
+    radial-gradient(circle at center, rgba(124,58,237,.35), transparent 60%),
+    radial-gradient(circle at 60% 40%, rgba(34,211,238,.25), transparent 60%);
+  filter:blur(30px);
+  animation:pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.1);}
 }
 
 .hero img{
-  max-width:520px;
-  width:100%;
+  width:min(620px,90vw);
   height:auto;
-  margin-bottom:40px;
+  position:relative;
 }
 
 .hero h1{
-  font-size:42px;
-  margin:0 0 20px;
+  font-size:46px;
+  margin:40px 0 20px;
 }
 
 .hero p{
   max-width:700px;
-  margin:0 auto 30px;
+  margin:auto;
   font-size:18px;
   color:var(--muted);
   line-height:1.6;
@@ -76,9 +141,10 @@ body{
 
 .cta{
   display:inline-block;
+  margin-top:30px;
   padding:14px 28px;
-  border-radius:8px;
-  background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+  border-radius:10px;
+  background:linear-gradient(135deg,var(--a1),var(--a2));
   color:white;
   text-decoration:none;
   font-weight:600;
@@ -86,11 +152,11 @@ body{
 }
 
 .cta:hover{
-  transform:translateY(-2px);
-  box-shadow:0 15px 35px rgba(0,0,0,.4);
+  transform:translateY(-3px);
+  box-shadow:0 15px 40px rgba(0,0,0,.5);
 }
 
-/* SECTION */
+/* ===== Section ===== */
 
 .section{
   padding:80px 0;
@@ -109,9 +175,7 @@ body{
 }
 
 @media(min-width:900px){
-  .grid{
-    grid-template-columns:repeat(3,1fr);
-  }
+  .grid{grid-template-columns:repeat(3,1fr);}
 }
 
 .card{
@@ -121,17 +185,10 @@ body{
   border:1px solid var(--line);
 }
 
-.card h3{
-  margin:0 0 10px;
-}
+.card h3{margin-bottom:10px}
+.card p{color:var(--muted);font-size:15px}
 
-.card p{
-  margin:0;
-  color:var(--muted);
-  font-size:15px;
-}
-
-/* FOOTER */
+/* ===== Footer ===== */
 
 .footer{
   padding:40px 0;
@@ -140,11 +197,15 @@ body{
   font-size:14px;
   color:rgba(255,255,255,.5);
 }
-
 </style>
 </head>
 
 <body>
+
+<div class="bg">
+  <div class="aurora"></div>
+  <canvas id="stars"></canvas>
+</div>
 
 <div class="wrap">
 
@@ -153,13 +214,17 @@ body{
   </div>
 
   <div class="hero">
-    <img src="orion-logo.jpg" alt="Orion GLE Ltd">
+
+    <div class="parallax" id="parallax">
+      <div class="glow"></div>
+      <img src="orion-logo.jpg" alt="Orion GLE Ltd">
+    </div>
 
     <h1>Building Modern Digital Products</h1>
 
     <p>
-      Orion GLE Ltd develops and operates scalable digital platforms,
-      applications and online services designed for performance and growth.
+      Orion GLE Ltd develops scalable digital platforms, applications
+      and high-performance online services.
     </p>
 
     <a class="cta" href="mailto:support@oriongle.co.uk">Get in Touch</a>
@@ -167,35 +232,74 @@ body{
 
   <div class="section">
     <h2>Our Focus</h2>
-
     <div class="grid">
-
       <div class="card">
         <h3>App Development</h3>
-        <p>Modern applications built for reliability and scale.</p>
+        <p>Modern, scalable applications built for reliability and growth.</p>
       </div>
-
       <div class="card">
         <h3>Platform Infrastructure</h3>
         <p>Secure hosting, deployment pipelines and cloud architecture.</p>
       </div>
-
       <div class="card">
         <h3>Product Strategy</h3>
         <p>Brand-led digital products with long-term vision.</p>
       </div>
-
     </div>
   </div>
 
   <div class="footer">
-    © <span id="year"></span> Orion GLE Ltd. All rights reserved.
+    © <span id="year"></span> Orion GLE Ltd
   </div>
 
 </div>
 
 <script>
-document.getElementById("year").textContent = new Date().getFullYear();
+/* ===== Starfield ===== */
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+let w,h,stars=[];
+function resize(){
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+}
+window.addEventListener("resize",resize);
+resize();
+
+for(let i=0;i<160;i++){
+  stars.push({
+    x:Math.random()*w,
+    y:Math.random()*h,
+    r:Math.random()*1.2,
+    d:Math.random()*0.3
+  });
+}
+
+function animate(){
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle="white";
+  stars.forEach(s=>{
+    ctx.globalAlpha=Math.random();
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fill();
+    s.y+=s.d;
+    if(s.y>h){s.y=0;s.x=Math.random()*w;}
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* ===== Parallax ===== */
+const parallax=document.getElementById("parallax");
+document.addEventListener("mousemove",e=>{
+  const x=(e.clientX/window.innerWidth-.5)*20;
+  const y=(e.clientY/window.innerHeight-.5)*20;
+  parallax.style.transform=`rotateX(${ -y }deg) rotateY(${ x }deg)`;
+});
+
+/* Year */
+document.getElementById("year").textContent=new Date().getFullYear();
 </script>
 
 </body>
