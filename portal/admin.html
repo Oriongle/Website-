@@ -98,6 +98,15 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
         <tbody id="filesBody"><tr><td colspan="5">Loading...</td></tr></tbody>
       </table>
     </div>
+    <div class="card">
+      <p><strong>Reset audit</strong></p>
+      <p><button class="btn" id="refreshAudit" type="button">Refresh audit</button></p>
+      <p class="status" id="resetAuditStatus"></p>
+      <table>
+        <thead><tr><th>When</th><th>User</th><th>Action</th><th>Details</th></tr></thead>
+        <tbody id="resetAuditBody"><tr><td colspan="4">Loading...</td></tr></tbody>
+      </table>
+    </div>
   </section>
   
   <div class="card">
@@ -182,6 +191,47 @@ async function loadFiles() {
   }
 }
 
+function formatAuditAction(action) {
+  const a = String(action || '').trim();
+  if (a === 'requested') return 'Reset requested';
+  if (a === 'completed') return 'Reset completed';
+  if (a === 'admin_reset') return 'Admin reset';
+  if (a === 'required_due_inactivity') return 'Forced reset (inactivity)';
+  return a || 'Unknown';
+}
+
+async function loadResetAudit() {
+  const body = document.getElementById('resetAuditBody');
+  const status = document.getElementById('resetAuditStatus');
+  body.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+  status.textContent = '';
+  try {
+    const data = await api('/api/admin/reset-audit');
+    const rows = data.events || [];
+    body.innerHTML = '';
+    if (!rows.length) {
+      body.innerHTML = '<tr><td colspan="4">No reset audit events yet.</td></tr>';
+      return;
+    }
+    rows.slice(0, 200).forEach((event) => {
+      const tr = document.createElement('tr');
+      const when = event.at ? new Date(event.at).toLocaleString() : '-';
+      const user = `${event.name || '-'} (${event.email || '-'})`;
+      const details = [];
+      if (event.ip) details.push(`IP: ${event.ip}`);
+      if (event.by) details.push(`By: ${event.by}`);
+      if (event.days) details.push(`Days: ${event.days}`);
+      tr.innerHTML = `<td>${when}</td><td>${user}</td><td>${formatAuditAction(event.action)}</td><td>${details.join(' | ') || '-'}</td>`;
+      body.appendChild(tr);
+    });
+    status.textContent = `Showing ${Math.min(rows.length, 200)} of ${rows.length} event(s).`;
+    status.style.color = 'rgba(255,255,255,.72)';
+  } catch (e) {
+    body.innerHTML = `<tr><td colspan="4">${e.message}</td></tr>`;
+    status.textContent = 'Unable to load reset audit.';
+  }
+}
+
 async function loadUsers(){
   const body = document.getElementById('usersBody');
   body.innerHTML = '<tr><td colspan="7">Loading...</td></tr>';
@@ -229,6 +279,7 @@ async function boot(){
     document.getElementById('portalContent').style.display = 'block';
     loadUsers();
     loadFiles();
+    loadResetAudit();
   } catch {
     window.location.assign('/portal/login.html?next=/portal/admin.html');
   }
@@ -391,9 +442,14 @@ document.getElementById('usersBody').addEventListener('click', async function(e)
     }
     tableStatus.textContent = 'Updated.';
     loadUsers();
+    loadResetAudit();
   } catch (e3) {
     tableStatus.textContent = e3.message;
   }
+});
+
+document.getElementById('refreshAudit').addEventListener('click', function(){
+  loadResetAudit();
 });
 
 document.getElementById('logout').addEventListener('click', async function(){

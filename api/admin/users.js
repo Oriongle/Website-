@@ -28,6 +28,12 @@ function sanitizeUserForClient(u) {
   };
 }
 
+function appendResetAudit(user, event) {
+  const next = Array.isArray(user.resetAudit) ? user.resetAudit.slice(-49) : [];
+  next.push(event);
+  user.resetAudit = next;
+}
+
 function normalizePortalDownloads(raw) {
   if (Array.isArray(raw)) {
     return raw
@@ -182,6 +188,13 @@ module.exports = async function handler(req, res) {
     if (password) {
       if (password.length < 8) return bad(res, "Password must be at least 8 characters.");
       user.passwordHash = hashPassword(password);
+      user.lastPasswordResetAt = new Date().toISOString();
+      user.inactivityResetRequiredAt = "";
+      appendResetAudit(user, {
+        at: user.lastPasswordResetAt,
+        action: "admin_reset",
+        by: String(session.email || "")
+      });
     }
     if (role) {
       if (!["admin", "client"].includes(role)) return bad(res, "Role must be admin or client.");
