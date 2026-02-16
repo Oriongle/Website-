@@ -3,13 +3,23 @@ const crypto = require("crypto");
 const USERS_KEY = "portal_users_v1";
 
 function hasKvConfig() {
-  return Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  return Boolean(url && token);
+}
+
+function getStoreConfig() {
+  return {
+    url: process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL,
+    token: process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN
+  };
 }
 
 async function kvGet(key) {
-  const url = `${process.env.KV_REST_API_URL}/get/${encodeURIComponent(key)}`;
+  const cfg = getStoreConfig();
+  const url = `${cfg.url}/get/${encodeURIComponent(key)}`;
   const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}` }
+    headers: { Authorization: `Bearer ${cfg.token}` }
   });
   if (!res.ok) throw new Error("KV get failed");
   const json = await res.json();
@@ -17,11 +27,12 @@ async function kvGet(key) {
 }
 
 async function kvSet(key, value) {
+  const cfg = getStoreConfig();
   const encoded = encodeURIComponent(value);
-  const url = `${process.env.KV_REST_API_URL}/set/${encodeURIComponent(key)}/${encoded}`;
+  const url = `${cfg.url}/set/${encodeURIComponent(key)}/${encoded}`;
   const res = await fetch(url, {
     method: "POST",
-    headers: { Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}` }
+    headers: { Authorization: `Bearer ${cfg.token}` }
   });
   if (!res.ok) throw new Error("KV set failed");
 }
