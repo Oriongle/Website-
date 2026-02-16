@@ -47,7 +47,7 @@ body {
   gap: 10px;
   border: 1px solid var(--pt-line-soft) !important;
   border-radius: 10px;
-  padding: 8px 10px !important;
+  padding: 12px 16px !important;
   margin: 0 0 16px;
   background: rgba(14, 22, 36, 0.72) !important;
   backdrop-filter: blur(10px);
@@ -61,6 +61,7 @@ body {
   flex-wrap: wrap;
   align-items: center;
   min-width: 0;
+  padding: 2px 2px;
 }
 
 .links a,
