@@ -27,6 +27,7 @@ tr:last-child td{border-bottom:none}.badge{display:inline-block;padding:6px 10px
 .note{margin-top:16px;color:rgba(255,255,255,.6);font-size:13px;line-height:1.65}.actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}.btn{display:inline-flex;padding:10px 12px;border-radius:10px;text-decoration:none;border:1px solid var(--line);color:#fff;background:rgba(255,255,255,.03)}
 .footer{border-top:1px solid var(--line);padding:28px 0;margin-top:44px;color:rgba(255,255,255,.55);text-align:center;font-size:13px}.footerLegal{margin-top:8px;color:rgba(255,255,255,.48);line-height:1.55}
 </style>
+<link rel="stylesheet" href="/assets/public-theme.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -68,5 +69,6 @@ fetch('/api/status').then(r=>r.json()).then(data=>{
 }).catch(()=>{document.getElementById('statusBody').innerHTML='<tr><td colspan="5">Unable to load status data.</td></tr>';});
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
+<script src="/assets/public-theme.js" defer></script>
 </body>
 </html>
