@@ -234,11 +234,17 @@ canvas#stars{position:absolute; inset:0; width:100%; height:100%; opacity:.85}
   </div>
 
   <div class="hero">
-    <div class="parallax" id="parallax">
-      <div class="glow"></div>
-      <div class="logoPlate">
-        <img class="logoHero" src="orion-logo.jpg" alt="Orion GLE Ltd Logo" loading="eager" fetchpriority="high" decoding="async">
+    <div class="devWindow" id="parallax">
+      <div class="devWindowBar">
+        <span>orion-gle / production</span>
+        <span>deploy: stable</span>
       </div>
+      <pre class="devWindowCode"><span class="tok-key">const</span> studio = {
+  company: <span class="tok-str">\"ORION GLE LTD\"</span>,
+  founded: <span class="tok-num">2025</span>,
+  focus: [<span class="tok-str">\"websites\"</span>, <span class="tok-str">\"apps\"</span>, <span class="tok-str">\"product upgrades\"</span>],
+  delivery: <span class="tok-str">\"fast, scalable, production-ready\"</span>
+};</pre>
     </div>
     <h1>Family Operated. Product Focused. Built for Longevity.</h1>
     <p>
@@ -324,7 +330,7 @@ draw();
 /* Parallax (desktop only) */
 const parallax = document.getElementById("parallax");
 const isTouch = matchMedia("(pointer: coarse)").matches;
-if(!isTouch){
+if(parallax && !isTouch){
   document.addEventListener("mousemove", (e)=>{
     const x = (e.clientX / window.innerWidth - 0.5) * 16;
     const y = (e.clientY / window.innerHeight - 0.5) * 16;
