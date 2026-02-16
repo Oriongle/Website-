@@ -5,37 +5,143 @@
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <style>
-:root{--bg:#05070d;--text:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.1)}*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:#fff}
-.wrap{max-width:980px;margin:0 auto;padding:22px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.btn{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff;text-decoration:none;cursor:pointer}
-.card{margin-top:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);padding:16px}h1{margin:0 0 8px}p,li{color:var(--muted);line-height:1.7}
+:root{--bg:#05070d;--text:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.1);--a1:#7c3aed;--a2:#22d3ee}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:#fff}
+.wrap{max-width:1060px;margin:0 auto;padding:22px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.btn{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff;text-decoration:none;cursor:pointer}
+.btn.primary{border:none;background:linear-gradient(135deg,var(--a1),var(--a2));color:#061019;font-weight:700}
+.card{margin-top:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);padding:16px}
+h1{margin:0 0 8px}p,li,label{color:var(--muted);line-height:1.7}.status{font-size:13px;color:#ff9aa2;min-height:20px}
+form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end}input,select{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff}
+table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;font-size:13px}th{color:rgba(255,255,255,.58);font-size:12px;text-transform:uppercase}
+.badge{display:inline-block;padding:5px 8px;border-radius:999px;border:1px solid var(--line);font-size:11px}.ok{color:#7ef0a8}.dim{color:#f5b274}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+@media(max-width:920px){form{grid-template-columns:1fr}}
 </style>
 </head><body><div class="wrap">
 <div id="guard" class="card"><p>Checking session...</p></div>
 <div id="portalContent" style="display:none">
   <div class="top"><h1>Admin Portal</h1><div><a class="btn" href="/update-admin.html">Updates Helper</a> <button class="btn" id="logout">Logout</button></div></div>
-  <div class="card"><p>Admin quick links:</p><ul><li>Review updates feed JSON and publish notes.</li><li>Check client status feed source in <code>/data/status.json</code>.</li><li>Manage portal credentials in Vercel environment variables.</li></ul></div>
-  <div class="card"><p>Public dashboards:</p><p><a class="btn" href="/status.html">Status Page</a> <a class="btn" href="/updates.html">Updates Page</a></p></div>
+
+  <div class="card">
+    <p><strong>Add user</strong></p>
+    <form id="addForm">
+      <label>Email<input id="newEmail" type="email" required></label>
+      <label>Password<input id="newPassword" type="password" minlength="8" required></label>
+      <label>Role<select id="newRole"><option value="client">Client</option><option value="admin">Admin</option></select></label>
+      <button class="btn primary" type="submit">Create</button>
+    </form>
+    <p class="status" id="addStatus"></p>
+  </div>
+
+  <div class="card">
+    <p><strong>Users</strong></p>
+    <table>
+      <thead><tr><th>Email</th><th>Role</th><th>Status</th><th>Last login</th><th>Actions</th></tr></thead>
+      <tbody id="usersBody"><tr><td colspan="5">Loading...</td></tr></tbody>
+    </table>
+    <p class="status" id="tableStatus"></p>
+  </div>
 </div>
 </div>
 <script>
-async function init() {
+async function api(path, options){
+  const res = await fetch(path, options);
+  const data = await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(data.error || 'Request failed');
+  return data;
+}
+
+async function loadUsers(){
+  const body = document.getElementById('usersBody');
+  body.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
   try {
-    const res = await fetch('/api/auth/me');
-    const data = await res.json();
-    if (!res.ok || data.role !== 'admin') {
-      window.location.assign('/portal/login.html?error=forbidden&next=/portal/admin.html');
-      return;
-    }
-    document.getElementById('guard').remove();
-    document.getElementById('portalContent').style.display = 'block';
-    document.getElementById('logout').addEventListener('click', async function(){
-      await fetch('/api/auth/logout', {method:'POST'});
-      window.location.assign('/portal/login.html');
+    const data = await api('/api/admin/users');
+    const rows = data.users || [];
+    body.innerHTML = '';
+    rows.forEach(u=>{
+      const tr = document.createElement('tr');
+      const status = u.active ? '<span class="badge ok">Active</span>' : '<span class="badge dim">Disabled</span>';
+      const actions = u.source === 'env'
+        ? '<span class="badge">Env-managed</span>'
+        : `<div class="actions"><button class="btn" data-a="toggle" data-id="${u.id}" data-active="${u.active}">${u.active ? 'Disable' : 'Enable'}</button><button class="btn" data-a="reset" data-id="${u.id}">Reset Password</button><button class="btn" data-a="delete" data-id="${u.id}">Delete</button></div>`;
+      tr.innerHTML = `<td>${u.email}</td><td>${u.role}</td><td>${status}</td><td>${u.lastLoginAt || '-'}</td><td>${actions}</td>`;
+      body.appendChild(tr);
     });
   } catch (e) {
+    body.innerHTML = `<tr><td colspan="5">${e.message}</td></tr>`;
+  }
+}
+
+async function boot(){
+  try {
+    const me = await api('/api/auth/me');
+    if(me.role !== 'admin') throw new Error('forbidden');
+    document.getElementById('guard').remove();
+    document.getElementById('portalContent').style.display = 'block';
+    loadUsers();
+  } catch {
     window.location.assign('/portal/login.html?next=/portal/admin.html');
   }
 }
-init();
+
+const addForm = document.getElementById('addForm');
+addForm.addEventListener('submit', async function(e){
+  e.preventDefault();
+  const status = document.getElementById('addStatus');
+  status.textContent = 'Creating user...';
+  try {
+    await api('/api/admin/users', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        email: document.getElementById('newEmail').value.trim(),
+        password: document.getElementById('newPassword').value,
+        role: document.getElementById('newRole').value
+      })
+    });
+    status.textContent = 'User created.';
+    addForm.reset();
+    loadUsers();
+  } catch (e2) {
+    status.textContent = e2.message;
+  }
+});
+
+document.getElementById('usersBody').addEventListener('click', async function(e){
+  const btn = e.target.closest('button[data-a]');
+  if(!btn) return;
+  const action = btn.getAttribute('data-a');
+  const id = btn.getAttribute('data-id');
+  const tableStatus = document.getElementById('tableStatus');
+  tableStatus.textContent = 'Working...';
+
+  try {
+    if(action === 'toggle') {
+      const active = btn.getAttribute('data-active') === 'true';
+      await api('/api/admin/users', {method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id, active: !active})});
+    }
+    if(action === 'reset') {
+      const next = prompt('Enter new password (8+ chars):');
+      if(!next) { tableStatus.textContent = ''; return; }
+      await api('/api/admin/users', {method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id, password: next})});
+    }
+    if(action === 'delete') {
+      if(!confirm('Delete this user?')) { tableStatus.textContent = ''; return; }
+      await api('/api/admin/users', {method:'DELETE', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id})});
+    }
+    tableStatus.textContent = 'Updated.';
+    loadUsers();
+  } catch (e3) {
+    tableStatus.textContent = e3.message;
+  }
+});
+
+document.getElementById('logout').addEventListener('click', async function(){
+  await fetch('/api/auth/logout', {method:'POST'});
+  window.location.assign('/portal/login.html');
+});
+
+boot();
 </script>
 </body></html>
