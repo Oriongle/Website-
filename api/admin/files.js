@@ -258,7 +258,7 @@ module.exports = async function handler(req, res) {
 
   if (req.method === "PATCH") {
     const id = sanitize(req.body?.id || "", 80);
-    if (!id) return bad(res, "File id is required.");
+    if (!id) return bad(res, "Item id is required.");
 
     if (Object.prototype.hasOwnProperty.call(req.body || {}, "allowedUserIds")) {
       const targetFolder = folders.find((f) => f.id === id);
@@ -267,6 +267,62 @@ module.exports = async function handler(req, res) {
       targetFolder.allowedUserIds = Array.from(new Set(
         list.map((v) => sanitize(v, 80)).filter(Boolean)
       ));
+      await saveFolders(folders);
+      return res.status(200).json({ ok: true });
+    }
+
+    if (Object.prototype.hasOwnProperty.call(req.body || {}, "folderName") ||
+        Object.prototype.hasOwnProperty.call(req.body || {}, "parentId")) {
+      const targetFolder = folders.find((f) => f.id === id);
+      if (!targetFolder) return bad(res, "Folder not found.", 404);
+      const scopedFolders = String(targetFolder.userId || "")
+        ? folders.filter((f) => String(f.userId || "") === String(targetFolder.userId || ""))
+        : folders.filter((f) => !f.userId);
+
+      if (Object.prototype.hasOwnProperty.call(req.body || {}, "folderName")) {
+        const nextName = sanitize(req.body?.folderName || "", 80);
+        if (!nextName) return bad(res, "Folder name is required.");
+        const lower = nextName.toLowerCase();
+        const parentId = String(targetFolder.parentId || "");
+        if (scopedFolders.some((f) =>
+          f.id !== targetFolder.id &&
+          String(f.parentId || "") === parentId &&
+          String(f.name || "").toLowerCase() === lower
+        )) {
+          return bad(res, "A folder with this name already exists at this level.");
+        }
+        targetFolder.name = nextName;
+      }
+
+      if (Object.prototype.hasOwnProperty.call(req.body || {}, "parentId")) {
+        const nextParent = normalizeParentId(req.body?.parentId, scopedFolders);
+        if (nextParent === targetFolder.id) return bad(res, "Folder cannot be its own parent.");
+        const siblingConflict = scopedFolders.some((f) =>
+          f.id !== targetFolder.id &&
+          String(f.parentId || "") === nextParent &&
+          String(f.name || "").toLowerCase() === String(targetFolder.name || "").toLowerCase()
+        );
+        if (siblingConflict) {
+          return bad(res, "A folder with this name already exists at the destination.");
+        }
+        // Prevent moving into descendant.
+        const descendants = new Set();
+        let changed = true;
+        descendants.add(targetFolder.id);
+        while (changed) {
+          changed = false;
+          scopedFolders.forEach((f) => {
+            if (descendants.has(f.id)) return;
+            if (descendants.has(String(f.parentId || ""))) {
+              descendants.add(f.id);
+              changed = true;
+            }
+          });
+        }
+        if (descendants.has(nextParent)) return bad(res, "Folder cannot be moved into its own subtree.");
+        targetFolder.parentId = nextParent;
+      }
+
       await saveFolders(folders);
       return res.status(200).json({ ok: true });
     }
@@ -287,6 +343,27 @@ module.exports = async function handler(req, res) {
     }
     if (Object.prototype.hasOwnProperty.call(req.body || {}, "notes")) {
       file.notes = sanitize(req.body?.notes || "", 500);
+    }
+    if (Object.prototype.hasOwnProperty.call(req.body || {}, "contentBase64")) {
+      const contentBase64 = String(req.body?.contentBase64 || "").trim();
+      if (!contentBase64) return bad(res, "File content is required.");
+      let buffer;
+      try {
+        buffer = Buffer.from(contentBase64, "base64");
+      } catch {
+        return bad(res, "File content is invalid.");
+      }
+      if (!buffer || !buffer.length) return bad(res, "File content is invalid.");
+      if (buffer.length > MAX_FILE_BYTES) return bad(res, "File is too large. Max allowed size is 2 MB.");
+      file.contentBase64 = contentBase64;
+      file.size = buffer.length;
+      if (Object.prototype.hasOwnProperty.call(req.body || {}, "fileName")) {
+        file.fileName = sanitize(req.body?.fileName || file.fileName, 180) || file.fileName;
+      }
+      if (Object.prototype.hasOwnProperty.call(req.body || {}, "mimeType")) {
+        file.mimeType = sanitize(req.body?.mimeType || file.mimeType, 120) || file.mimeType || "application/octet-stream";
+      }
+      file.updatedAt = new Date().toISOString();
     }
 
     await saveFiles(files);
@@ -315,12 +392,11 @@ module.exports = async function handler(req, res) {
       }
 
       folders = folders.filter((f) => !idsToDelete.has(f.id));
-      files.forEach((f) => {
-        if (idsToDelete.has(String(f.folderId || "")) && String(f.userId || "") === folderUserId) {
-          f.folderId = "";
-        }
+      const nextFiles = files.filter((f) => {
+        if (String(f.userId || "") !== folderUserId) return true;
+        return !idsToDelete.has(String(f.folderId || ""));
       });
-      await Promise.all([saveFolders(folders), saveFiles(files)]);
+      await Promise.all([saveFolders(folders), saveFiles(nextFiles)]);
       return res.status(200).json({ ok: true });
     }
 
