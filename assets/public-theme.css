@@ -104,6 +104,7 @@ div.hero {
   border-radius: 18px;
   background: linear-gradient(155deg, var(--pt-surface), var(--pt-surface-2)) !important;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.32);
+  padding: 26px 26px 30px !important;
 }
 
 .hero::before,
@@ -252,6 +253,6 @@ table td {
   .hero,
   section.hero,
   div.hero {
-    padding: 22px 18px !important;
+    padding: 22px 18px 24px !important;
   }
 }
