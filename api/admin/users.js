@@ -9,6 +9,11 @@ function bad(res, message, code = 400) {
 function sanitizeUserForClient(u) {
   return {
     id: u.id,
+    fullName: u.fullName || "",
+    company: u.company || "",
+    phone: u.phone || "",
+    project: u.project || "",
+    notes: u.notes || "",
     email: u.email,
     role: u.role,
     active: u.active !== false,
@@ -59,6 +64,11 @@ module.exports = async function handler(req, res) {
   const body = req.body || {};
 
   if (req.method === "POST") {
+    const fullName = String(body.fullName || "").trim();
+    const company = String(body.company || "").trim();
+    const phone = String(body.phone || "").trim();
+    const project = String(body.project || "").trim();
+    const notes = String(body.notes || "").trim();
     const email = String(body.email || "").trim().toLowerCase();
     const password = String(body.password || "");
     const role = String(body.role || "client").trim().toLowerCase();
@@ -71,6 +81,11 @@ module.exports = async function handler(req, res) {
 
     users.push({
       id: newUserId(),
+      fullName,
+      company,
+      phone,
+      project,
+      notes,
       email,
       role,
       passwordHash: hashPassword(password),
@@ -86,6 +101,21 @@ module.exports = async function handler(req, res) {
 
   if (req.method === "PATCH") {
     const id = String(body.id || "").trim();
+    const fullName = Object.prototype.hasOwnProperty.call(body, "fullName")
+      ? String(body.fullName || "").trim()
+      : null;
+    const company = Object.prototype.hasOwnProperty.call(body, "company")
+      ? String(body.company || "").trim()
+      : null;
+    const phone = Object.prototype.hasOwnProperty.call(body, "phone")
+      ? String(body.phone || "").trim()
+      : null;
+    const project = Object.prototype.hasOwnProperty.call(body, "project")
+      ? String(body.project || "").trim()
+      : null;
+    const notes = Object.prototype.hasOwnProperty.call(body, "notes")
+      ? String(body.notes || "").trim()
+      : null;
     const email = String(body.email || "").trim().toLowerCase();
     const password = String(body.password || "");
     const role = body.role ? String(body.role).trim().toLowerCase() : "";
@@ -107,6 +137,11 @@ module.exports = async function handler(req, res) {
       if (!["admin", "client"].includes(role)) return bad(res, "Role must be admin or client.");
       user.role = role;
     }
+    if (fullName !== null) user.fullName = fullName;
+    if (company !== null) user.company = company;
+    if (phone !== null) user.phone = phone;
+    if (project !== null) user.project = project;
+    if (notes !== null) user.notes = notes;
     if (hasActive) user.active = body.active;
 
     await saveUsers(users);
