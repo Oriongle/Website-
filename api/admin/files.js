@@ -76,6 +76,7 @@ async function getFolders() {
       .map((f) => ({
         id: String(f.id),
         name: String(f.name),
+        userId: String(f.userId || ""),
         createdAt: f.createdAt || null,
         createdBy: f.createdBy || ""
       }));
