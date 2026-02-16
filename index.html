@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Orion GLE Ltd</title>
 <meta name="description" content="Orion GLE Ltd — a family-run business building and improving app-led products." />
-<!-- Deploy test update: 2026-02-16 -->
 
 <style>
 :root{
@@ -79,18 +78,30 @@ canvas#stars{position:absolute; inset:0; width:100%; height:100%; opacity:.85}
 
 /* ===== Hero ===== */
 .hero{
-  text-align:center;
-  padding:46px 0 70px;
+  padding:38px 0 72px;
   position:relative;
 }
+.heroShell{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:34px;
+  align-items:center;
+}
+.visualWrap{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
 .parallax{
-  position:relative; display:inline-block;
+  position:relative;
+  display:block;
   transform-style:preserve-3d;
   will-change:transform;
   transition:transform .12s ease-out;
 }
 .glow{
-  position:absolute; inset:-26%;
+  position:absolute; inset:-20%;
   background:
     radial-gradient(circle at 50% 50%, rgba(124,58,237,.32), transparent 60%),
     radial-gradient(circle at 60% 40%, rgba(34,211,238,.22), transparent 62%),
@@ -104,25 +115,46 @@ canvas#stars{position:absolute; inset:0; width:100%; height:100%; opacity:.85}
   0%,100%{transform:scale(1); opacity:.85}
   50%{transform:scale(1.10); opacity:1}
 }
-.hero .logoHero{
-  width:min(520px, 92vw);
-  height:auto;
+.logoPlate{
   position:relative;
-  display:block;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:26px;
+  padding:14px;
+  background:linear-gradient(145deg, rgba(255,255,255,.12), rgba(255,255,255,.03));
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.2);
+  backdrop-filter:blur(6px);
 }
-.hero h1{
-  margin:34px 0 14px;
-  font-size:46px;
+.hero .logoHero{
+  width:min(460px, 82vw);
+  height:auto;
+  display:block;
+  border-radius:16px;
+}
+.logoBadge{
+  margin-top:12px;
+  padding:7px 12px;
+  font-size:12px;
+  letter-spacing:.12em;
+  color:rgba(255,255,255,.7);
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,255,255,.03);
+}
+.heroCopy h1{
+  margin:0 0 14px;
+  font-size:48px;
+  line-height:1.1;
   letter-spacing:.3px;
 }
-.hero p{
-  margin:0 auto;
-  max-width:760px;
+.heroCopy p{
+  margin:0;
   font-size:18px;
   color:var(--muted);
   line-height:1.65;
 }
-.ctaRow{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:26px}
+.ctaRow{display:flex; gap:12px; justify-content:flex-start; flex-wrap:wrap; margin-top:26px}
 .cta{
   display:inline-flex; align-items:center; justify-content:center;
   padding:13px 18px; border-radius:12px;
@@ -139,6 +171,12 @@ canvas#stars{position:absolute; inset:0; width:100%; height:100%; opacity:.85}
 }
 .cta:hover{transform:translateY(-2px); box-shadow:0 18px 45px rgba(0,0,0,.45)}
 .smallNote{margin-top:14px; color:rgba(255,255,255,.55); font-size:13px}
+@media(max-width:920px){
+  .heroShell{grid-template-columns:1fr; gap:22px}
+  .heroCopy{text-align:center}
+  .ctaRow{justify-content:center}
+  .heroCopy h1{font-size:42px}
+}
 
 /* ===== Sections ===== */
 .section{
@@ -202,23 +240,32 @@ canvas#stars{position:absolute; inset:0; width:100%; height:100%; opacity:.85}
   </div>
 
   <div class="hero">
-    <div class="parallax" id="parallax">
-      <div class="glow"></div>
-      <img class="logoHero" src="orion-logo.jpg" alt="Orion GLE Ltd Logo">
-    </div>
+    <div class="heroShell">
+      <div class="visualWrap">
+        <div class="parallax" id="parallax">
+          <div class="glow"></div>
+          <div class="logoPlate">
+            <img class="logoHero" src="orion-logo.jpg" alt="Orion GLE Ltd Logo">
+          </div>
+        </div>
+        <div class="logoBadge">ORION GLE LTD</div>
+      </div>
 
-    <h1>Family-run. Product-led. Built to last.</h1>
-    <p>
-      Orion GLE Ltd is a family-run business focused on app development and app alterations —
-      improving existing products, building new ideas, and delivering clean user experiences with reliable performance.
-    </p>
+      <div class="heroCopy">
+        <h1>Family-run. Product-led. Built to last.</h1>
+        <p>
+          Orion GLE Ltd is a family-run business focused on app development and app alterations.
+          We improve existing products, build new ideas, and deliver clean user experiences with reliable performance.
+        </p>
 
-    <div class="ctaRow">
-      <a class="cta primary" href="applications.html">View Applications</a>
-      <a class="cta" href="about.html">About Us</a>
-      <a class="cta" href="mailto:support@oriongle.co.uk">Email Us</a>
+        <div class="ctaRow">
+          <a class="cta primary" href="applications.html">View Applications</a>
+          <a class="cta" href="about.html">About Us</a>
+          <a class="cta" href="mailto:support@oriongle.co.uk">Email Us</a>
+        </div>
+        <div class="smallNote">Support & enquiries: support@oriongle.co.uk</div>
+      </div>
     </div>
-    <div class="smallNote">Support & enquiries: support@oriongle.co.uk</div>
   </div>
 
   <div class="section">
