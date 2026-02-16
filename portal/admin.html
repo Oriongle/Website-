@@ -83,7 +83,7 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
     </div>
     <div class="card" id="userDocsCard" style="display:none">
       <p><strong id="userDocsTitle">Client documents</strong></p>
-      <p id="userFolderPath" class="status" style="color:rgba(255,255,255,.72)">Path: <span class="crumb">Admin</span></p>
+      <p id="userFolderPath" class="status" style="color:rgba(255,255,255,.72)">Path: <span class="crumb">Company files</span></p>
       <div class="fileTools">
         <label>Create folder<input id="userFolderName" type="text" placeholder="e.g. Contracts"></label>
         <div>
@@ -330,7 +330,7 @@ function syncUserFolderUi(folders) {
     cursor = folder.parentId || '';
   }
   const fullPath = `/${pathParts.join('/')}`;
-  const chips = ['<span class="crumb">Admin</span>']
+  const chips = ['<span class="crumb">Company files</span>']
     .concat(pathParts.map((p) => `<span class="crumb">${p}</span>`))
     .join('');
   pathEl.innerHTML = `Path: ${chips}`;
@@ -361,7 +361,7 @@ function syncUserFolderUi(folders) {
   rootNode.className = `treeNode ${userCurrentFolderId ? '' : 'active'}`;
   rootNode.setAttribute('data-utree-open', '');
   rootNode.setAttribute('data-id', '');
-  rootNode.innerHTML = `<span>🗂️</span><span>Admin</span>`;
+  rootNode.innerHTML = `<span>🗂️</span><span>Company files</span>`;
   treeRoot.appendChild(rootNode);
 
   if (!lines.length) {
