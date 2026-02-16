@@ -23,6 +23,7 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
 .grid{display:grid;gap:14px;margin-top:14px;}
 @media(min-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
 .footer{border-top:1px solid var(--line);padding:28px 0;margin-top:44px;color:rgba(255,255,255,.55);text-align:center;font-size:13px;}
+.footerLegal{margin-top:8px;color:rgba(255,255,255,.48);line-height:1.55;}
 </style>
 </head>
 <body>
@@ -64,7 +65,10 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
     </div>
   </div>
 
-  <div class="footer">© <span id="year"></span> Orion GLE Ltd</div>
+  <div class="footer">
+    © <span id="year"></span> Orion GLE Ltd
+    <div class="footerLegal">Company information: ORION GLE LTD (Company No. 16933963), registered in England and Wales. Registered office: 23a Meadowgate Croft, Wakefield, WF3 3SS.</div>
+  </div>
 </div>
 <script>document.getElementById("year").textContent=new Date().getFullYear();</script>
 </body>
