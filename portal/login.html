@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Portal Login — Orion GLE Ltd</title>
-<meta name="description" content="Owner and client portal login.">
+<meta name="description" content="Admin and client portal login.">
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <style>
@@ -19,9 +19,9 @@ button{margin-top:14px;width:100%;padding:12px;border:none;border-radius:12px;fo
 </head><body>
 <div class="card">
   <h1>Portal Login</h1>
-  <p>Use owner or client credentials to continue.</p>
+  <p>Use admin or client credentials to continue.</p>
   <form id="loginForm">
-    <label>Login type<select id="role" required><option value="client">Client</option><option value="owner">Owner</option></select></label>
+    <label>Login type<select id="role" required><option value="client">Client</option><option value="admin">Admin</option></select></label>
     <label>Email<input id="email" type="email" required></label>
     <label>Password<input id="password" type="password" required></label>
     <button type="submit">Sign in</button>
@@ -52,7 +52,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Login failed');
     if (next) return window.location.assign(next);
-    window.location.assign(role === 'owner' ? '/portal/owner.html' : '/portal/client.html');
+    window.location.assign(role === 'admin' ? '/portal/admin.html' : '/portal/client.html');
   } catch (err) {
     statusEl.textContent = err.message || 'Unable to login';
   }

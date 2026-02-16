@@ -1,41 +1,9 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Owner Portal — Orion GLE Ltd</title>
-<meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<style>
-:root{--bg:#05070d;--text:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.1)}*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:#fff}
-.wrap{max-width:980px;margin:0 auto;padding:22px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.btn{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff;text-decoration:none;cursor:pointer}
-.card{margin-top:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);padding:16px}h1{margin:0 0 8px}p,li{color:var(--muted);line-height:1.7}
-</style>
-</head><body><div class="wrap">
-<div id="guard" class="card"><p>Checking session...</p></div>
-<div id="portalContent" style="display:none">
-  <div class="top"><h1>Owner Portal</h1><div><a class="btn" href="/update-admin.html">Updates Helper</a> <button class="btn" id="logout">Logout</button></div></div>
-  <div class="card"><p>Owner quick links:</p><ul><li>Review updates feed JSON and publish notes.</li><li>Check client status feed source in <code>/data/status.json</code>.</li><li>Manage portal credentials in Vercel environment variables.</li></ul></div>
-  <div class="card"><p>Public dashboards:</p><p><a class="btn" href="/status.html">Status Page</a> <a class="btn" href="/updates.html">Updates Page</a></p></div>
-</div>
-</div>
-<script>
-async function init() {
-  try {
-    const res = await fetch('/api/auth/me');
-    const data = await res.json();
-    if (!res.ok || data.role !== 'owner') {
-      window.location.assign('/portal/login.html?error=forbidden&next=/portal/owner.html');
-      return;
-    }
-    document.getElementById('guard').remove();
-    document.getElementById('portalContent').style.display = 'block';
-    document.getElementById('logout').addEventListener('click', async function(){
-      await fetch('/api/auth/logout', {method:'POST'});
-      window.location.assign('/portal/login.html');
-    });
-  } catch (e) {
-    window.location.assign('/portal/login.html?next=/portal/owner.html');
-  }
-}
-init();
-</script>
+<title>Portal Redirect</title>
+<meta http-equiv="refresh" content="0; url=/portal/admin.html">
+<link rel="canonical" href="/portal/admin.html">
+</head><body>
+<p>Redirecting to <a href="/portal/admin.html">Admin Portal</a>...</p>
 </body></html>
