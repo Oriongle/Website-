@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Client Portal — Orion GLE Ltd</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#05070d;--text:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.1)}*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:#fff}
+.wrap{max-width:980px;margin:0 auto;padding:22px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.btn{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff;text-decoration:none;cursor:pointer}
+.card{margin-top:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);padding:16px}h1{margin:0 0 8px}p,li{color:var(--muted);line-height:1.7}
+</style>
+</head><body><div class="wrap">
+<div id="guard" class="card"><p>Checking session...</p></div>
+<div id="portalContent" style="display:none">
+  <div class="top"><h1>Client Portal</h1><div><a class="btn" href="/status.html">Project Status</a> <button class="btn" id="logout">Logout</button></div></div>
+  <div class="card"><p>Welcome to the Orion GLE client portal.</p><ul><li>Track high-level status from the public-safe dashboard.</li><li>Use the contact form for change requests and TestFlight access.</li><li>Ask for private reporting access if your project needs it.</li></ul></div>
+  <div class="card"><a class="btn" href="/contact.html">Send a request</a></div>
+</div>
+</div>
+<script>
+async function init() {
+  try {
+    const res = await fetch('/api/auth/me');
+    const data = await res.json();
+    if (!res.ok || data.role !== 'client') {
+      window.location.assign('/portal/login.html?error=forbidden&next=/portal/client.html');
+      return;
+    }
+    document.getElementById('guard').remove();
+    document.getElementById('portalContent').style.display = 'block';
+    document.getElementById('logout').addEventListener('click', async function(){
+      await fetch('/api/auth/logout', {method:'POST'});
+      window.location.assign('/portal/login.html');
+    });
+  } catch (e) {
+    window.location.assign('/portal/login.html?next=/portal/client.html');
+  }
+}
+init();
+</script>
+</body></html>

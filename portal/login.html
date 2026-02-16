@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal Login — Orion GLE Ltd</title>
+<meta name="description" content="Owner and client portal login.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#05070d;--text:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.1);--a1:#7c3aed;--a2:#22d3ee}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
+.card{width:min(520px,100%);border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:22px}
+h1{margin:0 0 8px;font-size:32px}p{margin:0 0 14px;color:var(--muted)}
+label{display:block;font-size:13px;color:rgba(255,255,255,.8);margin-top:10px}
+input,select{width:100%;margin-top:6px;padding:11px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff}
+button{margin-top:14px;width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;background:linear-gradient(135deg,var(--a1),var(--a2));color:#061019;cursor:pointer}
+.status{margin-top:10px;min-height:20px;color:#ff9aa2;font-size:13px}
+.links{margin-top:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.links a{color:#fff;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35);font-size:13px}
+</style>
+</head><body>
+<div class="card">
+  <h1>Portal Login</h1>
+  <p>Use owner or client credentials to continue.</p>
+  <form id="loginForm">
+    <label>Login type<select id="role" required><option value="client">Client</option><option value="owner">Owner</option></select></label>
+    <label>Email<input id="email" type="email" required></label>
+    <label>Password<input id="password" type="password" required></label>
+    <button type="submit">Sign in</button>
+    <p class="status" id="status"></p>
+  </form>
+  <div class="links"><a href="/index.html">Back to site</a><a href="/contact.html">Need access?</a></div>
+</div>
+<script>
+const params = new URLSearchParams(window.location.search);
+const next = params.get('next') || '';
+const statusEl = document.getElementById('status');
+if (params.get('error') === 'forbidden') statusEl.textContent = 'Access denied for this account.';
+if (params.get('error') === 'config') statusEl.textContent = 'Portal is not configured yet.';
+
+document.getElementById('loginForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  statusEl.textContent = 'Signing in...';
+  const role = document.getElementById('role').value;
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({role,email,password})
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Login failed');
+    if (next) return window.location.assign(next);
+    window.location.assign(role === 'owner' ? '/portal/owner.html' : '/portal/client.html');
+  } catch (err) {
+    statusEl.textContent = err.message || 'Unable to login';
+  }
+});
+</script>
+</body></html>
