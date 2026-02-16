@@ -25,7 +25,9 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
 .kpi{border:1px solid var(--line);border-radius:12px;padding:12px;background:rgba(255,255,255,.02)}
 .kpi strong{display:block;font-size:24px;line-height:1.1}
 .kpi span{color:var(--muted);font-size:12px}
+.fileForm{display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:10px;align-items:end}
 @media(max-width:920px){form{grid-template-columns:1fr}}
+@media(max-width:920px){.fileForm{grid-template-columns:1fr}}
 @media(max-width:800px){.kpis{grid-template-columns:1fr}}
 </style>
 </head><body><div class="wrap">
@@ -82,6 +84,20 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
       <p><a class="btn" href="/status.html">Open Status Page</a> <a class="btn" href="/updates.html">Open Updates Page</a> <a class="btn" href="/update-admin.html">Updates Helper</a></p>
       <p>Use the <strong>Users</strong> section to create client logins, disable access, reset passwords, or remove users.</p>
     </div>
+    <div class="card">
+      <p><strong>File database</strong></p>
+      <form id="fileForm" class="fileForm">
+        <label>Title<input id="fileTitle" type="text" placeholder="Client briefing pack"></label>
+        <label>Notes<input id="fileNotes" type="text" placeholder="Optional note"></label>
+        <label>Choose file<input id="fileInput" type="file" required></label>
+        <button class="btn primary" type="submit">Upload</button>
+      </form>
+      <p class="status" id="fileStatus"></p>
+      <table>
+        <thead><tr><th>Title</th><th>File</th><th>Size</th><th>Uploaded</th><th>Actions</th></tr></thead>
+        <tbody id="filesBody"><tr><td colspan="5">Loading...</td></tr></tbody>
+      </table>
+    </div>
   </section>
   
   <div class="card">
@@ -103,6 +119,7 @@ async function api(path, options){
   return data;
 }
 let currentUsersById = {};
+let currentFilesById = {};
 
 function downloadsToText(downloads) {
   if (!Array.isArray(downloads) || !downloads.length) return '';
@@ -130,6 +147,39 @@ function textToDownloads(text) {
       };
     })
     .filter((item) => item.url);
+}
+
+function formatBytes(bytes) {
+  const n = Number(bytes || 0);
+  if (!n) return "-";
+  if (n < 1024) return `${n} B`;
+  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+  return `${(n / (1024 * 1024)).toFixed(2)} MB`;
+}
+
+async function loadFiles() {
+  const body = document.getElementById('filesBody');
+  body.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
+  try {
+    const data = await api('/api/admin/files');
+    const rows = data.files || [];
+    currentFilesById = {};
+    body.innerHTML = '';
+    if (!rows.length) {
+      body.innerHTML = '<tr><td colspan="5">No files uploaded yet.</td></tr>';
+      return;
+    }
+    rows.forEach((file) => {
+      currentFilesById[file.id] = file;
+      const tr = document.createElement('tr');
+      const uploaded = file.createdAt ? new Date(file.createdAt).toLocaleString() : '-';
+      const safeId = encodeURIComponent(file.id);
+      tr.innerHTML = `<td>${file.title || '-'}</td><td>${file.fileName || '-'}</td><td>${formatBytes(file.size)}</td><td>${uploaded}</td><td><div class="actions"><a class="btn" href="/api/admin/files?id=${safeId}&inline=1" target="_blank" rel="noopener">View</a><a class="btn" href="/api/admin/files?id=${safeId}" target="_blank" rel="noopener">Download</a><button class="btn" data-fa="delete" data-id="${file.id}">Delete</button></div></td>`;
+      body.appendChild(tr);
+    });
+  } catch (e) {
+    body.innerHTML = `<tr><td colspan="5">${e.message}</td></tr>`;
+  }
 }
 
 async function loadUsers(){
@@ -178,6 +228,7 @@ async function boot(){
     document.getElementById('guard').remove();
     document.getElementById('portalContent').style.display = 'block';
     loadUsers();
+    loadFiles();
   } catch {
     window.location.assign('/portal/login.html?next=/portal/admin.html');
   }
@@ -211,6 +262,74 @@ addForm.addEventListener('submit', async function(e){
     loadUsers();
   } catch (e2) {
     status.textContent = e2.message;
+  }
+});
+
+document.getElementById('fileForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const status = document.getElementById('fileStatus');
+  const fileInput = document.getElementById('fileInput');
+  const file = fileInput.files && fileInput.files[0];
+  if (!file) {
+    status.textContent = 'Choose a file first.';
+    return;
+  }
+  if (file.size > 2 * 1024 * 1024) {
+    status.textContent = 'File too large. Max size is 2 MB.';
+    return;
+  }
+  status.textContent = 'Uploading...';
+  try {
+    const asBase64 = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = function(){ reject(new Error('Unable to read file.')); };
+      reader.onload = function(){
+        const data = String(reader.result || '');
+        const idx = data.indexOf(',');
+        resolve(idx >= 0 ? data.slice(idx + 1) : data);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    await api('/api/admin/files', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        title: document.getElementById('fileTitle').value.trim(),
+        notes: document.getElementById('fileNotes').value.trim(),
+        fileName: file.name,
+        mimeType: file.type || 'application/octet-stream',
+        contentBase64: asBase64
+      })
+    });
+
+    status.textContent = 'File uploaded.';
+    document.getElementById('fileForm').reset();
+    loadFiles();
+  } catch (err) {
+    status.textContent = err.message || 'Upload failed.';
+  }
+});
+
+document.getElementById('filesBody').addEventListener('click', async function(e){
+  const btn = e.target.closest('button[data-fa]');
+  if (!btn) return;
+  const action = btn.getAttribute('data-fa');
+  const id = btn.getAttribute('data-id');
+  const status = document.getElementById('fileStatus');
+  if (action !== 'delete') return;
+  if (!confirm('Delete this file from database?')) return;
+  status.textContent = 'Deleting...';
+  try {
+    await api('/api/admin/files', {
+      method: 'DELETE',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ id })
+    });
+    status.textContent = 'File deleted.';
+    loadFiles();
+  } catch (err) {
+    status.textContent = err.message || 'Delete failed.';
   }
 });
 
