@@ -105,7 +105,7 @@ div.hero {
   border-radius: 18px;
   background: linear-gradient(155deg, var(--pt-surface), var(--pt-surface-2)) !important;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.32);
-  padding: 36px 36px 38px !important;
+  padding: 44px 44px 46px !important;
 }
 
 .hero::before,
@@ -170,7 +170,7 @@ table {
 article.card,
 section.card,
 .panel {
-  padding: 26px 24px !important;
+  padding: 34px 32px !important;
 }
 
 .card::before,
@@ -261,13 +261,13 @@ table td {
   .hero,
   section.hero,
   div.hero {
-    padding: 26px 22px 28px !important;
+    padding: 34px 30px 36px !important;
   }
 
   .card,
   article.card,
   section.card,
   .panel {
-    padding: 20px 18px !important;
+    padding: 28px 26px !important;
   }
 }
