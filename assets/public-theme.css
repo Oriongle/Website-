@@ -72,7 +72,7 @@ button.btn {
   font-size: 14px !important;
   letter-spacing: 0;
   text-transform: none;
-  font-weight: 600;
+  font-weight: 500;
   border: 1px solid var(--pt-line) !important;
   color: #dff0ff !important;
   background: rgba(18, 29, 48, 0.78) !important;
@@ -117,7 +117,7 @@ div.hero::after {
 
 h1 {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-weight: 800 !important;
+  font-weight: 700 !important;
   text-transform: none !important;
   letter-spacing: 0 !important;
   line-height: 1.12 !important;
@@ -136,7 +136,7 @@ h3,
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   text-transform: none;
   letter-spacing: 0;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 p,
@@ -190,7 +190,7 @@ form::before {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 12px;
   text-transform: none;
-  font-weight: 600;
+  font-weight: 500;
   color: #d7e9ff;
   background: rgba(18, 29, 48, 0.82);
   border: 1px solid rgba(105, 183, 255, 0.34);
