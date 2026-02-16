@@ -1,41 +1,134 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Site Survey Pro — Orion GLE Ltd</title>
+
 <style>
-:root{--bg:#05070d;--text:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.10);--a1:#7c3aed;--a2:#22d3ee;--max:900px;}
+:root{
+  --bg:#05070d;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.72);
+  --line:rgba(255,255,255,.10);
+  --accent:#7c3aed;
+  --accent2:#22d3ee;
+  --max:1000px;
+}
+
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);}
-.wrap{max-width:var(--max);margin:0 auto;padding:0 22px;}
-.nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);}
-.nav a{color:rgba(255,255,255,.78);text-decoration:none;font-size:14px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);}
-.nav a:hover{border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.05);}
-.header{display:flex;gap:14px;align-items:center;margin-top:34px;}
-.icon{width:64px;height:64px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);object-fit:cover;}
-h1{margin:0;font-size:40px;}
-p{margin:12px 0 0;color:var(--muted);line-height:1.75;}
-.card{margin-top:18px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:18px;}
-.badge{display:inline-block;margin-top:10px;font-size:12px;color:rgba(255,255,255,.72);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);}
-.btn{display:inline-flex;margin-top:14px;text-decoration:none;padding:11px 14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--a1),var(--a2));color:#071019;font-weight:700;}
-</style></head><body>
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.wrap{max-width:var(--max);margin:auto;padding:0 24px;}
+
+.nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:24px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.nav a{
+  text-decoration:none;
+  color:rgba(255,255,255,.75);
+  font-size:14px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.03);
+}
+
+.hero{
+  padding:60px 0 40px;
+  text-align:center;
+}
+
+.icon{
+  width:120px;
+  height:120px;
+  border-radius:28px;
+  object-fit:cover;
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:0 30px 60px rgba(0,0,0,.6);
+}
+
+h1{margin:30px 0 10px;font-size:44px;}
+
+.badge{
+  display:inline-block;
+  margin-top:12px;
+  padding:6px 12px;
+  font-size:12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.7);
+}
+
+p{
+  max-width:720px;
+  margin:24px auto 0;
+  font-size:17px;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.card{
+  margin:40px auto 0;
+  max-width:720px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:24px;
+  background:rgba(255,255,255,.03);
+}
+
+.btn{
+  display:inline-block;
+  margin-top:18px;
+  padding:14px 20px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#071019;
+}
+</style>
+</head>
+
+<body>
 <div class="wrap">
+
   <div class="nav">
     <a href="applications.html">← Applications</a>
     <a href="mailto:support@oriongle.co.uk">Contact</a>
   </div>
 
-  <div class="header">
+  <div class="hero">
     <img class="icon" src="assets/apps/site-survey-pro.png" alt="Site Survey Pro icon">
-    <div>
-      <h1>Site Survey Pro</h1>
-      <div class="badge">Pre-release • In development</div>
-    </div>
-  </div>
+    <h1>Site Survey Pro</h1>
+    <div class="badge">Pre-Release • In Development</div>
 
-  <p>A practical Orion GLE product being prepared for release. Detailed information will be published when ready.</p>
+    <p>
+      Site Survey Pro is a practical field-focused application currently in active development.
+      Detailed capabilities will be shared upon public release.
+    </p>
+  </div>
 
   <div class="card">
-    <p style="margin:0;color:rgba(255,255,255,.78)"><strong>Updates & enquiries</strong></p>
-    <p style="margin:10px 0 0">For early access, collaboration, or support:</p>
+    <strong>Early Access Enquiries</strong>
+    <p>
+      For beta participation or partnership discussions,
+      contact Orion GLE directly.
+    </p>
     <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
   </div>
+
 </div>
-</body></html>
+</body>
+</html>
