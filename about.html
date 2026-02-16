@@ -50,6 +50,15 @@ h1{margin:16px 0 14px;font-size:46px;line-height:1.1}
 .list{margin:10px 0 0;padding-left:18px;color:var(--muted);line-height:1.8}
 .stat{font-size:30px;font-weight:700;line-height:1}
 .statLabel{margin-top:8px;color:var(--muted);font-size:14px}
+.flowWrap{margin-top:24px}
+.flowTitle{margin:0 0 10px;font-size:22px}
+.flowSub{margin:0;color:var(--muted);line-height:1.7}
+.flow{display:grid;gap:10px;margin-top:16px}
+.flowStep{border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);padding:14px 16px;position:relative}
+.flowStep strong{display:block;margin:0 0 6px}
+.flowStep p{margin:0;color:var(--muted);line-height:1.6}
+@media(min-width:900px){.flow{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.flowStep:not(:nth-child(3n))::after{content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.45);font-size:20px}}
 
 .cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:600;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text)}
@@ -98,6 +107,58 @@ h1{margin:16px 0 14px;font-size:46px;line-height:1.1}
       and future-ready technology. Your trust drives our commitment to excellence, innovation, and ongoing support
       at every stage of your journey.
     </p>
+  </section>
+
+  <section class="grid two">
+    <article class="card">
+      <h2>What We Do</h2>
+      <ul class="list">
+        <li>Website development for businesses, products, and service platforms.</li>
+        <li>Application development for iOS, Android, and web-based products.</li>
+        <li>Upgrades to existing apps and websites including UX, speed, and reliability.</li>
+        <li>Ongoing support, improvement, and release management post-launch.</li>
+      </ul>
+    </article>
+    <article class="card">
+      <h2>How We Do It</h2>
+      <ul class="list">
+        <li>Define outcomes first: goals, users, scope, and commercial priorities.</li>
+        <li>Design for clarity: wireframes, journeys, and conversion-focused UX.</li>
+        <li>Build in short sprints with visible progress and regular feedback loops.</li>
+        <li>Test thoroughly before launch, then support performance and iteration.</li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="card flowWrap">
+    <h2 class="flowTitle">How an App or Website Is Built</h2>
+    <p class="flowSub">Our delivery framework is structured, transparent, and designed to reduce risk while keeping momentum high.</p>
+    <div class="flow" aria-label="Build flow">
+      <div class="flowStep">
+        <strong>1. Discovery</strong>
+        <p>We define business goals, user needs, required features, and technical constraints.</p>
+      </div>
+      <div class="flowStep">
+        <strong>2. Architecture</strong>
+        <p>We map system structure, data models, integrations, and delivery milestones.</p>
+      </div>
+      <div class="flowStep">
+        <strong>3. UX & UI Design</strong>
+        <p>We craft layouts and interactions that are clear, modern, and conversion-focused.</p>
+      </div>
+      <div class="flowStep">
+        <strong>4. Development</strong>
+        <p>We build core functionality in agile cycles with consistent progress reviews.</p>
+      </div>
+      <div class="flowStep">
+        <strong>5. QA & Optimisation</strong>
+        <p>We test usability, stability, speed, and security before release.</p>
+      </div>
+      <div class="flowStep">
+        <strong>6. Launch & Support</strong>
+        <p>We deploy, monitor, and continue improving performance after go-live.</p>
+      </div>
+    </div>
   </section>
 
   <section class="grid three">
