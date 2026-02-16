@@ -106,17 +106,27 @@ async function renderPrivateDocs() {
     if (!files.length) return;
 
     const byFolder = {};
+    const folderMap = Object.fromEntries(folders.map((f) => [f.id, f]));
+    function folderPath(folderId) {
+      if (!folderId || !folderMap[folderId]) return 'General documents';
+      const parts = [];
+      let cursor = folderId;
+      while (cursor && folderMap[cursor]) {
+        parts.unshift(folderMap[cursor].name);
+        cursor = folderMap[cursor].parentId || '';
+      }
+      return parts.join(' / ') || 'General documents';
+    }
     files.forEach((file) => {
       const key = file.folderId || '__none__';
       if (!byFolder[key]) byFolder[key] = [];
       byFolder[key].push(file);
     });
-    const folderMap = Object.fromEntries(folders.map((f) => [f.id, f.name]));
     root.innerHTML = '';
     Object.keys(byFolder).forEach((key) => {
       const block = document.createElement('div');
       block.className = 'docGroup';
-      const title = key === '__none__' ? 'General documents' : (folderMap[key] || 'Documents');
+      const title = key === '__none__' ? 'General documents' : folderPath(key);
       const list = byFolder[key];
       const items = list.map((file) => {
         const safeId = encodeURIComponent(file.id);

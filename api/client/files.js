@@ -54,7 +54,15 @@ async function getFolders() {
   try {
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter((f) => f && f.id && f.name);
+    return parsed
+      .filter((f) => f && f.id && f.name)
+      .map((f) => ({
+        id: String(f.id),
+        name: String(f.name),
+        parentId: String(f.parentId || ""),
+        userId: String(f.userId || ""),
+        createdAt: f.createdAt || null
+      }));
   } catch {
     return [];
   }

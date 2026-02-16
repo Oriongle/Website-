@@ -77,6 +77,7 @@ async function getFolders() {
         id: String(f.id),
         name: String(f.name),
         userId: String(f.userId || ""),
+        parentId: String(f.parentId || ""),
         createdAt: f.createdAt || null,
         createdBy: f.createdBy || ""
       }));
@@ -116,6 +117,12 @@ function normalizeFolderId(folderId, folders) {
 
 function normalizeUserId(userId) {
   return sanitize(userId || "", 80);
+}
+
+function normalizeParentId(parentId, folders) {
+  const value = sanitize(parentId || "", 80);
+  if (!value) return "";
+  return folders.some((f) => f.id === value) ? value : "";
 }
 
 module.exports = async function handler(req, res) {
@@ -188,14 +195,16 @@ module.exports = async function handler(req, res) {
     if (type === "folder") {
       const name = sanitize(body.name || "", 80);
       if (!name) return bad(res, "Folder name is required.");
+      const parentId = normalizeParentId(body.parentId, scopedFolders);
       const lower = name.toLowerCase();
-      if (scopedFolders.some((f) => String(f.name || "").toLowerCase() === lower)) {
+      if (scopedFolders.some((f) => String(f.parentId || "") === parentId && String(f.name || "").toLowerCase() === lower)) {
         return bad(res, "A folder with this name already exists.");
       }
       folders.unshift({
         id: crypto.randomUUID(),
         name,
         userId,
+        parentId,
         createdAt: new Date().toISOString(),
         createdBy: String(session.email || "")
       });
@@ -274,10 +283,24 @@ module.exports = async function handler(req, res) {
       const folder = folders.find((f) => f.id === folderId);
       const exists = Boolean(folder);
       if (!exists) return bad(res, "Folder not found.", 404);
-      folders = folders.filter((f) => f.id !== folderId);
       const folderUserId = String(folder.userId || "");
+      const idsToDelete = new Set([folderId]);
+      let changed = true;
+      while (changed) {
+        changed = false;
+        folders.forEach((f) => {
+          if (String(f.userId || "") !== folderUserId) return;
+          if (idsToDelete.has(f.id)) return;
+          if (idsToDelete.has(String(f.parentId || ""))) {
+            idsToDelete.add(f.id);
+            changed = true;
+          }
+        });
+      }
+
+      folders = folders.filter((f) => !idsToDelete.has(f.id));
       files.forEach((f) => {
-        if (String(f.folderId || "") === folderId && String(f.userId || "") === folderUserId) {
+        if (idsToDelete.has(String(f.folderId || "")) && String(f.userId || "") === folderUserId) {
           f.folderId = "";
         }
       });
