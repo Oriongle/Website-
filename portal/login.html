@@ -15,6 +15,7 @@ input,select{width:100%;margin-top:6px;padding:11px;border-radius:10px;border:1p
 button{margin-top:14px;width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;background:linear-gradient(135deg,var(--a1),var(--a2));color:#061019;cursor:pointer}
 .status{margin-top:10px;min-height:20px;color:#ff9aa2;font-size:13px}
 .links{margin-top:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.links a{color:#fff;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35);font-size:13px}
+.subtleBtn{margin-top:8px;background:transparent;color:#fff;border:1px dashed var(--line);padding:10px;border-radius:10px;cursor:pointer}
 </style>
 </head><body>
 <div class="card">
@@ -25,6 +26,7 @@ button{margin-top:14px;width:100%;padding:12px;border:none;border-radius:12px;fo
     <label>Email<input id="email" type="email" required></label>
     <label>Password<input id="password" type="password" required></label>
     <button type="submit">Sign in</button>
+    <button class="subtleBtn" id="forgotBtn" type="button">Forgot password</button>
     <p class="status" id="status"></p>
   </form>
   <div class="links"><a href="/index.html">Back to site</a><a href="/contact.html">Need access?</a></div>
@@ -55,6 +57,31 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     window.location.assign(role === 'admin' ? '/portal/admin.html' : '/portal/client.html');
   } catch (err) {
     statusEl.textContent = err.message || 'Unable to login';
+  }
+});
+
+document.getElementById('forgotBtn').addEventListener('click', async function(){
+  const email = document.getElementById('email').value.trim();
+  const role = document.getElementById('role').value;
+  if (!email) {
+    statusEl.textContent = 'Enter your email first, then press Forgot password.';
+    return;
+  }
+  statusEl.style.color = '#ff9aa2';
+  statusEl.textContent = 'Sending reset link...';
+  try {
+    const res = await fetch('/api/auth/forgot-password', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ email, role })
+    });
+    const data = await res.json().catch(()=>({}));
+    if (!res.ok) throw new Error(data.error || 'Unable to start reset');
+    statusEl.style.color = '#7ef0a8';
+    statusEl.textContent = data.message || 'If the account exists, a reset link has been sent.';
+  } catch (err) {
+    statusEl.style.color = '#ff9aa2';
+    statusEl.textContent = err.message || 'Unable to start reset';
   }
 });
 </script>
