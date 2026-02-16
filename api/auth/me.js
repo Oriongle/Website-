@@ -1,6 +1,6 @@
-const { verifyToken } = require("./_token");
-const { getPortalSecret } = require("./config");
-const { getUsers } = require("./user-store");
+const { verifyToken } = require("../../lib/auth/_token");
+const { getPortalSecret } = require("../../lib/auth/config");
+const { getUsers } = require("../../lib/auth/user-store");
 
 function getCookieValue(cookieHeader, key) {
   const raw = String(cookieHeader || "");

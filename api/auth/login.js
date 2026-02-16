@@ -1,7 +1,7 @@
-const { signToken } = require("./_token");
-const { getPortalSecret } = require("./config");
-const { verifyPassword } = require("./password");
-const { getUsers, saveUsers } = require("./user-store");
+const { signToken } = require("../../lib/auth/_token");
+const { getPortalSecret } = require("../../lib/auth/config");
+const { verifyPassword } = require("../../lib/auth/password");
+const { getUsers, saveUsers } = require("../../lib/auth/user-store");
 
 const DEFAULT_INACTIVITY_DAYS = 60;
 

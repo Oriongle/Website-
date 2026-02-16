@@ -1,5 +1,5 @@
-const { getSession } = require("../auth/session");
-const { hasKvConfig } = require("../auth/user-store");
+const { getSession } = require("../../lib/auth/session");
+const { hasKvConfig } = require("../../lib/auth/user-store");
 
 const FILES_KEY = "portal_files_v1";
 const FOLDERS_KEY = "portal_file_folders_v1";

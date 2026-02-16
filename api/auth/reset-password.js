@@ -1,6 +1,6 @@
 const crypto = require("crypto");
-const { hashPassword } = require("./password");
-const { getUsers, saveUsers } = require("./user-store");
+const { hashPassword } = require("../../lib/auth/password");
+const { getUsers, saveUsers } = require("../../lib/auth/user-store");
 
 function getClientIp(req) {
   const fwd = req.headers["x-forwarded-for"];

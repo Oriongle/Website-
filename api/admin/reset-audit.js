@@ -1,5 +1,5 @@
-const { requireAdmin } = require("../auth/session");
-const { getUsers, hasKvConfig } = require("../auth/user-store");
+const { requireAdmin } = require("../../lib/auth/session");
+const { getUsers, hasKvConfig } = require("../../lib/auth/user-store");
 
 function bad(res, message, code = 400) {
   return res.status(code).json({ error: message });
