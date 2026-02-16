@@ -92,6 +92,11 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
         </div>
       </div>
       <p class="status" id="userFolderStatus"></p>
+      <div class="card" style="margin-top:10px">
+        <p><strong>Main Folder Access</strong></p>
+        <p class="status" id="userAccessStatus"></p>
+        <div id="userAccessList"><p class="status">Select a client to manage access.</p></div>
+      </div>
       <form id="userFileForm" class="fileForm">
         <label>Title<input id="userFileTitle" type="text" placeholder="Client document"></label>
         <label>Notes<input id="userFileNotes" type="text" placeholder="Optional note"></label>
@@ -193,6 +198,7 @@ let currentUserDocFilesById = {};
 let currentUserDocFoldersById = {};
 let selectedUserDocsId = '';
 let userCurrentFolderId = '';
+let currentSharedFoldersById = {};
 
 function downloadsToText(downloads) {
   if (!Array.isArray(downloads) || !downloads.length) return '';
@@ -390,11 +396,38 @@ function setSelectedUserDocs(userId) {
   const user = currentUsersById[selectedUserDocsId] || null;
   if (!user || user.source === 'env') {
     card.style.display = 'none';
+    document.getElementById('userAccessList').innerHTML = '<p class="status">Select a client to manage access.</p>';
     return;
   }
   card.style.display = 'block';
   title.textContent = `Client documents — ${user.fullName || user.email}`;
   loadUserDocs();
+}
+
+function renderSharedAccess(sharedFolders) {
+  const root = document.getElementById('userAccessList');
+  const topLevel = sharedFolders
+    .filter((f) => !f.userId && !f.parentId)
+    .sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
+  currentSharedFoldersById = {};
+  topLevel.forEach((f) => { currentSharedFoldersById[f.id] = f; });
+
+  if (!topLevel.length) {
+    root.innerHTML = '<p class="status">No main folders found in Company files.</p>';
+    return;
+  }
+  root.innerHTML = '';
+  topLevel.forEach((folder) => {
+    const id = `folderAccess_${folder.id}`;
+    const checked = (folder.allowedUserIds || []).includes(selectedUserDocsId) ? 'checked' : '';
+    const row = document.createElement('label');
+    row.style.display = 'flex';
+    row.style.gap = '8px';
+    row.style.alignItems = 'center';
+    row.style.marginBottom = '8px';
+    row.innerHTML = `<input type="checkbox" id="${id}" data-user-access="toggle" data-folder-id="${folder.id}" ${checked}> <span>${folder.name}</span>`;
+    root.appendChild(row);
+  });
 }
 
 async function loadUserDocs() {
@@ -407,11 +440,16 @@ async function loadUserDocs() {
   itemsBody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
   try {
     const query = new URLSearchParams({ userId: selectedUserDocsId });
-    const data = await api(`/api/admin/files?${query.toString()}`);
+    const [data, sharedData] = await Promise.all([
+      api(`/api/admin/files?${query.toString()}`),
+      api('/api/admin/files')
+    ]);
     const rows = data.files || [];
     const folders = data.folders || [];
+    const sharedFolders = sharedData.folders || [];
     currentUserDocFilesById = {};
     syncUserFolderUi(folders);
+    renderSharedAccess(sharedFolders);
 
     itemsBody.innerHTML = '';
     const visibleFolders = folders.filter((f) => String(f.parentId || '') === userCurrentFolderId);
@@ -680,6 +718,32 @@ document.getElementById('userTree').addEventListener('click', function(e){
   if (!node) return;
   userCurrentFolderId = node.getAttribute('data-id') || '';
   loadUserDocs();
+});
+
+document.getElementById('userAccessList').addEventListener('change', async function(e){
+  const input = e.target.closest('input[data-user-access="toggle"]');
+  if (!input) return;
+  const folderId = input.getAttribute('data-folder-id');
+  const folder = currentSharedFoldersById[folderId];
+  const status = document.getElementById('userAccessStatus');
+  if (!folder || !selectedUserDocsId) return;
+
+  const next = new Set(Array.isArray(folder.allowedUserIds) ? folder.allowedUserIds : []);
+  if (input.checked) next.add(selectedUserDocsId);
+  else next.delete(selectedUserDocsId);
+
+  status.textContent = 'Saving access...';
+  try {
+    await api('/api/admin/files', {
+      method: 'PATCH',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ id: folderId, allowedUserIds: Array.from(next) })
+    });
+    status.textContent = 'Access updated.';
+    loadUserDocs();
+  } catch (err) {
+    status.textContent = err.message || 'Unable to update access.';
+  }
 });
 
 document.getElementById('userItemsBody').addEventListener('click', async function(e){

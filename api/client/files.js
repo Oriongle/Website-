@@ -1,5 +1,5 @@
 const { getSession } = require("../../lib/auth/session");
-const { hasKvConfig } = require("../../lib/auth/user-store");
+const { hasKvConfig, getUsers } = require("../../lib/auth/user-store");
 
 const FILES_KEY = "portal_files_v1";
 const FOLDERS_KEY = "portal_file_folders_v1";
@@ -61,6 +61,9 @@ async function getFolders() {
         name: String(f.name),
         parentId: String(f.parentId || ""),
         userId: String(f.userId || ""),
+        allowedUserIds: Array.isArray(f.allowedUserIds)
+          ? f.allowedUserIds.map((v) => String(v)).filter(Boolean)
+          : [],
         createdAt: f.createdAt || null
       }));
   } catch {
@@ -93,17 +96,49 @@ module.exports = async function handler(req, res) {
 
   let files;
   let folders;
+  let store;
   try {
     files = await getFiles();
     folders = await getFolders();
+    store = await getUsers();
   } catch {
     return bad(res, "Unable to load files.", 500);
   }
 
   const uid = String(session.uid);
   const id = sanitize(req.query?.id || "", 80);
-  const scopedFiles = files.filter((f) => String(f.userId || "") === uid);
-  const scopedFolders = folders.filter((f) => String(f.userId || "") === uid);
+  const user = (store.users || []).find((u) => String(u.id || "") === uid && u.active !== false);
+  if (!user) return bad(res, "Unauthorized", 401);
+
+  const privateFolders = folders.filter((f) => String(f.userId || "") === uid);
+  const privateFiles = files.filter((f) => String(f.userId || "") === uid);
+
+  const sharedFolders = folders.filter((f) => !f.userId);
+  const sharedChildren = {};
+  sharedFolders.forEach((f) => {
+    const p = String(f.parentId || "");
+    if (!sharedChildren[p]) sharedChildren[p] = [];
+    sharedChildren[p].push(f);
+  });
+
+  const allowedSharedIds = new Set();
+  function includeDescendants(folderId) {
+    if (!folderId || allowedSharedIds.has(folderId)) return;
+    allowedSharedIds.add(folderId);
+    const kids = sharedChildren[folderId] || [];
+    kids.forEach((child) => includeDescendants(child.id));
+  }
+
+  sharedFolders.forEach((folder) => {
+    const allowed = Array.isArray(folder.allowedUserIds) ? folder.allowedUserIds : [];
+    if (allowed.includes(uid)) includeDescendants(folder.id);
+  });
+
+  const visibleSharedFolders = sharedFolders.filter((f) => allowedSharedIds.has(f.id));
+  const visibleSharedFiles = files.filter((f) => !f.userId && allowedSharedIds.has(String(f.folderId || "")));
+
+  const scopedFolders = privateFolders.concat(visibleSharedFolders);
+  const scopedFiles = privateFiles.concat(visibleSharedFiles);
 
   if (!id) {
     const folderMap = Object.fromEntries(scopedFolders.map((f) => [f.id, f.name]));

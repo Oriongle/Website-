@@ -78,6 +78,9 @@ async function getFolders() {
         name: String(f.name),
         userId: String(f.userId || ""),
         parentId: String(f.parentId || ""),
+        allowedUserIds: Array.isArray(f.allowedUserIds)
+          ? f.allowedUserIds.map((v) => String(v)).filter(Boolean)
+          : [],
         createdAt: f.createdAt || null,
         createdBy: f.createdBy || ""
       }));
@@ -205,6 +208,7 @@ module.exports = async function handler(req, res) {
         name,
         userId,
         parentId,
+        allowedUserIds: [],
         createdAt: new Date().toISOString(),
         createdBy: String(session.email || "")
       });
@@ -255,6 +259,18 @@ module.exports = async function handler(req, res) {
   if (req.method === "PATCH") {
     const id = sanitize(req.body?.id || "", 80);
     if (!id) return bad(res, "File id is required.");
+
+    if (Object.prototype.hasOwnProperty.call(req.body || {}, "allowedUserIds")) {
+      const targetFolder = folders.find((f) => f.id === id);
+      if (!targetFolder) return bad(res, "Folder not found.", 404);
+      const list = Array.isArray(req.body?.allowedUserIds) ? req.body.allowedUserIds : [];
+      targetFolder.allowedUserIds = Array.from(new Set(
+        list.map((v) => sanitize(v, 80)).filter(Boolean)
+      ));
+      await saveFolders(folders);
+      return res.status(200).json({ ok: true });
+    }
+
     const file = files.find((f) => f.id === id);
     if (!file) return bad(res, "File not found.", 404);
     const userId = normalizeUserId(file.userId || req.body?.userId || "");
