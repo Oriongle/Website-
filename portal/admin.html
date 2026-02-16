@@ -26,8 +26,12 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
 .kpi strong{display:block;font-size:24px;line-height:1.1}
 .kpi span{color:var(--muted);font-size:12px}
 .fileForm{display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:10px;align-items:end}
+.folderForm{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+.fileTools{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end}
 @media(max-width:920px){form{grid-template-columns:1fr}}
 @media(max-width:920px){.fileForm{grid-template-columns:1fr}}
+@media(max-width:920px){.folderForm{grid-template-columns:1fr}}
+@media(max-width:920px){.fileTools{grid-template-columns:1fr}}
 @media(max-width:800px){.kpis{grid-template-columns:1fr}}
 </style>
 </head><body><div class="wrap">
@@ -86,16 +90,29 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
     </div>
     <div class="card">
       <p><strong>File database</strong></p>
+      <form id="folderForm" class="folderForm">
+        <label>Create folder<input id="folderName" type="text" placeholder="e.g. Client Documents"></label>
+        <button class="btn" type="submit">Create folder</button>
+      </form>
+      <div class="fileTools">
+        <label>Filter folder<select id="folderFilter"><option value="">All folders</option></select></label>
+      </div>
+      <p class="status" id="folderStatus"></p>
+      <table>
+        <thead><tr><th>Folder</th><th>Created</th><th>Actions</th></tr></thead>
+        <tbody id="foldersBody"><tr><td colspan="3">Loading...</td></tr></tbody>
+      </table>
       <form id="fileForm" class="fileForm">
         <label>Title<input id="fileTitle" type="text" placeholder="Client briefing pack"></label>
         <label>Notes<input id="fileNotes" type="text" placeholder="Optional note"></label>
+        <label>Folder<select id="fileFolder"><option value="">No folder</option></select></label>
         <label>Choose file<input id="fileInput" type="file" required></label>
         <button class="btn primary" type="submit">Upload</button>
       </form>
       <p class="status" id="fileStatus"></p>
       <table>
-        <thead><tr><th>Title</th><th>File</th><th>Size</th><th>Uploaded</th><th>Actions</th></tr></thead>
-        <tbody id="filesBody"><tr><td colspan="5">Loading...</td></tr></tbody>
+        <thead><tr><th>Title</th><th>File</th><th>Folder</th><th>Size</th><th>Uploaded</th><th>Actions</th></tr></thead>
+        <tbody id="filesBody"><tr><td colspan="6">Loading...</td></tr></tbody>
       </table>
     </div>
     <div class="card">
@@ -129,6 +146,8 @@ async function api(path, options){
 }
 let currentUsersById = {};
 let currentFilesById = {};
+let currentFoldersById = {};
+let currentFolders = [];
 
 function downloadsToText(downloads) {
   if (!Array.isArray(downloads) || !downloads.length) return '';
@@ -168,27 +187,82 @@ function formatBytes(bytes) {
 
 async function loadFiles() {
   const body = document.getElementById('filesBody');
-  body.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
+  body.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
   try {
-    const data = await api('/api/admin/files');
+    const filterId = document.getElementById('folderFilter').value || '';
+    const url = filterId
+      ? `/api/admin/files?folderId=${encodeURIComponent(filterId)}`
+      : '/api/admin/files';
+    const data = await api(url);
     const rows = data.files || [];
+    const folders = data.folders || [];
     currentFilesById = {};
+    currentFolders = folders;
+    currentFoldersById = {};
+    folders.forEach((f) => { currentFoldersById[f.id] = f; });
+    syncFolderUi(folders);
     body.innerHTML = '';
     if (!rows.length) {
-      body.innerHTML = '<tr><td colspan="5">No files uploaded yet.</td></tr>';
+      body.innerHTML = '<tr><td colspan="6">No files uploaded yet.</td></tr>';
       return;
     }
+    const rowFolderOptions = ['<option value="">No folder</option>']
+      .concat(folders.map((f) => `<option value="${f.id}">${f.name}</option>`))
+      .join('');
     rows.forEach((file) => {
       currentFilesById[file.id] = file;
       const tr = document.createElement('tr');
       const uploaded = file.createdAt ? new Date(file.createdAt).toLocaleString() : '-';
       const safeId = encodeURIComponent(file.id);
-      tr.innerHTML = `<td>${file.title || '-'}</td><td>${file.fileName || '-'}</td><td>${formatBytes(file.size)}</td><td>${uploaded}</td><td><div class="actions"><a class="btn" href="/api/admin/files?id=${safeId}&inline=1" target="_blank" rel="noopener">View</a><a class="btn" href="/api/admin/files?id=${safeId}" target="_blank" rel="noopener">Download</a><button class="btn" data-fa="delete" data-id="${file.id}">Delete</button></div></td>`;
+      tr.innerHTML = `<td>${file.title || '-'}</td><td>${file.fileName || '-'}</td><td><select data-fa="folder" data-id="${file.id}">${rowFolderOptions}</select></td><td>${formatBytes(file.size)}</td><td>${uploaded}</td><td><div class="actions"><a class="btn" href="/api/admin/files?id=${safeId}&inline=1" target="_blank" rel="noopener">View</a><a class="btn" href="/api/admin/files?id=${safeId}" target="_blank" rel="noopener">Download</a><button class="btn" data-fa="move" data-id="${file.id}">Save folder</button><button class="btn" data-fa="delete" data-id="${file.id}">Delete</button></div></td>`;
       body.appendChild(tr);
+      const select = tr.querySelector(`select[data-fa="folder"][data-id="${file.id}"]`);
+      if (select) select.value = file.folderId || '';
     });
   } catch (e) {
-    body.innerHTML = `<tr><td colspan="5">${e.message}</td></tr>`;
+    body.innerHTML = `<tr><td colspan="6">${e.message}</td></tr>`;
   }
+}
+
+function syncFolderUi(folders) {
+  const folderFilter = document.getElementById('folderFilter');
+  const fileFolder = document.getElementById('fileFolder');
+  const foldersBody = document.getElementById('foldersBody');
+  const selectedFilter = folderFilter.value || '';
+  const selectedUpload = fileFolder.value || '';
+
+  const options = ['<option value="">No folder</option>']
+    .concat(folders.map((f) => `<option value="${f.id}">${f.name}</option>`))
+    .join('');
+  fileFolder.innerHTML = options;
+
+  const filterOptions = ['<option value="">All folders</option>']
+    .concat(folders.map((f) => `<option value="${f.id}">${f.name}</option>`))
+    .join('');
+  folderFilter.innerHTML = filterOptions;
+
+  if (selectedFilter && folders.some((f) => f.id === selectedFilter)) {
+    folderFilter.value = selectedFilter;
+  } else {
+    folderFilter.value = '';
+  }
+  if (selectedUpload && folders.some((f) => f.id === selectedUpload)) {
+    fileFolder.value = selectedUpload;
+  } else {
+    fileFolder.value = '';
+  }
+
+  foldersBody.innerHTML = '';
+  if (!folders.length) {
+    foldersBody.innerHTML = '<tr><td colspan="3">No folders yet.</td></tr>';
+    return;
+  }
+  folders.forEach((folder) => {
+    const tr = document.createElement('tr');
+    const created = folder.createdAt ? new Date(folder.createdAt).toLocaleString() : '-';
+    tr.innerHTML = `<td>${folder.name}</td><td>${created}</td><td><button class="btn" data-fo="delete" data-id="${folder.id}">Delete</button></td>`;
+    foldersBody.appendChild(tr);
+  });
 }
 
 function formatAuditAction(action) {
@@ -348,6 +422,7 @@ document.getElementById('fileForm').addEventListener('submit', async function(e)
       body: JSON.stringify({
         title: document.getElementById('fileTitle').value.trim(),
         notes: document.getElementById('fileNotes').value.trim(),
+        folderId: document.getElementById('fileFolder').value || '',
         fileName: file.name,
         mimeType: file.type || 'application/octet-stream',
         contentBase64: asBase64
@@ -362,25 +437,94 @@ document.getElementById('fileForm').addEventListener('submit', async function(e)
   }
 });
 
+document.getElementById('folderForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const status = document.getElementById('folderStatus');
+  const name = document.getElementById('folderName').value.trim();
+  if (!name) {
+    status.textContent = 'Enter a folder name.';
+    return;
+  }
+  status.textContent = 'Creating folder...';
+  try {
+    await api('/api/admin/files', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ type: 'folder', name })
+    });
+    status.textContent = 'Folder created.';
+    document.getElementById('folderForm').reset();
+    loadFiles();
+  } catch (err) {
+    status.textContent = err.message || 'Unable to create folder.';
+  }
+});
+
+document.getElementById('folderFilter').addEventListener('change', function(){
+  loadFiles();
+});
+
+document.getElementById('foldersBody').addEventListener('click', async function(e){
+  const btn = e.target.closest('button[data-fo]');
+  if (!btn) return;
+  const action = btn.getAttribute('data-fo');
+  const id = btn.getAttribute('data-id');
+  const status = document.getElementById('folderStatus');
+  if (action !== 'delete') return;
+  const folder = currentFoldersById[id];
+  if (!confirm(`Delete folder "${folder && folder.name ? folder.name : 'this folder'}"? Files will be moved to No folder.`)) return;
+  status.textContent = 'Deleting folder...';
+  try {
+    await api('/api/admin/files', {
+      method: 'DELETE',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ folderId: id })
+    });
+    status.textContent = 'Folder deleted.';
+    loadFiles();
+  } catch (err) {
+    status.textContent = err.message || 'Delete failed.';
+  }
+});
+
 document.getElementById('filesBody').addEventListener('click', async function(e){
   const btn = e.target.closest('button[data-fa]');
   if (!btn) return;
   const action = btn.getAttribute('data-fa');
   const id = btn.getAttribute('data-id');
   const status = document.getElementById('fileStatus');
-  if (action !== 'delete') return;
-  if (!confirm('Delete this file from database?')) return;
-  status.textContent = 'Deleting...';
-  try {
-    await api('/api/admin/files', {
-      method: 'DELETE',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ id })
-    });
-    status.textContent = 'File deleted.';
-    loadFiles();
-  } catch (err) {
-    status.textContent = err.message || 'Delete failed.';
+  if (action === 'move') {
+    const select = document.querySelector(`select[data-fa="folder"][data-id="${id}"]`);
+    const folderId = select ? (select.value || '') : '';
+    status.textContent = 'Updating folder...';
+    try {
+      await api('/api/admin/files', {
+        method: 'PATCH',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ id, folderId })
+      });
+      status.textContent = 'Folder updated.';
+      loadFiles();
+    } catch (err) {
+      status.textContent = err.message || 'Update failed.';
+    }
+    return;
+  }
+
+  if (action === 'delete') {
+    if (!confirm('Delete this file from database?')) return;
+    status.textContent = 'Deleting...';
+    try {
+      await api('/api/admin/files', {
+        method: 'DELETE',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ id })
+      });
+      status.textContent = 'File deleted.';
+      loadFiles();
+    } catch (err) {
+      status.textContent = err.message || 'Delete failed.';
+    }
   }
 });
 
