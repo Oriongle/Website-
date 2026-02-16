@@ -72,6 +72,33 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
       </table>
       <p class="status" id="tableStatus"></p>
     </div>
+    <div class="card" id="userDocsCard" style="display:none">
+      <p><strong id="userDocsTitle">Client documents</strong></p>
+      <form id="userFolderForm" class="folderForm">
+        <label>Create folder<input id="userFolderName" type="text" placeholder="e.g. Contracts"></label>
+        <button class="btn" type="submit">Create folder</button>
+      </form>
+      <div class="fileTools">
+        <label>Filter folder<select id="userFolderFilter"><option value="">All folders</option></select></label>
+      </div>
+      <p class="status" id="userFolderStatus"></p>
+      <table>
+        <thead><tr><th>Folder</th><th>Created</th><th>Actions</th></tr></thead>
+        <tbody id="userFoldersBody"><tr><td colspan="3">No user selected.</td></tr></tbody>
+      </table>
+      <form id="userFileForm" class="fileForm">
+        <label>Title<input id="userFileTitle" type="text" placeholder="Client document"></label>
+        <label>Notes<input id="userFileNotes" type="text" placeholder="Optional note"></label>
+        <label>Folder<select id="userFileFolder"><option value="">No folder</option></select></label>
+        <label>Choose file<input id="userFileInput" type="file" required></label>
+        <button class="btn primary" type="submit">Upload</button>
+      </form>
+      <p class="status" id="userFileStatus"></p>
+      <table>
+        <thead><tr><th>Title</th><th>File</th><th>Folder</th><th>Size</th><th>Uploaded</th><th>Actions</th></tr></thead>
+        <tbody id="userFilesBody"><tr><td colspan="6">No user selected.</td></tr></tbody>
+      </table>
+    </div>
   </section>
 
   <section class="sectionPane" id="paneGeneral" role="tabpanel" aria-labelledby="tabGeneral">
@@ -148,6 +175,9 @@ let currentUsersById = {};
 let currentFilesById = {};
 let currentFoldersById = {};
 let currentFolders = [];
+let currentUserDocFilesById = {};
+let currentUserDocFoldersById = {};
+let selectedUserDocsId = '';
 
 function downloadsToText(downloads) {
   if (!Array.isArray(downloads) || !downloads.length) return '';
@@ -265,6 +295,98 @@ function syncFolderUi(folders) {
   });
 }
 
+function syncUserFolderUi(folders) {
+  const folderFilter = document.getElementById('userFolderFilter');
+  const fileFolder = document.getElementById('userFileFolder');
+  const foldersBody = document.getElementById('userFoldersBody');
+  const selectedFilter = folderFilter.value || '';
+  const selectedUpload = fileFolder.value || '';
+
+  const options = ['<option value="">No folder</option>']
+    .concat(folders.map((f) => `<option value="${f.id}">${f.name}</option>`))
+    .join('');
+  fileFolder.innerHTML = options;
+
+  const filterOptions = ['<option value="">All folders</option>']
+    .concat(folders.map((f) => `<option value="${f.id}">${f.name}</option>`))
+    .join('');
+  folderFilter.innerHTML = filterOptions;
+
+  if (selectedFilter && folders.some((f) => f.id === selectedFilter)) folderFilter.value = selectedFilter;
+  else folderFilter.value = '';
+  if (selectedUpload && folders.some((f) => f.id === selectedUpload)) fileFolder.value = selectedUpload;
+  else fileFolder.value = '';
+
+  currentUserDocFoldersById = {};
+  folders.forEach((f) => { currentUserDocFoldersById[f.id] = f; });
+  foldersBody.innerHTML = '';
+  if (!folders.length) {
+    foldersBody.innerHTML = '<tr><td colspan="3">No folders yet.</td></tr>';
+    return;
+  }
+  folders.forEach((folder) => {
+    const tr = document.createElement('tr');
+    const created = folder.createdAt ? new Date(folder.createdAt).toLocaleString() : '-';
+    tr.innerHTML = `<td>${folder.name}</td><td>${created}</td><td><button class="btn" data-ufo="delete" data-id="${folder.id}">Delete</button></td>`;
+    foldersBody.appendChild(tr);
+  });
+}
+
+function setSelectedUserDocs(userId) {
+  selectedUserDocsId = userId || '';
+  const card = document.getElementById('userDocsCard');
+  const title = document.getElementById('userDocsTitle');
+  const user = currentUsersById[selectedUserDocsId] || null;
+  if (!user || user.source === 'env') {
+    card.style.display = 'none';
+    return;
+  }
+  card.style.display = 'block';
+  title.textContent = `Client documents — ${user.fullName || user.email}`;
+  loadUserDocs();
+}
+
+async function loadUserDocs() {
+  const filesBody = document.getElementById('userFilesBody');
+  const user = currentUsersById[selectedUserDocsId];
+  if (!selectedUserDocsId || !user || user.source === 'env') {
+    filesBody.innerHTML = '<tr><td colspan="6">No user selected.</td></tr>';
+    return;
+  }
+  filesBody.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
+  try {
+    const filterId = document.getElementById('userFolderFilter').value || '';
+    const query = new URLSearchParams({ userId: selectedUserDocsId });
+    if (filterId) query.set('folderId', filterId);
+    const data = await api(`/api/admin/files?${query.toString()}`);
+    const rows = data.files || [];
+    const folders = data.folders || [];
+    currentUserDocFilesById = {};
+    syncUserFolderUi(folders);
+
+    filesBody.innerHTML = '';
+    if (!rows.length) {
+      filesBody.innerHTML = '<tr><td colspan="6">No files uploaded for this client.</td></tr>';
+      return;
+    }
+    const rowFolderOptions = ['<option value="">No folder</option>']
+      .concat(folders.map((f) => `<option value="${f.id}">${f.name}</option>`))
+      .join('');
+    rows.forEach((file) => {
+      currentUserDocFilesById[file.id] = file;
+      const tr = document.createElement('tr');
+      const uploaded = file.createdAt ? new Date(file.createdAt).toLocaleString() : '-';
+      const safeId = encodeURIComponent(file.id);
+      tr.innerHTML = `<td>${file.title || '-'}</td><td>${file.fileName || '-'}</td><td><select data-ufa="folder" data-id="${file.id}">${rowFolderOptions}</select></td><td>${formatBytes(file.size)}</td><td>${uploaded}</td><td><div class="actions"><a class="btn" href="/api/admin/files?id=${safeId}&inline=1" target="_blank" rel="noopener">View</a><a class="btn" href="/api/admin/files?id=${safeId}" target="_blank" rel="noopener">Download</a><button class="btn" data-ufa="move" data-id="${file.id}">Save folder</button><button class="btn" data-ufa="delete" data-id="${file.id}">Delete</button></div></td>`;
+      filesBody.appendChild(tr);
+      const select = tr.querySelector(`select[data-ufa="folder"][data-id="${file.id}"]`);
+      if (select) select.value = file.folderId || '';
+    });
+  } catch (e) {
+    filesBody.innerHTML = `<tr><td colspan="6">${e.message}</td></tr>`;
+  }
+}
+
 function formatAuditAction(action) {
   const a = String(action || '').trim();
   if (a === 'requested') return 'Reset requested';
@@ -326,10 +448,16 @@ async function loadUsers(){
       const status = u.active ? '<span class="badge ok">Active</span>' : '<span class="badge dim">Disabled</span>';
       const actions = u.source === 'env'
         ? '<span class="badge">Env-managed</span>'
-        : `<div class="actions"><button class="btn" data-a="edit" data-id="${u.id}">Edit Info</button><button class="btn" data-a="toggle" data-id="${u.id}" data-active="${u.active}">${u.active ? 'Disable' : 'Enable'}</button><button class="btn" data-a="reset" data-id="${u.id}">Reset Password</button><button class="btn" data-a="delete" data-id="${u.id}">Delete</button></div>`;
+        : `<div class="actions"><button class="btn" data-a="docs" data-id="${u.id}">Docs</button><button class="btn" data-a="edit" data-id="${u.id}">Edit Info</button><button class="btn" data-a="toggle" data-id="${u.id}" data-active="${u.active}">${u.active ? 'Disable' : 'Enable'}</button><button class="btn" data-a="reset" data-id="${u.id}">Reset Password</button><button class="btn" data-a="delete" data-id="${u.id}">Delete</button></div>`;
       tr.innerHTML = `<td>${u.fullName || '-'}</td><td>${u.company || '-'}</td><td>${u.email}</td><td>${u.role}</td><td>${status}</td><td>${u.lastLoginAt || '-'}</td><td>${actions}</td>`;
       body.appendChild(tr);
     });
+    if (selectedUserDocsId && currentUsersById[selectedUserDocsId]) {
+      setSelectedUserDocs(selectedUserDocsId);
+    } else if (selectedUserDocsId && !currentUsersById[selectedUserDocsId]) {
+      selectedUserDocsId = '';
+      document.getElementById('userDocsCard').style.display = 'none';
+    }
   } catch (e) {
     body.innerHTML = `<tr><td colspan="7">${e.message}</td></tr>`;
   }
@@ -464,6 +592,155 @@ document.getElementById('folderFilter').addEventListener('change', function(){
   loadFiles();
 });
 
+document.getElementById('userFolderFilter').addEventListener('change', function(){
+  loadUserDocs();
+});
+
+document.getElementById('userFolderForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const status = document.getElementById('userFolderStatus');
+  const user = currentUsersById[selectedUserDocsId];
+  if (!selectedUserDocsId || !user || user.source === 'env') {
+    status.textContent = 'Choose a client first from Users -> Docs.';
+    return;
+  }
+  const name = document.getElementById('userFolderName').value.trim();
+  if (!name) {
+    status.textContent = 'Enter a folder name.';
+    return;
+  }
+  status.textContent = 'Creating folder...';
+  try {
+    await api('/api/admin/files', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ type: 'folder', name, userId: selectedUserDocsId })
+    });
+    status.textContent = 'Folder created.';
+    document.getElementById('userFolderForm').reset();
+    loadUserDocs();
+  } catch (err) {
+    status.textContent = err.message || 'Unable to create folder.';
+  }
+});
+
+document.getElementById('userFoldersBody').addEventListener('click', async function(e){
+  const btn = e.target.closest('button[data-ufo]');
+  if (!btn) return;
+  const action = btn.getAttribute('data-ufo');
+  const id = btn.getAttribute('data-id');
+  const status = document.getElementById('userFolderStatus');
+  if (action !== 'delete') return;
+  const folder = currentUserDocFoldersById[id];
+  if (!confirm(`Delete folder "${folder && folder.name ? folder.name : 'this folder'}"? Files will be moved to No folder.`)) return;
+  status.textContent = 'Deleting folder...';
+  try {
+    await api('/api/admin/files', {
+      method: 'DELETE',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ folderId: id, userId: selectedUserDocsId })
+    });
+    status.textContent = 'Folder deleted.';
+    loadUserDocs();
+  } catch (err) {
+    status.textContent = err.message || 'Delete failed.';
+  }
+});
+
+document.getElementById('userFileForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const status = document.getElementById('userFileStatus');
+  const user = currentUsersById[selectedUserDocsId];
+  if (!selectedUserDocsId || !user || user.source === 'env') {
+    status.textContent = 'Choose a client first from Users -> Docs.';
+    return;
+  }
+  const fileInput = document.getElementById('userFileInput');
+  const file = fileInput.files && fileInput.files[0];
+  if (!file) {
+    status.textContent = 'Choose a file first.';
+    return;
+  }
+  if (file.size > 2 * 1024 * 1024) {
+    status.textContent = 'File too large. Max size is 2 MB.';
+    return;
+  }
+  status.textContent = 'Uploading...';
+  try {
+    const asBase64 = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = function(){ reject(new Error('Unable to read file.')); };
+      reader.onload = function(){
+        const data = String(reader.result || '');
+        const idx = data.indexOf(',');
+        resolve(idx >= 0 ? data.slice(idx + 1) : data);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    await api('/api/admin/files', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        userId: selectedUserDocsId,
+        title: document.getElementById('userFileTitle').value.trim(),
+        notes: document.getElementById('userFileNotes').value.trim(),
+        folderId: document.getElementById('userFileFolder').value || '',
+        fileName: file.name,
+        mimeType: file.type || 'application/octet-stream',
+        contentBase64: asBase64
+      })
+    });
+    status.textContent = 'File uploaded.';
+    document.getElementById('userFileForm').reset();
+    loadUserDocs();
+  } catch (err) {
+    status.textContent = err.message || 'Upload failed.';
+  }
+});
+
+document.getElementById('userFilesBody').addEventListener('click', async function(e){
+  const btn = e.target.closest('button[data-ufa]');
+  if (!btn) return;
+  const action = btn.getAttribute('data-ufa');
+  const id = btn.getAttribute('data-id');
+  const status = document.getElementById('userFileStatus');
+
+  if (action === 'move') {
+    const select = document.querySelector(`select[data-ufa="folder"][data-id="${id}"]`);
+    const folderId = select ? (select.value || '') : '';
+    status.textContent = 'Updating folder...';
+    try {
+      await api('/api/admin/files', {
+        method: 'PATCH',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ id, userId: selectedUserDocsId, folderId })
+      });
+      status.textContent = 'Folder updated.';
+      loadUserDocs();
+    } catch (err) {
+      status.textContent = err.message || 'Update failed.';
+    }
+    return;
+  }
+
+  if (action === 'delete') {
+    if (!confirm('Delete this file from this client?')) return;
+    status.textContent = 'Deleting...';
+    try {
+      await api('/api/admin/files', {
+        method: 'DELETE',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ id, userId: selectedUserDocsId })
+      });
+      status.textContent = 'File deleted.';
+      loadUserDocs();
+    } catch (err) {
+      status.textContent = err.message || 'Delete failed.';
+    }
+  }
+});
+
 document.getElementById('foldersBody').addEventListener('click', async function(e){
   const btn = e.target.closest('button[data-fo]');
   if (!btn) return;
@@ -537,6 +814,11 @@ document.getElementById('usersBody').addEventListener('click', async function(e)
   tableStatus.textContent = 'Working...';
 
   try {
+    if(action === 'docs') {
+      setSelectedUserDocs(id);
+      tableStatus.textContent = '';
+      return;
+    }
     if(action === 'edit') {
       const u = currentUsersById[id] || {};
       const fullName = prompt('Name:', u.fullName || '');

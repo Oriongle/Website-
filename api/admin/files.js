@@ -101,6 +101,7 @@ function toMeta(file) {
     size: Number(file.size || 0),
     notes: file.notes || "",
     folderId: file.folderId || "",
+    userId: file.userId || "",
     createdAt: file.createdAt || null,
     uploadedBy: file.uploadedBy || ""
   };
@@ -110,6 +111,10 @@ function normalizeFolderId(folderId, folders) {
   const value = sanitize(folderId || "", 80);
   if (!value) return "";
   return folders.some((f) => f.id === value) ? value : "";
+}
+
+function normalizeUserId(userId) {
+  return sanitize(userId || "", 80);
 }
 
 module.exports = async function handler(req, res) {
@@ -137,10 +142,17 @@ module.exports = async function handler(req, res) {
     const id = sanitize(req.query?.id || "", 80);
     if (!id) {
       const folderId = sanitize(req.query?.folderId || "", 80);
+      const userId = normalizeUserId(req.query?.userId || "");
+      const scopedFolders = userId
+        ? folders.filter((f) => String(f.userId || "") === userId)
+        : folders.filter((f) => !f.userId);
       const folderMap = Object.fromEntries(folders.map((f) => [f.id, f.name]));
-      const filteredFiles = folderId
-        ? files.filter((f) => String(f.folderId || "") === folderId)
-        : files;
+      let filteredFiles = userId
+        ? files.filter((f) => String(f.userId || "") === userId)
+        : files.filter((f) => !f.userId);
+      if (folderId) {
+        filteredFiles = filteredFiles.filter((f) => String(f.folderId || "") === folderId);
+      }
       const metas = filteredFiles.map((f) => {
         const m = toMeta(f);
         return {
@@ -148,7 +160,7 @@ module.exports = async function handler(req, res) {
           folderName: m.folderId ? (folderMap[m.folderId] || "") : ""
         };
       });
-      return res.status(200).json({ ok: true, files: metas, folders });
+      return res.status(200).json({ ok: true, files: metas, folders: scopedFolders });
     }
 
     const item = files.find((f) => f.id === id);
@@ -167,17 +179,22 @@ module.exports = async function handler(req, res) {
   if (req.method === "POST") {
     const body = req.body || {};
     const type = sanitize(body.type || "", 24).toLowerCase();
+    const userId = normalizeUserId(body.userId || "");
+    const scopedFolders = userId
+      ? folders.filter((f) => String(f.userId || "") === userId)
+      : folders.filter((f) => !f.userId);
 
     if (type === "folder") {
       const name = sanitize(body.name || "", 80);
       if (!name) return bad(res, "Folder name is required.");
       const lower = name.toLowerCase();
-      if (folders.some((f) => String(f.name || "").toLowerCase() === lower)) {
+      if (scopedFolders.some((f) => String(f.name || "").toLowerCase() === lower)) {
         return bad(res, "A folder with this name already exists.");
       }
       folders.unshift({
         id: crypto.randomUUID(),
         name,
+        userId,
         createdAt: new Date().toISOString(),
         createdBy: String(session.email || "")
       });
@@ -190,7 +207,7 @@ module.exports = async function handler(req, res) {
     const mimeType = sanitize(body.mimeType || "", 120) || "application/octet-stream";
     const notes = sanitize(body.notes || "", 500);
     const contentBase64 = String(body.contentBase64 || "").trim();
-    const folderId = normalizeFolderId(body.folderId, folders);
+    const folderId = normalizeFolderId(body.folderId, scopedFolders);
 
     if (!fileName) return bad(res, "File name is required.");
     if (!contentBase64) return bad(res, "File content is required.");
@@ -215,6 +232,7 @@ module.exports = async function handler(req, res) {
       size: buffer.length,
       notes,
       folderId,
+      userId,
       contentBase64,
       createdAt: new Date().toISOString(),
       uploadedBy: String(session.email || "")
@@ -229,9 +247,13 @@ module.exports = async function handler(req, res) {
     if (!id) return bad(res, "File id is required.");
     const file = files.find((f) => f.id === id);
     if (!file) return bad(res, "File not found.", 404);
+    const userId = normalizeUserId(file.userId || req.body?.userId || "");
+    const scopedFolders = userId
+      ? folders.filter((f) => String(f.userId || "") === userId)
+      : folders.filter((f) => !f.userId);
 
     if (Object.prototype.hasOwnProperty.call(req.body || {}, "folderId")) {
-      file.folderId = normalizeFolderId(req.body?.folderId, folders);
+      file.folderId = normalizeFolderId(req.body?.folderId, scopedFolders);
     }
     if (Object.prototype.hasOwnProperty.call(req.body || {}, "title")) {
       const nextTitle = sanitize(req.body?.title || "", 120);
@@ -248,20 +270,29 @@ module.exports = async function handler(req, res) {
   if (req.method === "DELETE") {
     const folderId = sanitize(req.body?.folderId || "", 80);
     if (folderId) {
-      const exists = folders.some((f) => f.id === folderId);
+      const folder = folders.find((f) => f.id === folderId);
+      const exists = Boolean(folder);
       if (!exists) return bad(res, "Folder not found.", 404);
       folders = folders.filter((f) => f.id !== folderId);
+      const folderUserId = String(folder.userId || "");
       files.forEach((f) => {
-        if (String(f.folderId || "") === folderId) f.folderId = "";
+        if (String(f.folderId || "") === folderId && String(f.userId || "") === folderUserId) {
+          f.folderId = "";
+        }
       });
       await Promise.all([saveFolders(folders), saveFiles(files)]);
       return res.status(200).json({ ok: true });
     }
 
     const id = sanitize(req.body?.id || "", 80);
+    const userId = normalizeUserId(req.body?.userId || "");
     if (!id) return bad(res, "File id is required.");
+    const file = files.find((f) => f.id === id);
+    if (!file) return bad(res, "File not found.", 404);
+    if (userId && String(file.userId || "") !== userId) {
+      return bad(res, "File does not belong to this user.", 400);
+    }
     const next = files.filter((f) => f.id !== id);
-    if (next.length === files.length) return bad(res, "File not found.", 404);
     await saveFiles(next);
     return res.status(200).json({ ok: true });
   }

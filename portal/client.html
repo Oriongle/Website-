@@ -13,6 +13,7 @@
 .meta{font-size:13px;color:var(--muted)}
 .kv{display:grid;grid-template-columns:180px 1fr;gap:8px;margin-top:6px}
 @media(max-width:700px){.kv{grid-template-columns:1fr}}
+.docGroup{margin-top:12px}
 </style>
 </head><body><div class="wrap">
 <div id="guard" class="card"><p>Checking session...</p></div>
@@ -38,6 +39,10 @@
   <div class="card" id="downloadsCard" style="display:none">
     <h2 style="margin-top:0;font-size:20px">Downloads</h2>
     <div id="downloadsList" class="list"></div>
+  </div>
+  <div class="card" id="privateDocsCard" style="display:none">
+    <h2 style="margin-top:0;font-size:20px">Private Documents</h2>
+    <div id="privateDocsList"></div>
   </div>
   <div class="card"><a class="btn" href="/contact.html">Send a request</a></div>
 </div>
@@ -89,6 +94,42 @@ function renderClientProfile(profile) {
   }
 }
 
+async function renderPrivateDocs() {
+  const card = document.getElementById('privateDocsCard');
+  const root = document.getElementById('privateDocsList');
+  try {
+    const res = await fetch('/api/client/files');
+    const data = await res.json().catch(()=>({}));
+    if (!res.ok) return;
+    const files = Array.isArray(data.files) ? data.files : [];
+    const folders = Array.isArray(data.folders) ? data.folders : [];
+    if (!files.length) return;
+
+    const byFolder = {};
+    files.forEach((file) => {
+      const key = file.folderId || '__none__';
+      if (!byFolder[key]) byFolder[key] = [];
+      byFolder[key].push(file);
+    });
+    const folderMap = Object.fromEntries(folders.map((f) => [f.id, f.name]));
+    root.innerHTML = '';
+    Object.keys(byFolder).forEach((key) => {
+      const block = document.createElement('div');
+      block.className = 'docGroup';
+      const title = key === '__none__' ? 'General documents' : (folderMap[key] || 'Documents');
+      const list = byFolder[key];
+      const items = list.map((file) => {
+        const safeId = encodeURIComponent(file.id);
+        const note = (file.notes || '').trim();
+        return `<div class="item"><div><strong>${file.title || file.fileName}</strong></div><div class="meta">${file.fileName}${note ? ` | ${note}` : ''}</div><p><a class="btn" href="/api/client/files?id=${safeId}&inline=1" target="_blank" rel="noopener">View</a> <a class="btn" href="/api/client/files?id=${safeId}" target="_blank" rel="noopener">Download</a></p></div>`;
+      }).join('');
+      block.innerHTML = `<h3 style="margin:0 0 8px;font-size:16px">${title}</h3><div class="list">${items}</div>`;
+      root.appendChild(block);
+    });
+    card.style.display = 'block';
+  } catch {}
+}
+
 async function init() {
   try {
     const res = await fetch('/api/auth/me');
@@ -100,6 +141,7 @@ async function init() {
     document.getElementById('guard').remove();
     document.getElementById('portalContent').style.display = 'block';
     renderClientProfile(data.profile || null);
+    renderPrivateDocs();
     document.getElementById('logout').addEventListener('click', async function(){
       await fetch('/api/auth/logout', {method:'POST'});
       window.location.assign('/portal/login.html');
