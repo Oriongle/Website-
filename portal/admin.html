@@ -65,7 +65,8 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
 
   <div class="sectionTabs" role="tablist" aria-label="Admin sections">
     <button class="btn active" id="tabUsers" data-tab="users" role="tab" aria-selected="true">Users</button>
-    <button class="btn" id="tabGeneral" data-tab="general" role="tab" aria-selected="false">General</button>
+    <button class="btn" id="tabSubmission" data-tab="submission" role="tab" aria-selected="false">App Submission</button>
+    <button class="btn" id="tabFiles" data-tab="files" role="tab" aria-selected="false">Files</button>
   </div>
 
   <section class="sectionPane active" id="paneUsers" role="tabpanel" aria-labelledby="tabUsers">
@@ -135,7 +136,7 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
     </div>
   </section>
 
-  <section class="sectionPane" id="paneGeneral" role="tabpanel" aria-labelledby="tabGeneral">
+  <section class="sectionPane" id="paneSubmission" role="tabpanel" aria-labelledby="tabSubmission">
     <div class="card">
       <p><strong>Overview</strong></p>
       <div class="kpis">
@@ -162,6 +163,9 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
       </ul>
       <p class="status" style="color:rgba(255,255,255,.72)">This section is shown in Admin Portal only.</p>
     </div>
+  </section>
+
+  <section class="sectionPane" id="paneFiles" role="tabpanel" aria-labelledby="tabFiles">
     <div class="card">
       <p><strong>File database</strong></p>
       <p id="generalFolderPath" class="status" style="color:rgba(255,255,255,.72)">Path: <span class="crumb">Company files</span></p>
@@ -778,12 +782,17 @@ async function loadUsers(){
 
 function setActiveTab(tab) {
   const isUsers = tab === 'users';
+  const isSubmission = tab === 'submission';
+  const isFiles = tab === 'files';
   document.getElementById('tabUsers').classList.toggle('active', isUsers);
-  document.getElementById('tabGeneral').classList.toggle('active', !isUsers);
+  document.getElementById('tabSubmission').classList.toggle('active', isSubmission);
+  document.getElementById('tabFiles').classList.toggle('active', isFiles);
   document.getElementById('tabUsers').setAttribute('aria-selected', isUsers ? 'true' : 'false');
-  document.getElementById('tabGeneral').setAttribute('aria-selected', isUsers ? 'false' : 'true');
+  document.getElementById('tabSubmission').setAttribute('aria-selected', isSubmission ? 'true' : 'false');
+  document.getElementById('tabFiles').setAttribute('aria-selected', isFiles ? 'true' : 'false');
   document.getElementById('paneUsers').classList.toggle('active', isUsers);
-  document.getElementById('paneGeneral').classList.toggle('active', !isUsers);
+  document.getElementById('paneSubmission').classList.toggle('active', isSubmission);
+  document.getElementById('paneFiles').classList.toggle('active', isFiles);
 }
 
 async function boot(){
@@ -1424,7 +1433,8 @@ document.getElementById('logout').addEventListener('click', async function(){
 });
 
 document.getElementById('tabUsers').addEventListener('click', function(){ setActiveTab('users'); });
-document.getElementById('tabGeneral').addEventListener('click', function(){ setActiveTab('general'); });
+document.getElementById('tabSubmission').addEventListener('click', function(){ setActiveTab('submission'); });
+document.getElementById('tabFiles').addEventListener('click', function(){ setActiveTab('files'); });
 
 boot();
 </script>
