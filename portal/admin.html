@@ -31,6 +31,11 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
 .sectionTabs .btn.active{background:linear-gradient(135deg,var(--a1),var(--a2));border:none;color:#061019;font-weight:700}
 .sectionPane{display:none}
 .sectionPane.active{display:block}
+.portalChooser{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}
+.chooserBtn{display:block;padding:18px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.03);text-decoration:none;color:#fff;cursor:pointer;text-align:left}
+.chooserBtn strong{display:block;font-size:18px;line-height:1.15}
+.chooserBtn span{display:block;color:rgba(255,255,255,.68);margin-top:6px;font-size:13px}
+.chooserBtn:hover{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.05)}
 .kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .kpi{border:1px solid var(--line);border-radius:12px;padding:12px;background:rgba(255,255,255,.02)}
 .kpi strong{display:block;font-size:24px;line-height:1.1}
@@ -65,6 +70,7 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
 @media(max-width:920px){#addForm{grid-template-columns:1fr}}
 @media(max-width:920px){.fileForm{grid-template-columns:1fr}}
 @media(max-width:920px){.companyGrid{grid-template-columns:1fr}}
+@media(max-width:920px){.portalChooser{grid-template-columns:1fr}}
 @media(max-width:920px){.folderForm{grid-template-columns:1fr}}
 @media(max-width:920px){.fileTools{grid-template-columns:1fr}}
 @media(max-width:980px){.driveShell{grid-template-columns:1fr}}
@@ -76,12 +82,24 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
   <div class="top"><h1>Admin Portal</h1><div><a class="btn" href="/update-admin.html">Updates Helper</a> <button class="btn" id="logout">Logout</button></div></div>
 
   <div class="sectionTabs" role="tablist" aria-label="Admin sections">
-    <button class="btn active" id="tabUsers" data-tab="users" role="tab" aria-selected="true">Users</button>
+    <button class="btn active" id="tabHome" data-tab="home" role="tab" aria-selected="true">Home</button>
+    <button class="btn" id="tabUsers" data-tab="users" role="tab" aria-selected="false">Users</button>
     <button class="btn" id="tabSubmission" data-tab="submission" role="tab" aria-selected="false">App Submission</button>
     <button class="btn" id="tabFiles" data-tab="files" role="tab" aria-selected="false">Files</button>
   </div>
 
-  <section class="sectionPane active" id="paneUsers" role="tabpanel" aria-labelledby="tabUsers">
+  <section class="sectionPane active" id="paneHome" role="tabpanel" aria-labelledby="tabHome">
+    <div class="card">
+      <p><strong>Choose where to go</strong></p>
+      <div class="portalChooser">
+        <button class="chooserBtn" type="button" data-go-tab="users"><strong>Users</strong><span>Create, edit, disable, and reset portal users.</span></button>
+        <button class="chooserBtn" type="button" data-go-tab="submission"><strong>App Submission</strong><span>Apple checklist, company information, and legal links.</span></button>
+        <button class="chooserBtn" type="button" data-go-tab="files"><strong>Files</strong><span>Folder tree, uploads, and folder access management.</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sectionPane" id="paneUsers" role="tabpanel" aria-labelledby="tabUsers">
     <div class="card">
       <p><strong>Add user</strong></p>
       <form id="addForm">
@@ -804,15 +822,19 @@ async function loadUsers(){
 }
 
 function setActiveTab(tab) {
+  const isHome = tab === 'home';
   const isUsers = tab === 'users';
   const isSubmission = tab === 'submission';
   const isFiles = tab === 'files';
+  document.getElementById('tabHome').classList.toggle('active', isHome);
   document.getElementById('tabUsers').classList.toggle('active', isUsers);
   document.getElementById('tabSubmission').classList.toggle('active', isSubmission);
   document.getElementById('tabFiles').classList.toggle('active', isFiles);
+  document.getElementById('tabHome').setAttribute('aria-selected', isHome ? 'true' : 'false');
   document.getElementById('tabUsers').setAttribute('aria-selected', isUsers ? 'true' : 'false');
   document.getElementById('tabSubmission').setAttribute('aria-selected', isSubmission ? 'true' : 'false');
   document.getElementById('tabFiles').setAttribute('aria-selected', isFiles ? 'true' : 'false');
+  document.getElementById('paneHome').classList.toggle('active', isHome);
   document.getElementById('paneUsers').classList.toggle('active', isUsers);
   document.getElementById('paneSubmission').classList.toggle('active', isSubmission);
   document.getElementById('paneFiles').classList.toggle('active', isFiles);
@@ -1451,8 +1473,15 @@ document.getElementById('logout').addEventListener('click', async function(){
 });
 
 document.getElementById('tabUsers').addEventListener('click', function(){ setActiveTab('users'); });
+document.getElementById('tabHome').addEventListener('click', function(){ setActiveTab('home'); });
 document.getElementById('tabSubmission').addEventListener('click', function(){ setActiveTab('submission'); });
 document.getElementById('tabFiles').addEventListener('click', function(){ setActiveTab('files'); });
+document.querySelectorAll('[data-go-tab]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    const tab = btn.getAttribute('data-go-tab');
+    if (tab) setActiveTab(tab);
+  });
+});
 
 boot();
 </script>
