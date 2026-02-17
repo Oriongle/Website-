@@ -326,7 +326,7 @@ let currentUserDocFoldersById = {};
 let selectedUserDocsId = '';
 let userCurrentFolderId = '';
 let currentSharedFoldersById = {};
-let accessModalState = { folderId: '', mainFolderId: '' };
+let accessModalState = { folderId: '' };
 
 function downloadsToText(downloads) {
   if (!Array.isArray(downloads) || !downloads.length) return '';
@@ -492,7 +492,7 @@ function renderGeneralAccess() {
   const status = document.getElementById('generalAccessStatus');
   const mainId = getGeneralMainFolderId();
   if (!mainId || !currentFoldersById[mainId]) {
-    root.innerHTML = '<p class="status">Open a main folder to manage client access.</p>';
+    root.innerHTML = '<p class="status">Open any folder and use <strong>Manage access</strong> to set client access.</p>';
     status.textContent = '';
     return;
   }
@@ -529,35 +529,23 @@ function renderGeneralAccess() {
   });
 }
 
-function resolveMainFolder(folderId) {
-  let folder = currentFoldersById[folderId] || null;
-  while (folder && folder.parentId && currentFoldersById[folder.parentId]) {
-    folder = currentFoldersById[folder.parentId];
-  }
-  return folder || null;
-}
-
 function openAccessModal(folderId) {
   const folder = currentFoldersById[folderId] || null;
   if (!folder) return;
-  const mainFolder = resolveMainFolder(folderId);
-  if (!mainFolder) return;
-  accessModalState = { folderId, mainFolderId: mainFolder.id };
+  accessModalState = { folderId };
   const modal = document.getElementById('accessModal');
   const title = document.getElementById('accessModalTitle');
   const status = document.getElementById('accessModalStatus');
   const list = document.getElementById('accessModalList');
 
-  title.textContent = folder.id === mainFolder.id
-    ? `Manage access: ${mainFolder.name}`
-    : `Manage access: ${folder.name} (inherits from ${mainFolder.name})`;
+  title.textContent = `Manage access: ${folder.name}`;
 
   if (!generalClientUsers.length) {
     list.innerHTML = '<p class="status">No active client users found.</p>';
   } else {
     list.innerHTML = '';
     generalClientUsers.forEach((u) => {
-      const checked = (mainFolder.allowedUserIds || []).includes(u.id);
+      const checked = (folder.allowedUserIds || []).includes(u.id);
       const row = document.createElement('label');
       row.className = 'accessRow';
       const input = document.createElement('input');
@@ -581,9 +569,7 @@ function openAccessModal(folderId) {
     });
   }
 
-  status.textContent = folder.id === mainFolder.id
-    ? 'Select which clients can access this main folder.'
-    : `Access is controlled by main folder "${mainFolder.name}".`;
+  status.textContent = 'Select which clients can access this folder and its subfolders.';
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
 }
@@ -1466,10 +1452,10 @@ document.getElementById('accessModal').addEventListener('click', function(e){
   if (e.target.id === 'accessModal') closeAccessModal();
 });
 document.getElementById('accessModalSave').addEventListener('click', async function(){
-  const mainFolderId = accessModalState.mainFolderId;
-  const mainFolder = currentFoldersById[mainFolderId];
+  const folderId = accessModalState.folderId;
+  const folder = currentFoldersById[folderId];
   const status = document.getElementById('accessModalStatus');
-  if (!mainFolderId || !mainFolder) {
+  if (!folderId || !folder) {
     status.textContent = 'Folder not available. Reloading...';
     await loadFiles();
     return;
@@ -1481,7 +1467,7 @@ document.getElementById('accessModalSave').addEventListener('click', async funct
     await api('/api/admin/files', {
       method: 'PATCH',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ id: mainFolderId, allowedUserIds: next })
+      body: JSON.stringify({ id: folderId, allowedUserIds: next })
     });
     status.textContent = 'Access updated.';
     await loadFiles();
