@@ -15,6 +15,9 @@ h1{margin:0 0 8px}p,li,label{color:var(--muted);line-height:1.7}.status{font-siz
 form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end}input,select,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff}
 textarea{min-height:74px;resize:vertical}
 table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;font-size:13px}th{color:rgba(255,255,255,.58);font-size:12px;text-transform:uppercase}
+.folderRow{cursor:pointer}
+.folderRow td:first-child{font-weight:600}
+.folderRow:hover{background:rgba(255,255,255,.04)}
 .badge{display:inline-block;padding:5px 8px;border-radius:999px;border:1px solid var(--line);font-size:11px}.ok{color:#7ef0a8}.dim{color:#f5b274}
 .actions{display:flex;gap:6px;flex-wrap:wrap}
 .sectionTabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
@@ -374,6 +377,8 @@ function renderGeneralItems(files, folders) {
   visibleFolders.forEach((folder) => {
     const created = folder.createdAt ? new Date(folder.createdAt).toLocaleString() : '-';
     const tr = document.createElement('tr');
+    tr.className = 'folderRow';
+    tr.setAttribute('data-gopen', folder.id);
     tr.innerHTML = `<td>📁 ${folder.name}</td><td>Folder</td><td>${created}</td><td><div class="actions"><button class="btn" data-gaction="open-folder" data-id="${folder.id}">Open</button><button class="btn" data-gaction="create-subfolder" data-id="${folder.id}">New subfolder</button><button class="btn" data-gaction="manage-access" data-id="${folder.id}">Manage access</button><button class="btn" data-gaction="rename-folder" data-id="${folder.id}">Rename</button><button class="btn" data-gaction="delete-folder" data-id="${folder.id}">Delete</button></div></td>`;
     body.appendChild(tr);
   });
@@ -592,6 +597,8 @@ async function loadUserDocs() {
       .forEach((folder) => {
         const tr = document.createElement('tr');
         const created = folder.createdAt ? new Date(folder.createdAt).toLocaleString() : '-';
+        tr.className = 'folderRow';
+        tr.setAttribute('data-uopen', folder.id);
         tr.innerHTML = `<td>📁 ${folder.name}</td><td>Folder</td><td>${created}</td><td><div class="actions"><button class="btn" data-ui-action="open-folder" data-id="${folder.id}">Open</button><button class="btn" data-ui-action="create-subfolder" data-id="${folder.id}">New subfolder</button><button class="btn" data-ui-action="delete-folder" data-id="${folder.id}">Delete</button></div></td>`;
         itemsBody.appendChild(tr);
       });
@@ -851,6 +858,12 @@ document.getElementById('generalAccessList').addEventListener('change', async fu
 });
 
 document.getElementById('generalItemsBody').addEventListener('click', async function(e){
+  const row = e.target.closest('tr[data-gopen]');
+  if (row && !e.target.closest('button') && !e.target.closest('a')) {
+    generalCurrentFolderId = row.getAttribute('data-gopen') || '';
+    loadFiles();
+    return;
+  }
   const btn = e.target.closest('button[data-gaction]');
   if (!btn) return;
   const action = btn.getAttribute('data-gaction');
@@ -1091,6 +1104,12 @@ document.getElementById('userAccessList').addEventListener('change', async funct
 });
 
 document.getElementById('userItemsBody').addEventListener('click', async function(e){
+  const row = e.target.closest('tr[data-uopen]');
+  if (row && !e.target.closest('button') && !e.target.closest('a')) {
+    userCurrentFolderId = row.getAttribute('data-uopen') || '';
+    loadUserDocs();
+    return;
+  }
   const btn = e.target.closest('button[data-ui-action]');
   if (!btn) return;
   const action = btn.getAttribute('data-ui-action');
