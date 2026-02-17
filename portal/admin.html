@@ -794,16 +794,10 @@ async function loadUsers(){
       const status = u.active ? '<span class="badge ok">Active</span>' : '<span class="badge dim">Disabled</span>';
       const actions = u.source === 'env'
         ? '<span class="badge">Env-managed</span>'
-        : `<div class="actions"><button class="btn" data-a="docs" data-id="${u.id}">Docs</button><button class="btn" data-a="edit" data-id="${u.id}">Edit Info</button><button class="btn" data-a="toggle" data-id="${u.id}" data-active="${u.active}">${u.active ? 'Disable' : 'Enable'}</button><button class="btn" data-a="reset" data-id="${u.id}">Reset Password</button><button class="btn" data-a="delete" data-id="${u.id}">Delete</button></div>`;
+        : `<div class="actions"><button class="btn" data-a="edit" data-id="${u.id}">Edit Info</button><button class="btn" data-a="toggle" data-id="${u.id}" data-active="${u.active}">${u.active ? 'Disable' : 'Enable'}</button><button class="btn" data-a="reset" data-id="${u.id}">Reset Password</button><button class="btn" data-a="delete" data-id="${u.id}">Delete</button></div>`;
       tr.innerHTML = `<td>${u.fullName || '-'}</td><td>${u.company || '-'}</td><td>${u.email}</td><td>${u.role}</td><td>${status}</td><td>${u.lastLoginAt || '-'}</td><td>${actions}</td>`;
       body.appendChild(tr);
     });
-    if (selectedUserDocsId && currentUsersById[selectedUserDocsId]) {
-      setSelectedUserDocs(selectedUserDocsId);
-    } else if (selectedUserDocsId && !currentUsersById[selectedUserDocsId]) {
-      selectedUserDocsId = '';
-      document.getElementById('userDocsCard').style.display = 'none';
-    }
   } catch (e) {
     body.innerHTML = `<tr><td colspan="7">${e.message}</td></tr>`;
   }
@@ -1361,11 +1355,6 @@ document.getElementById('usersBody').addEventListener('click', async function(e)
   tableStatus.textContent = 'Working...';
 
   try {
-    if(action === 'docs') {
-      setSelectedUserDocs(id);
-      tableStatus.textContent = '';
-      return;
-    }
     if(action === 'edit') {
       const u = currentUsersById[id] || {};
       const fullName = prompt('Name:', u.fullName || '');
