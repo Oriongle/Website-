@@ -14,6 +14,11 @@
 h1{margin:0 0 8px}p,li,label{color:var(--muted);line-height:1.7}.status{font-size:13px;color:#ff9aa2;min-height:20px}
 form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end}input,select,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff}
 textarea{min-height:74px;resize:vertical}
+#addForm{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+#addForm label{display:flex;flex-direction:column;gap:6px;padding:10px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.015)}
+#addForm .fieldWide{grid-column:1 / -1}
+#addForm .addUserActions{grid-column:1 / -1;display:flex;justify-content:flex-end}
+#addForm .addUserActions .btn{min-width:160px}
 table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;font-size:13px}th{color:rgba(255,255,255,.58);font-size:12px;text-transform:uppercase}
 .folderRow{cursor:pointer}
 .folderRow td:first-child{font-weight:600}
@@ -52,6 +57,7 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
 .modalHead{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .modalActions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
 @media(max-width:920px){form{grid-template-columns:1fr}}
+@media(max-width:920px){#addForm{grid-template-columns:1fr}}
 @media(max-width:920px){.fileForm{grid-template-columns:1fr}}
 @media(max-width:920px){.folderForm{grid-template-columns:1fr}}
 @media(max-width:920px){.fileTools{grid-template-columns:1fr}}
@@ -80,11 +86,11 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
         <label>Phone<input id="newPhone" type="text" placeholder="Phone"></label>
         <label>Project<input id="newProject" type="text" placeholder="Project"></label>
         <label>Role<select id="newRole"><option value="client">Client</option><option value="admin">Admin</option></select></label>
-        <label style="grid-column:1 / span 3">Notes<textarea id="newNotes" placeholder="Notes"></textarea></label>
-        <label style="grid-column:1 / span 2">Portal headline<input id="newPortalTitle" type="text" placeholder="e.g. February rollout pack"></label>
-        <label style="grid-column:1 / span 4">Portal info<textarea id="newPortalMessage" placeholder="Visible to this client inside their portal"></textarea></label>
-        <label style="grid-column:1 / span 4">Download links<textarea id="newPortalDownloads" placeholder="One per line: Label | https://file-url | optional note"></textarea></label>
-        <button class="btn primary" type="submit">Create</button>
+        <label>Portal headline<input id="newPortalTitle" type="text" placeholder="e.g. February rollout pack"></label>
+        <label class="fieldWide">Notes<textarea id="newNotes" placeholder="Internal notes"></textarea></label>
+        <label class="fieldWide">Portal info<textarea id="newPortalMessage" placeholder="Visible to this client inside their portal"></textarea></label>
+        <label class="fieldWide">Download links<textarea id="newPortalDownloads" placeholder="One per line: Label | https://file-url | optional note"></textarea></label>
+        <div class="addUserActions"><button class="btn primary" type="submit">Create user</button></div>
       </form>
       <p class="status" id="addStatus"></p>
     </div>
