@@ -86,7 +86,7 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
   <div class="sectionTabs" role="tablist" aria-label="Admin sections">
     <button class="btn active" id="tabHome" data-tab="home" role="tab" aria-selected="true">Home</button>
     <button class="btn" id="tabUsers" data-tab="users" role="tab" aria-selected="false">Users</button>
-    <button class="btn" id="tabSubmission" data-tab="submission" role="tab" aria-selected="false">App Submission</button>
+    <button class="btn" id="tabSubmission" data-tab="submission" role="tab" aria-selected="false">Company Information</button>
     <button class="btn" id="tabFiles" data-tab="files" role="tab" aria-selected="false">Files</button>
   </div>
 
@@ -95,7 +95,7 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
       <p><strong>Choose where to go</strong></p>
       <div class="portalChooser">
         <button class="chooserBtn" type="button" data-go-tab="users"><strong>Users</strong><span>Create, edit, disable, and reset portal users.</span></button>
-        <button class="chooserBtn" type="button" data-go-tab="submission"><strong>App Submission</strong><span>Apple checklist, company information, and legal links.</span></button>
+        <button class="chooserBtn" type="button" data-go-tab="submission"><strong>Company Information</strong><span>Company records, attached filings, Apple checklist, and legal links.</span></button>
         <button class="chooserBtn" type="button" data-go-tab="files"><strong>Files</strong><span>Folder tree, uploads, and folder access management.</span></button>
       </div>
     </div>
@@ -170,6 +170,23 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
 
   <section class="sectionPane" id="paneSubmission" role="tabpanel" aria-labelledby="tabSubmission">
     <div class="card">
+      <p><strong>Company Information</strong></p>
+      <div class="companyGrid">
+        <div class="k">D-U-N-S Number</div><div>234446756</div>
+        <div class="k">Company Name</div><div>ORION GLE LTD</div>
+        <div class="k">Legal Status</div><div>Corporation</div>
+        <div class="k">Address</div><div>23A Meadowgate Croft, Lofthouse, Wakefield, WF3 3SS, GB</div>
+      </div>
+      <p style="margin-top:10px"><strong>Attached files</strong></p>
+      <p>
+        <a class="btn" href="/assets/company/112-543547_20251229-150102_17028.pdf" target="_blank" rel="noopener">Open Filing PDF 1</a>
+        <a class="btn" href="/assets/company/112-543547_20251229_16933963.pdf" target="_blank" rel="noopener">Open Filing PDF 2</a>
+      </p>
+      <div class="companyPreview">
+        <img src="/assets/company/DUNS.png" alt="D-U-N-S company information summary" loading="lazy" decoding="async">
+      </div>
+    </div>
+    <div class="card">
       <p><strong>Overview</strong></p>
       <div class="kpis">
         <div class="kpi"><strong id="kpiTotal">0</strong><span>Total users</span></div>
@@ -194,23 +211,6 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
         <li>TaskHawk: <a href="/taskhawk-privacy.html" target="_blank" rel="noopener">Privacy</a> • <a href="/taskhawk-terms.html" target="_blank" rel="noopener">Terms</a></li>
       </ul>
       <p class="status" style="color:rgba(255,255,255,.72)">This section is shown in Admin Portal only.</p>
-    </div>
-    <div class="card">
-      <p><strong>Company Information</strong></p>
-      <div class="companyGrid">
-        <div class="k">D-U-N-S Number</div><div>234446756</div>
-        <div class="k">Company Name</div><div>ORION GLE LTD</div>
-        <div class="k">Legal Status</div><div>Corporation</div>
-        <div class="k">Address</div><div>23A Meadowgate Croft, Lofthouse, Wakefield, WF3 3SS, GB</div>
-      </div>
-      <p style="margin-top:10px"><strong>Attached files</strong></p>
-      <p>
-        <a class="btn" href="/assets/company/112-543547_20251229-150102_17028.pdf" target="_blank" rel="noopener">Open Filing PDF 1</a>
-        <a class="btn" href="/assets/company/112-543547_20251229_16933963.pdf" target="_blank" rel="noopener">Open Filing PDF 2</a>
-      </p>
-      <div class="companyPreview">
-        <img src="/assets/company/DUNS.png" alt="D-U-N-S company information summary" loading="lazy" decoding="async">
-      </div>
     </div>
   </section>
 
