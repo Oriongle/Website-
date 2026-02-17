@@ -18,6 +18,8 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
 .folderRow{cursor:pointer}
 .folderRow td:first-child{font-weight:600}
 .folderRow:hover{background:rgba(255,255,255,.04)}
+.folderNameBtn{display:inline-flex;align-items:center;gap:6px;padding:0;border:0;background:transparent;color:#fff;font:inherit;cursor:pointer;text-align:left}
+.folderNameBtn:hover{color:#bfefff}
 .badge{display:inline-block;padding:5px 8px;border-radius:999px;border:1px solid var(--line);font-size:11px}.ok{color:#7ef0a8}.dim{color:#f5b274}
 .actions{display:flex;gap:6px;flex-wrap:wrap}
 .sectionTabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
@@ -44,6 +46,11 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
 .accessMeta{display:flex;flex-direction:column;gap:2px;line-height:1.35}
 .accessName{color:#fff;font-size:13px}
 .accessSub{color:rgba(255,255,255,.62);font-size:12px;word-break:break-word}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:1200;padding:16px}
+.modal.open{display:flex}
+.modalCard{width:min(640px,100%);max-height:85vh;overflow:auto;border:1px solid var(--line);border-radius:14px;background:#0c101a;padding:16px}
+.modalHead{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.modalActions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
 @media(max-width:920px){form{grid-template-columns:1fr}}
 @media(max-width:920px){.fileForm{grid-template-columns:1fr}}
 @media(max-width:920px){.folderForm{grid-template-columns:1fr}}
@@ -166,11 +173,8 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
         </div>
       </form>
       <p class="status" id="folderStatus"></p>
-      <div class="card" style="margin-top:10px">
-        <p><strong>Main Folder Access</strong></p>
-        <p class="status" id="generalAccessStatus"></p>
-        <div id="generalAccessList"><p class="status">Open a main folder to manage client access.</p></div>
-      </div>
+      <div id="generalAccessStatus" class="status" style="display:none"></div>
+      <div id="generalAccessList" style="display:none"></div>
       <form id="fileForm" class="fileForm">
         <label>Title<input id="fileTitle" type="text" placeholder="Client briefing pack"></label>
         <label>Notes<input id="fileNotes" type="text" placeholder="Optional note"></label>
@@ -214,6 +218,20 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
   </div>
 </div>
 </div>
+<div class="modal" id="accessModal" aria-hidden="true">
+  <div class="modalCard">
+    <div class="modalHead">
+      <p style="margin:0"><strong id="accessModalTitle">Manage folder access</strong></p>
+      <button class="btn" id="accessModalClose" type="button">Close</button>
+    </div>
+    <p class="status" id="accessModalStatus" style="color:rgba(255,255,255,.72)"></p>
+    <div id="accessModalList"><p class="status">Loading...</p></div>
+    <div class="modalActions">
+      <button class="btn" id="accessModalCancel" type="button">Cancel</button>
+      <button class="btn primary" id="accessModalSave" type="button">Save access</button>
+    </div>
+  </div>
+</div>
 <script>
 async function api(path, options){
   const res = await fetch(path, options);
@@ -233,6 +251,7 @@ let currentUserDocFoldersById = {};
 let selectedUserDocsId = '';
 let userCurrentFolderId = '';
 let currentSharedFoldersById = {};
+let accessModalState = { folderId: '', mainFolderId: '' };
 
 function downloadsToText(downloads) {
   if (!Array.isArray(downloads) || !downloads.length) return '';
@@ -379,7 +398,7 @@ function renderGeneralItems(files, folders) {
     const tr = document.createElement('tr');
     tr.className = 'folderRow';
     tr.setAttribute('data-gopen', folder.id);
-    tr.innerHTML = `<td>📁 ${folder.name}</td><td>Folder</td><td>${created}</td><td><div class="actions"><button class="btn" data-gaction="open-folder" data-id="${folder.id}">Open</button><button class="btn" data-gaction="create-subfolder" data-id="${folder.id}">New subfolder</button><button class="btn" data-gaction="manage-access" data-id="${folder.id}">Manage access</button><button class="btn" data-gaction="rename-folder" data-id="${folder.id}">Rename</button><button class="btn" data-gaction="delete-folder" data-id="${folder.id}">Delete</button></div></td>`;
+    tr.innerHTML = `<td><button class="folderNameBtn" data-gaction="manage-access" data-id="${folder.id}" type="button">📁 ${folder.name}</button></td><td>Folder</td><td>${created}</td><td><div class="actions"><button class="btn" data-gaction="open-folder" data-id="${folder.id}">Open</button><button class="btn" data-gaction="create-subfolder" data-id="${folder.id}">New subfolder</button><button class="btn" data-gaction="rename-folder" data-id="${folder.id}">Rename</button><button class="btn" data-gaction="delete-folder" data-id="${folder.id}">Delete</button></div></td>`;
     body.appendChild(tr);
   });
   visibleFiles.forEach((file) => {
@@ -433,6 +452,71 @@ function renderGeneralAccess() {
     row.appendChild(meta);
     root.appendChild(row);
   });
+}
+
+function resolveMainFolder(folderId) {
+  let folder = currentFoldersById[folderId] || null;
+  while (folder && folder.parentId && currentFoldersById[folder.parentId]) {
+    folder = currentFoldersById[folder.parentId];
+  }
+  return folder || null;
+}
+
+function openAccessModal(folderId) {
+  const folder = currentFoldersById[folderId] || null;
+  if (!folder) return;
+  const mainFolder = resolveMainFolder(folderId);
+  if (!mainFolder) return;
+  accessModalState = { folderId, mainFolderId: mainFolder.id };
+  const modal = document.getElementById('accessModal');
+  const title = document.getElementById('accessModalTitle');
+  const status = document.getElementById('accessModalStatus');
+  const list = document.getElementById('accessModalList');
+
+  title.textContent = folder.id === mainFolder.id
+    ? `Manage access: ${mainFolder.name}`
+    : `Manage access: ${folder.name} (inherits from ${mainFolder.name})`;
+
+  if (!generalClientUsers.length) {
+    list.innerHTML = '<p class="status">No active client users found.</p>';
+  } else {
+    list.innerHTML = '';
+    generalClientUsers.forEach((u) => {
+      const checked = (mainFolder.allowedUserIds || []).includes(u.id);
+      const row = document.createElement('label');
+      row.className = 'accessRow';
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.setAttribute('data-modal-access', '1');
+      input.setAttribute('data-user-id', String(u.id));
+      input.checked = checked;
+      const meta = document.createElement('span');
+      meta.className = 'accessMeta';
+      const name = document.createElement('span');
+      name.className = 'accessName';
+      name.textContent = String(u.fullName || u.email || 'Client');
+      const sub = document.createElement('span');
+      sub.className = 'accessSub';
+      sub.textContent = String(u.email || '');
+      meta.appendChild(name);
+      meta.appendChild(sub);
+      row.appendChild(input);
+      row.appendChild(meta);
+      list.appendChild(row);
+    });
+  }
+
+  status.textContent = folder.id === mainFolder.id
+    ? 'Select which clients can access this main folder.'
+    : `Access is controlled by main folder "${mainFolder.name}".`;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeAccessModal() {
+  const modal = document.getElementById('accessModal');
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
 }
 
 function syncUserFolderUi(folders) {
@@ -878,20 +962,7 @@ document.getElementById('generalItemsBody').addEventListener('click', async func
   }
 
   if (action === 'manage-access') {
-    generalCurrentFolderId = id || '';
-    await loadFiles();
-    const folder = currentFoldersById[id] || null;
-    let mainFolder = folder;
-    while (mainFolder && mainFolder.parentId && currentFoldersById[mainFolder.parentId]) {
-      mainFolder = currentFoldersById[mainFolder.parentId];
-    }
-    const status = document.getElementById('generalAccessStatus');
-    if (folder && folder.parentId && mainFolder) {
-      status.textContent = `Access is set at main-folder level. Managing "${mainFolder.name}".`;
-    } else if (folder) {
-      status.textContent = `Managing access for "${folder.name}".`;
-    }
-    document.getElementById('generalAccessList').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    openAccessModal(id);
     return;
   }
 
@@ -1314,6 +1385,37 @@ document.getElementById('usersBody').addEventListener('click', async function(e)
 
 document.getElementById('refreshAudit').addEventListener('click', function(){
   loadResetAudit();
+});
+
+document.getElementById('accessModalClose').addEventListener('click', closeAccessModal);
+document.getElementById('accessModalCancel').addEventListener('click', closeAccessModal);
+document.getElementById('accessModal').addEventListener('click', function(e){
+  if (e.target.id === 'accessModal') closeAccessModal();
+});
+document.getElementById('accessModalSave').addEventListener('click', async function(){
+  const mainFolderId = accessModalState.mainFolderId;
+  const mainFolder = currentFoldersById[mainFolderId];
+  const status = document.getElementById('accessModalStatus');
+  if (!mainFolderId || !mainFolder) {
+    status.textContent = 'Folder not available. Reloading...';
+    await loadFiles();
+    return;
+  }
+  const checks = Array.from(document.querySelectorAll('#accessModalList input[data-modal-access="1"]'));
+  const next = checks.filter((i) => i.checked).map((i) => i.getAttribute('data-user-id')).filter(Boolean);
+  status.textContent = 'Saving access...';
+  try {
+    await api('/api/admin/files', {
+      method: 'PATCH',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ id: mainFolderId, allowedUserIds: next })
+    });
+    status.textContent = 'Access updated.';
+    await loadFiles();
+    setTimeout(closeAccessModal, 250);
+  } catch (err) {
+    status.textContent = err.message || 'Unable to update access.';
+  }
 });
 
 document.getElementById('logout').addEventListener('click', async function(){
