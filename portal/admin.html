@@ -374,7 +374,7 @@ function renderGeneralItems(files, folders) {
   visibleFolders.forEach((folder) => {
     const created = folder.createdAt ? new Date(folder.createdAt).toLocaleString() : '-';
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td>📁 ${folder.name}</td><td>Folder</td><td>${created}</td><td><div class="actions"><button class="btn" data-gaction="open-folder" data-id="${folder.id}">Open</button><button class="btn" data-gaction="rename-folder" data-id="${folder.id}">Rename</button><button class="btn" data-gaction="delete-folder" data-id="${folder.id}">Delete</button></div></td>`;
+    tr.innerHTML = `<td>📁 ${folder.name}</td><td>Folder</td><td>${created}</td><td><div class="actions"><button class="btn" data-gaction="open-folder" data-id="${folder.id}">Open</button><button class="btn" data-gaction="manage-access" data-id="${folder.id}">Manage access</button><button class="btn" data-gaction="rename-folder" data-id="${folder.id}">Rename</button><button class="btn" data-gaction="delete-folder" data-id="${folder.id}">Delete</button></div></td>`;
     body.appendChild(tr);
   });
   visibleFiles.forEach((file) => {
@@ -861,6 +861,24 @@ document.getElementById('generalItemsBody').addEventListener('click', async func
   if (action === 'open-folder') {
     generalCurrentFolderId = id || '';
     loadFiles();
+    return;
+  }
+
+  if (action === 'manage-access') {
+    generalCurrentFolderId = id || '';
+    await loadFiles();
+    const folder = currentFoldersById[id] || null;
+    let mainFolder = folder;
+    while (mainFolder && mainFolder.parentId && currentFoldersById[mainFolder.parentId]) {
+      mainFolder = currentFoldersById[mainFolder.parentId];
+    }
+    const status = document.getElementById('generalAccessStatus');
+    if (folder && folder.parentId && mainFolder) {
+      status.textContent = `Access is set at main-folder level. Managing "${mainFolder.name}".`;
+    } else if (folder) {
+      status.textContent = `Managing access for "${folder.name}".`;
+    }
+    document.getElementById('generalAccessList').scrollIntoView({ behavior: 'smooth', block: 'start' });
     return;
   }
 
