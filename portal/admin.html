@@ -431,7 +431,7 @@ function renderGeneralItems(files, folders) {
     const tr = document.createElement('tr');
     tr.className = 'folderRow';
     tr.setAttribute('data-gopen', folder.id);
-    tr.innerHTML = `<td><button class="folderNameBtn" data-gaction="manage-access" data-id="${folder.id}" type="button">📁 ${folder.name}</button></td><td>Folder</td><td>${created}</td><td><div class="actions"><button class="btn" data-gaction="open-folder" data-id="${folder.id}">Open</button><button class="btn" data-gaction="create-subfolder" data-id="${folder.id}">New subfolder</button><button class="btn" data-gaction="rename-folder" data-id="${folder.id}">Rename</button><button class="btn" data-gaction="delete-folder" data-id="${folder.id}">Delete</button></div></td>`;
+    tr.innerHTML = `<td><button class="folderNameBtn" data-gaction="manage-access" data-id="${folder.id}" type="button">📁 ${folder.name}</button></td><td>Folder</td><td>${created}</td><td><div class="actions"><button class="btn" data-gaction="open-folder" data-id="${folder.id}">Open</button><button class="btn" data-gaction="create-subfolder" data-id="${folder.id}">New subfolder</button><button class="btn" data-gaction="manage-access" data-id="${folder.id}">Manage access</button><button class="btn" data-gaction="rename-folder" data-id="${folder.id}">Rename</button><button class="btn" data-gaction="delete-folder" data-id="${folder.id}">Delete</button></div></td>`;
     body.appendChild(tr);
   });
   visibleFiles.forEach((file) => {
