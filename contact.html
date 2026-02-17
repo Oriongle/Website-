@@ -48,12 +48,23 @@ label{font-size:13px;color:rgba(255,255,255,.78)}
 input,select,textarea{
   width:100%;
   margin-top:6px;
-  padding:12px;
+  min-height:44px;
+  padding:10px 12px;
   border-radius:10px;
   border:1px solid var(--line);
   background:rgba(255,255,255,.03);
   color:var(--text);
   font:inherit;
+}
+select{
+  padding-right:38px;
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,rgba(255,255,255,.75) 50%),linear-gradient(135deg,rgba(255,255,255,.75) 50%,transparent 50%);
+  background-position:calc(100% - 18px) calc(50% - 3px),calc(100% - 12px) calc(50% - 3px);
+  background-size:6px 6px,6px 6px;
+  background-repeat:no-repeat;
 }
 input:focus,select:focus,textarea:focus,button:focus{outline:2px solid #22d3ee;outline-offset:2px}
 textarea{min-height:140px;resize:vertical}
