@@ -56,9 +56,15 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
 .modalCard{width:min(640px,100%);max-height:85vh;overflow:auto;border:1px solid var(--line);border-radius:14px;background:#0c101a;padding:16px}
 .modalHead{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .modalActions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.companyGrid{display:grid;grid-template-columns:220px 1fr;gap:8px 12px;margin-top:8px}
+.companyGrid div{padding:8px 10px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.02)}
+.companyGrid .k{color:rgba(255,255,255,.66);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.companyPreview{margin-top:10px;border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;max-width:520px}
+.companyPreview img{display:block;width:100%;height:auto}
 @media(max-width:920px){form{grid-template-columns:1fr}}
 @media(max-width:920px){#addForm{grid-template-columns:1fr}}
 @media(max-width:920px){.fileForm{grid-template-columns:1fr}}
+@media(max-width:920px){.companyGrid{grid-template-columns:1fr}}
 @media(max-width:920px){.folderForm{grid-template-columns:1fr}}
 @media(max-width:920px){.fileTools{grid-template-columns:1fr}}
 @media(max-width:980px){.driveShell{grid-template-columns:1fr}}
@@ -168,6 +174,23 @@ table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;bord
         <li>TaskHawk: <a href="/taskhawk-privacy.html" target="_blank" rel="noopener">Privacy</a> • <a href="/taskhawk-terms.html" target="_blank" rel="noopener">Terms</a></li>
       </ul>
       <p class="status" style="color:rgba(255,255,255,.72)">This section is shown in Admin Portal only.</p>
+    </div>
+    <div class="card">
+      <p><strong>Company Information</strong></p>
+      <div class="companyGrid">
+        <div class="k">D-U-N-S Number</div><div>234446756</div>
+        <div class="k">Company Name</div><div>ORION GLE LTD</div>
+        <div class="k">Legal Status</div><div>Corporation</div>
+        <div class="k">Address</div><div>23A Meadowgate Croft, Lofthouse, Wakefield, WF3 3SS, GB</div>
+      </div>
+      <p style="margin-top:10px"><strong>Attached files</strong></p>
+      <p>
+        <a class="btn" href="/assets/company/112-543547_20251229-150102_17028.pdf" target="_blank" rel="noopener">Open Filing PDF 1</a>
+        <a class="btn" href="/assets/company/112-543547_20251229_16933963.pdf" target="_blank" rel="noopener">Open Filing PDF 2</a>
+      </p>
+      <div class="companyPreview">
+        <img src="/assets/company/DUNS.png" alt="D-U-N-S company information summary" loading="lazy" decoding="async">
+      </div>
     </div>
   </section>
 
