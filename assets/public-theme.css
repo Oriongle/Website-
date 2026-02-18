@@ -208,13 +208,15 @@ form::before {
 }
 
 .homeLogo {
-  width: min(180px, 48vw);
+  width: min(1240px, 98vw) !important;
+  max-width: 1240px !important;
   height: auto;
   display: block;
-  margin: 0 auto 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(164, 189, 232, 0.22);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+  margin: 0 auto 4px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
 }
 
 input,
