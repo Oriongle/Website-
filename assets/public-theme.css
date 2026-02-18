@@ -208,8 +208,8 @@ form::before {
 }
 
 .homeLogo {
-  width: min(1240px, 98vw) !important;
-  max-width: 1240px !important;
+  width: min(1060px, 94vw) !important;
+  max-width: 1060px !important;
   height: auto;
   display: block;
   margin: 0 auto 4px !important;
