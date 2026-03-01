@@ -10,7 +10,7 @@ Use this for each iOS app in App Store Connect.
 - Support email: support@oriongle.co.uk
 - Website: https://oriongle.co.uk
 
-## 1) VOW
+## 1) VOW Focus
 - App page: https://oriongle.co.uk/vow/
 - Privacy Policy URL: https://oriongle.co.uk/vow/privacy.html
 - Terms of Use URL: https://oriongle.co.uk/vow/terms.html
