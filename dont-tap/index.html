@@ -14,6 +14,13 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,san
 .nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:22px 0;border-bottom:1px solid var(--line);}
 .nav a{color:rgba(255,255,255,.78);text-decoration:none;font-size:14px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);}
 .nav a:hover{border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.05);}
+.navRight{position:relative;display:flex;align-items:center;gap:10px}
+.settingsBtn{width:42px;height:42px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff;font-size:18px;cursor:pointer}
+.settingsBtn:hover{border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.05)}
+.settingsMenu{position:absolute;top:50px;right:0;min-width:240px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#0b111d;display:none;z-index:40}
+.settingsMenu.open{display:block}
+.settingsMenu a{display:block;padding:9px 10px;border-radius:8px;color:rgba(255,255,255,.82);text-decoration:none;font-size:14px}
+.settingsMenu a:hover{background:rgba(255,255,255,.06);color:#fff}
 .hero{text-align:center;padding:56px 0 36px;}
 .icon{width:120px;height:120px;border-radius:28px;object-fit:cover;border:1px solid rgba(255,255,255,.15);box-shadow:0 30px 60px rgba(0,0,0,.6);}
 h1{margin:28px 0 8px;font-size:44px;}
@@ -34,7 +41,16 @@ p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-heig
 <div class="wrap">
   <div class="nav">
     <a href="/applications.html">← Applications</a>
-    <a href="/contact.html">Contact</a>
+    <div class="navRight">
+      <a href="/contact.html">Contact</a>
+      <button class="settingsBtn" id="settingsBtn" type="button" aria-label="Settings" aria-haspopup="true" aria-expanded="false">⚙</button>
+      <div class="settingsMenu" id="settingsMenu" role="menu" aria-label="Don't Tap settings menu">
+        <a href="/dont-tap/privacy.html" role="menuitem">Privacy Policy</a>
+        <a href="/dont-tap/terms.html" role="menuitem">Terms &amp; Conditions</a>
+        <a href="#settings" role="menuitem">Standard Settings</a>
+        <a href="/cookies.html" role="menuitem">Privacy Settings</a>
+      </div>
+    </div>
   </div>
 
   <div class="hero">
@@ -62,6 +78,16 @@ p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-heig
     <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
   </div>
 
+  <div class="card" id="settings">
+    <strong>Standard Settings</strong>
+    <p style="margin:10px 0 0;color:rgba(255,255,255,.72)">
+      In-app settings include:
+    </p>
+    <p style="margin:10px 0 0;color:rgba(255,255,255,.72)">
+      Sound, haptics, gameplay preferences, restore purchases, and legal links.
+    </p>
+  </div>
+
   <div class="footer">
     © <span id="y"></span> Orion GLE Ltd •
     <a href="/dont-tap/privacy.html">Privacy Policy</a> •
@@ -71,6 +97,26 @@ p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-heig
 </div>
 
 <script>document.getElementById("y").textContent=new Date().getFullYear();</script>
+<script>
+const settingsBtn = document.getElementById("settingsBtn");
+const settingsMenu = document.getElementById("settingsMenu");
+settingsBtn.addEventListener("click", function(){
+  const isOpen = settingsMenu.classList.toggle("open");
+  settingsBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+});
+document.addEventListener("click", function(e){
+  if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) {
+    settingsMenu.classList.remove("open");
+    settingsBtn.setAttribute("aria-expanded", "false");
+  }
+});
+document.addEventListener("keydown", function(e){
+  if (e.key === "Escape") {
+    settingsMenu.classList.remove("open");
+    settingsBtn.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
 <script src="/assets/site-config.js"></script>
 <script src="/assets/analytics.js" defer></script>
 <script src="/assets/cookie-consent.js" defer></script>
