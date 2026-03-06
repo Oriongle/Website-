@@ -28,6 +28,15 @@ h1{margin:28px 0 8px;font-size:44px;}
 p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-height:1.7;}
 .card{margin:34px auto 0;max-width:760px;border:1px solid var(--line);border-radius:18px;padding:18px;background:rgba(255,255,255,.03);}
 .btn{display:inline-flex;margin-top:14px;gap:10px;align-items:center;justify-content:center;padding:12px 14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--a1),var(--a2));color:#071019;font-weight:800;text-decoration:none;}
+.btnRow{display:flex;flex-wrap:wrap;gap:10px}
+.btn.secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff;}
+.galleryCard{max-width:980px}
+.galleryGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.shot{margin:0;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.25)}
+.shot img{display:block;width:100%;height:auto;filter:blur(7px);transform:scale(1.02);transition:filter .25s ease,transform .25s ease}
+.shot:hover img{filter:blur(4px);transform:scale(1.01)}
+.shot figcaption{position:absolute;left:10px;bottom:10px;padding:6px 10px;border-radius:999px;font-size:12px;color:rgba(255,255,255,.86);background:rgba(5,7,13,.72);border:1px solid rgba(255,255,255,.16)}
+@media(max-width:780px){.galleryGrid{grid-template-columns:1fr}}
 .footer{border-top:1px solid var(--line);padding:26px 0;margin-top:44px;color:rgba(255,255,255,.55);text-align:center;font-size:13px;}
 .footer a{color:rgba(255,255,255,.75);text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35)}
 .footer a:hover{color:#fff}
@@ -72,11 +81,52 @@ p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-heig
     <p style="margin:10px 0 0;color:rgba(255,255,255,.72)">
       Privacy and terms on this page are aligned to the app legal content.
     </p>
-    <p style="margin:10px 0 0">
-      <a href="/dont-tap/privacy.html">Privacy Policy</a> •
-      <a href="/dont-tap/terms.html">Terms &amp; Conditions</a>
+    <div class="btnRow" style="margin-top:12px">
+      <a class="btn secondary" href="/dont-tap/privacy.html">Privacy Policy</a>
+      <a class="btn secondary" href="/dont-tap/terms.html">Terms &amp; Conditions</a>
+      <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
+    </div>
+  </div>
+
+  <div class="card galleryCard">
+    <strong>Preview Screens</strong>
+    <p style="margin:10px 0 0;color:rgba(255,255,255,.72)">
+      Early release visuals are intentionally blurred on the public page.
     </p>
-    <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
+    <div class="galleryGrid">
+      <figure class="shot">
+        <img src="/assets/apps/dont-tap/dont-tap-1.png" alt="Don't Tap preview screen 1" loading="lazy" decoding="async">
+        <figcaption>Gameplay Preview</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/assets/apps/dont-tap/dont-tap-2.png" alt="Don't Tap preview screen 2" loading="lazy" decoding="async">
+        <figcaption>Gameplay Preview</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/assets/apps/dont-tap/dont-tap-3.png" alt="Don't Tap preview screen 3" loading="lazy" decoding="async">
+        <figcaption>Session Summary</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/assets/apps/dont-tap/dont-tap-4.png" alt="Don't Tap preview screen 4" loading="lazy" decoding="async">
+        <figcaption>Main Screen</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/assets/apps/dont-tap/dont-tap-5.png" alt="Don't Tap preview screen 5" loading="lazy" decoding="async">
+        <figcaption>Progress Overlay</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/assets/apps/dont-tap/dont-tap-6.png" alt="Don't Tap preview screen 6" loading="lazy" decoding="async">
+        <figcaption>Progress Overlay</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/assets/apps/dont-tap/dont-tap-7.png" alt="Don't Tap preview screen 7" loading="lazy" decoding="async">
+        <figcaption>Run Start</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/assets/apps/dont-tap/dont-tap-8.png" alt="Don't Tap preview screen 8" loading="lazy" decoding="async">
+        <figcaption>Loading Sequence</figcaption>
+      </figure>
+    </div>
   </div>
 
   <div class="card" id="settings">
