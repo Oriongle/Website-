@@ -24,6 +24,8 @@ p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-heig
 
 .card{margin:34px auto 0;max-width:760px;border:1px solid var(--line);border-radius:18px;padding:18px;background:rgba(255,255,255,.03);}
 .btn{display:inline-flex;margin-top:14px;gap:10px;align-items:center;justify-content:center;padding:12px 14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--a1),var(--a2));color:#071019;font-weight:800;text-decoration:none;}
+.btnRow{display:flex;flex-wrap:wrap;gap:10px}
+.btn.secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff;}
 .shots{margin:34px auto 0;max-width:900px;border:1px solid var(--line);border-radius:18px;padding:18px;background:rgba(255,255,255,.03);}
 .shots h2{margin:0 0 6px;font-size:24px}
 .shotGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}
@@ -87,7 +89,11 @@ p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-heig
     <p style="margin:10px 0 0;color:rgba(255,255,255,.72)">
       For release timing or product enquiries, contact Orion GLE:
     </p>
-    <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
+    <div class="btnRow" style="margin-top:12px">
+      <a class="btn secondary" href="/vow/privacy.html">Privacy Policy</a>
+      <a class="btn secondary" href="/vow/terms.html">Terms of Use</a>
+      <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
+    </div>
   </div>
 
   <div class="footer">
