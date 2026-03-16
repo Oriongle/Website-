@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FieldNexus — Orion GLE Ltd</title>
+
+<style>
+:root{
+  --bg:#05070d;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.72);
+  --line:rgba(255,255,255,.10);
+  --accent:#7c3aed;
+  --accent2:#22d3ee;
+  --max:1000px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);}
+.wrap{max-width:var(--max);margin:auto;padding:0 24px;}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:24px 0;border-bottom:1px solid var(--line);}
+.nav a{text-decoration:none;color:rgba(255,255,255,.75);font-size:14px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);}
+.hero{padding:60px 0 40px;text-align:center;}
+.icon{width:120px;height:120px;border-radius:28px;object-fit:cover;border:1px solid rgba(255,255,255,.15);box-shadow:0 30px 60px rgba(0,0,0,.6);}
+h1{margin:30px 0 10px;font-size:44px;}
+.badge{display:inline-block;margin-top:12px;padding:6px 12px;font-size:12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.7);}
+.storeHint{display:inline-block;margin-top:10px;padding:7px 12px;font-size:12px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.02);color:rgba(255,255,255,.82);}
+p{max-width:760px;margin:24px auto 0;font-size:17px;color:var(--muted);line-height:1.7;}
+.card{margin:40px auto 0;max-width:760px;border:1px solid var(--line);border-radius:18px;padding:24px;background:rgba(255,255,255,.03);}
+.btn{display:inline-flex;margin-top:18px;padding:14px 20px;border-radius:14px;text-decoration:none;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#071019;}
+.btnRow{display:flex;flex-wrap:wrap;gap:10px}
+.btn.secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff;}
+.shots{margin:34px auto 0;max-width:900px;border:1px solid var(--line);border-radius:18px;padding:18px;background:rgba(255,255,255,.03);}
+.shots h2{margin:0 0 6px;font-size:24px}
+.shotGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}
+.shot{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:#000;min-height:220px}
+.shot img{width:100%;height:100%;display:block;object-fit:cover;filter:blur(6px) saturate(1.05) brightness(.84);transform:scale(1.03)}
+.shotTag{position:absolute;left:10px;bottom:10px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.45);font-size:12px;color:rgba(255,255,255,.88)}
+@media(max-width:820px){.shotGrid{grid-template-columns:1fr}}
+.footer{border-top:1px solid var(--line);padding:28px 0;margin-top:44px;color:rgba(255,255,255,.55);text-align:center;font-size:13px;}
+.footerLegal{margin-top:8px;color:rgba(255,255,255,.48);line-height:1.55;}
+</style>
+<link rel="stylesheet" href="/assets/cookie-consent.css">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/public-theme.css?v=20260216c">
+</head>
+<body>
+<div class="wrap">
+  <div class="nav">
+    <a href="applications.html">← Applications</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <div class="hero">
+    <img class="icon" src="assets/apps/fieldnexus-512.png" alt="FieldNexus icon" loading="lazy" decoding="async">
+    <h1>FieldNexus</h1>
+    <div class="badge">Pre-Release • In Development</div>
+    <div class="storeHint">Coming soon to the App Store</div>
+
+    <p>
+      FieldNexus is an Orion GLE field operations product focused on practical coordination for sites, teams, and delivery workflows.
+      Public release detail is being staged while the product remains in active build.
+    </p>
+    <p>
+      Website: <a href="https://fieldnexus.co.uk" target="_blank" rel="noopener" style="color:#fff;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35)">fieldnexus.co.uk</a>
+    </p>
+  </div>
+
+  <div class="shots">
+    <h2>Preview Screens</h2>
+    <p style="margin:0;color:rgba(255,255,255,.72)">Early interface previews are intentionally blurred.</p>
+    <div class="shotGrid">
+      <figure class="shot">
+        <img src="/assets/apps/fieldnexus/previews/fieldnexus-1.png" alt="FieldNexus preview 1" loading="lazy" decoding="async">
+        <figcaption class="shotTag">Dashboard Preview</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/assets/apps/fieldnexus/previews/fieldnexus-2.png" alt="FieldNexus preview 2" loading="lazy" decoding="async">
+        <figcaption class="shotTag">Workspace Preview</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="card">
+    <strong>Enquiries and legal</strong>
+    <p>
+      For website enquiries, early access questions, or product support,
+      contact Orion GLE.
+    </p>
+    <div class="btnRow">
+      <a class="btn secondary" href="/fieldnexus-privacy.html">Privacy Policy</a>
+      <a class="btn secondary" href="/fieldnexus-terms.html">Terms &amp; Conditions</a>
+      <a class="btn secondary" href="https://fieldnexus.co.uk" target="_blank" rel="noopener">Visit Website</a>
+      <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    © <span id="year"></span> Orion GLE Ltd
+    <div class="footerLegal">Legal: <a href="/fieldnexus-privacy.html">Privacy</a> • <a href="/fieldnexus-terms.html">Terms</a></div>
+    <div class="footerLegal">Company information: ORION GLE LTD (Company No. 16933963), registered in England and Wales</div>
+  </div>
+</div>
+<script>document.getElementById("year").textContent=new Date().getFullYear();</script>
+<script src="/assets/site-config.js"></script>
+<script src="/assets/analytics.js" defer></script>
+<script src="/assets/cookie-consent.js" defer></script>
+<script src="/assets/public-theme.js?v=20260216c" defer></script>
+</body>
+</html>
