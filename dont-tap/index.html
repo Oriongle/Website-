@@ -33,8 +33,8 @@ p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-heig
 .galleryCard{max-width:980px}
 .galleryGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
 .shot{margin:0;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.25)}
-.shot img{display:block;width:100%;height:auto;filter:blur(7px);transform:scale(1.02);transition:filter .25s ease,transform .25s ease}
-.shot:hover img{filter:blur(4px);transform:scale(1.01)}
+.shot img{display:block;width:100%;height:auto;transform:none;transition:transform .25s ease}
+.shot:hover img{transform:scale(1.01)}
 .shot figcaption{position:absolute;left:10px;bottom:10px;padding:6px 10px;border-radius:999px;font-size:12px;color:rgba(255,255,255,.86);background:rgba(5,7,13,.72);border:1px solid rgba(255,255,255,.16)}
 @media(max-width:780px){.galleryGrid{grid-template-columns:1fr}}
 .footer{border-top:1px solid var(--line);padding:26px 0;margin-top:44px;color:rgba(255,255,255,.55);text-align:center;font-size:13px;}
@@ -93,18 +93,18 @@ p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-heig
   </div>
 
   <div class="card galleryCard">
-    <strong>Preview Screens</strong>
+    <strong>App Store Screenshots</strong>
     <p style="margin:10px 0 0;color:rgba(255,255,255,.72)">
-      Early release visuals are intentionally blurred on the public page.
+      Live release screenshots from the current App Store version.
     </p>
     <div class="galleryGrid">
       <figure class="shot">
         <img src="/assets/apps/dont-tap/dont-tap-1.png" alt="Don't Tap preview screen 1" loading="lazy" decoding="async">
-        <figcaption>Gameplay Preview</figcaption>
+        <figcaption>Gameplay Screen</figcaption>
       </figure>
       <figure class="shot">
         <img src="/assets/apps/dont-tap/dont-tap-2.png" alt="Don't Tap preview screen 2" loading="lazy" decoding="async">
-        <figcaption>Gameplay Preview</figcaption>
+        <figcaption>Gameplay Screen</figcaption>
       </figure>
       <figure class="shot">
         <img src="/assets/apps/dont-tap/dont-tap-3.png" alt="Don't Tap preview screen 3" loading="lazy" decoding="async">
