@@ -480,10 +480,41 @@ form {
   font-weight: 600 !important;
 }
 
+.brandLockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin: 14px 0 18px;
+  padding: 12px 16px;
+  border: 1px solid rgba(157, 190, 226, 0.14);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(15, 28, 46, 0.46), rgba(10, 19, 33, 0.36));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
 .homeLogo {
-  width: min(720px, 90vw) !important;
-  max-width: 720px !important;
-  margin: 10px 0 8px !important;
+  width: 190px !important;
+  max-width: 42vw !important;
+  height: auto;
+  margin: 0 !important;
+  flex: 0 0 auto;
+}
+
+.brandLockupText {
+  display: grid;
+  gap: 4px;
+}
+
+.brandLockupText strong {
+  font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.brandLockupText span {
+  color: var(--muted-soft);
+  font-size: 13px;
 }
 
 .heroVisualMark {
@@ -659,8 +690,19 @@ textarea::placeholder {
     font-size: clamp(2.4rem, 11vw, 4rem) !important;
   }
 
+  .brandLockup {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 12px 14px;
+  }
+
   .homeLogo {
-    width: min(560px, 92vw) !important;
+    width: 148px !important;
+    max-width: 38vw !important;
+  }
+
+  .brandLockupText strong {
+    font-size: 1rem;
   }
 
   .card,
