@@ -4,229 +4,95 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Site Survey Pro — Orion GLE Ltd</title>
-
-<style>
-:root{
-  --bg:#05070d;
-  --text:#ffffff;
-  --muted:rgba(255,255,255,.72);
-  --line:rgba(255,255,255,.10);
-  --accent:#7c3aed;
-  --accent2:#22d3ee;
-  --max:1000px;
-}
-
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-
-.wrap{max-width:var(--max);margin:auto;padding:0 24px;}
-
-.nav{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:24px 0;
-  border-bottom:1px solid var(--line);
-}
-
-.nav a{
-  text-decoration:none;
-  color:rgba(255,255,255,.75);
-  font-size:14px;
-  padding:10px 14px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.03);
-}
-
-.hero{
-  padding:60px 0 40px;
-  text-align:center;
-}
-
-.icon{
-  width:120px;
-  height:120px;
-  border-radius:28px;
-  object-fit:cover;
-  border:1px solid rgba(255,255,255,.15);
-  box-shadow:0 30px 60px rgba(0,0,0,.6);
-}
-
-h1{margin:30px 0 10px;font-size:44px;}
-
-.badge{
-  display:inline-block;
-  margin-top:12px;
-  padding:6px 12px;
-  font-size:12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.15);
-  background:rgba(255,255,255,.04);
-  color:rgba(255,255,255,.7);
-}
-.storeHint{
-  display:inline-block;
-  margin-top:10px;
-  padding:7px 12px;
-  font-size:12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.16);
-  background:rgba(255,255,255,.02);
-  color:rgba(255,255,255,.82);
-}
-
-p{
-  max-width:720px;
-  margin:24px auto 0;
-  font-size:17px;
-  color:var(--muted);
-  line-height:1.7;
-}
-
-.card{
-  margin:40px auto 0;
-  max-width:720px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:24px;
-  background:rgba(255,255,255,.03);
-}
-
-.btn{
-  display:inline-flex;
-  margin-top:18px;
-  padding:14px 20px;
-  border-radius:14px;
-  text-decoration:none;
-  font-weight:700;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#071019;
-}
-.btnRow{display:flex;flex-wrap:wrap;gap:10px}
-.btn.secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff;}
-.storeBadge{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:54px;
-  padding:12px 18px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.16);
-  background:#000;
-  color:#fff;
-  text-decoration:none;
-  font-weight:700;
-  letter-spacing:.01em;
-  box-shadow:0 12px 30px rgba(0,0,0,.28);
-}
-.storeBadge small{display:block;font-size:11px;line-height:1.1;color:rgba(255,255,255,.76);font-weight:600;}
-.storeBadge strong{display:block;font-size:18px;line-height:1.1;color:#fff;}
-.storeBadge img{display:block;width:156px;max-width:100%;height:auto;}
-.shots{margin:34px auto 0;max-width:900px;border:1px solid var(--line);border-radius:18px;padding:18px;background:rgba(255,255,255,.03);}
-.shots h2{margin:0 0 6px;font-size:24px}
-.shotGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}
-.shot{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:#000;min-height:220px}
-.shot img{width:100%;height:100%;display:block;object-fit:cover;transform:none}
-.shotTag{position:absolute;left:10px;bottom:10px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.45);font-size:12px;color:rgba(255,255,255,.88)}
-@media(max-width:820px){
-  .wrap{padding:0 16px}
-  .nav{padding:16px 0;justify-content:center}
-  .hero{padding:34px 0 22px}
-  .icon{width:96px;height:96px;border-radius:24px}
-  h1{margin:20px 0 8px;font-size:34px;line-height:1.08}
-  p{font-size:15px;line-height:1.6}
-  .card{margin:22px auto 0;padding:16px}
-  .btnRow{flex-direction:column}
-  .btn,.btn.secondary,.storeBadge{width:100%;margin-top:0}
-  .shotGrid{grid-template-columns:1fr}
-}
-.footer{
-  border-top:1px solid var(--line);
-  padding:28px 0;
-  margin-top:44px;
-  color:rgba(255,255,255,.55);
-  text-align:center;
-  font-size:13px;
-}
-.footerLegal{
-  margin-top:8px;
-  color:rgba(255,255,255,.48);
-  line-height:1.55;
-}
-</style>
+<meta name="description" content="Site Survey Pro by Orion GLE Ltd — live on the App Store for structured site capture and field workflow support.">
 <link rel="stylesheet" href="/assets/cookie-consent.css">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/public-theme.css?v=20260216c">
+<link rel="stylesheet" href="/assets/public-theme.css?v=20260323d">
 </head>
-
 <body>
 <div class="wrap">
-
   <div class="nav">
-    <a href="applications.html">← Applications</a>
-    <a href="contact.html">Contact</a>
-  </div>
-
-  <div class="hero">
-    <img class="icon" src="assets/apps/site-survey-pro-512.jpg" alt="Site Survey Pro icon" loading="lazy" decoding="async">
-    <h1>Site Survey Pro</h1>
-    <div class="badge">Live on the App Store</div>
-    <div class="storeHint">Available now on the App Store</div>
-
-    <p>
-      Site Survey Pro is a practical field-focused application built for structured site capture,
-      survey records, and on-site operational workflows.
-    </p>
-    <div class="btnRow" style="justify-content:center;margin-top:16px">
-      <a class="appStoreBtn" href="https://apps.apple.com/us/app/site-survey-pro/id6760477100" target="_blank" rel="noopener" aria-label="Download Site Survey Pro on the App Store"><span class="appStoreIcon" aria-hidden="true"></span><span class="appStoreText"><small>Download on the</small><strong>App Store</strong></span></a>
+    <div class="navLinks">
+      <a href="/applications.html">Applications</a>
+      <a href="/support">Support</a>
+      <a href="/contact.html">Contact</a>
     </div>
   </div>
 
-  <div class="shots">
-    <h2>App Store Screenshots</h2>
-    <p style="margin:0;color:rgba(255,255,255,.72)">Live release screenshots from the current App Store version.</p>
-    <div class="shotGrid">
-      <figure class="shot">
-        <img src="/assets/apps/site-survey-pro/screenshots/site-survey-pro-live-1.png" alt="Site Survey Pro App Store screenshot 1" loading="lazy" decoding="async">
-        <figcaption class="shotTag">Site Overview</figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/assets/apps/site-survey-pro/screenshots/site-survey-pro-live-2.png" alt="Site Survey Pro App Store screenshot 2" loading="lazy" decoding="async">
-        <figcaption class="shotTag">Survey Record View</figcaption>
-      </figure>
+  <main class="appShell">
+    <section class="hero">
+      <div class="appHeroGrid alignStart">
+        <article class="appIntroCard">
+          <div class="appHeadline">
+            <img class="icon" src="/assets/apps/site-survey-pro-512.jpg" alt="Site Survey Pro icon" loading="lazy" decoding="async">
+            <div>
+              <span class="eyebrow">Live App</span>
+              <h1>Site Survey Pro</h1>
+              <div class="appMetaRow">
+                <span class="badge">Live on the App Store</span>
+                <span class="badge">Field tools</span>
+                <span class="badge">Operational workflow</span>
+              </div>
+            </div>
+          </div>
+          <p class="appLead">Site Survey Pro is a practical field-focused application built for structured site capture, survey records, and on-site operational workflows. The live release is available now through the App Store with support and legal pages already aligned.</p>
+          <div class="btnRow" style="margin-top:18px">
+            <a class="appStoreBtn" href="https://apps.apple.com/us/app/site-survey-pro/id6760477100" target="_blank" rel="noopener" aria-label="Download Site Survey Pro on the App Store"><span class="appStoreIcon" aria-hidden="true"></span><span class="appStoreText"><small>Download on the</small><strong>App Store</strong></span></a>
+            <a class="btn" href="/site-survey-pro-privacy.html">Privacy Policy</a>
+            <a class="btn" href="/site-survey-pro-terms.html">Terms &amp; Conditions</a>
+          </div>
+        </article>
+
+        <aside class="appSideCard">
+          <div class="sectionKicker">Highlights</div>
+          <div class="appSummaryGrid">
+            <div class="summaryTile"><strong>Field capture</strong><span>Designed for site records, structured survey detail, and practical on-site use.</span></div>
+            <div class="summaryTile"><strong>Workflow</strong><span>Built to support operational teams with clearer record keeping.</span></div>
+            <div class="summaryTile"><strong>Support</strong><span>Live support route and public legal coverage already in place.</span></div>
+            <div class="summaryTile"><strong>Release</strong><span>Available now through the App Store listing.</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="appGalleryCard">
+      <div class="sectionKicker">App Store Screenshots</div>
+      <h2 class="sectionTitle">Live release screens</h2>
+      <div class="appGalleryGrid">
+        <figure class="appShot"><img src="/assets/apps/site-survey-pro/screenshots/site-survey-pro-live-1.png" alt="Site Survey Pro site overview screen" loading="lazy" decoding="async"><figcaption>Site Overview</figcaption></figure>
+        <figure class="appShot"><img src="/assets/apps/site-survey-pro/screenshots/site-survey-pro-live-2.png" alt="Site Survey Pro survey record view" loading="lazy" decoding="async"><figcaption>Survey Record View</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="duoGrid">
+      <article class="appSupportCard">
+        <div class="sectionKicker">Legal and support</div>
+        <h2 class="sectionTitle">Need help with the live app?</h2>
+        <p>Privacy and terms on this page are aligned with the live App Store release. For field workflow questions or support issues, contact Orion GLE directly.</p>
+        <div class="tightActions">
+          <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
+          <a class="btn" href="/support">Support page</a>
+        </div>
+      </article>
+      <article class="appSupportCard">
+        <div class="sectionKicker">Operational use</div>
+        <h2 class="sectionTitle">Built for practical field work</h2>
+        <p>Site Survey Pro is positioned as a utility-led product, focused on clarity, record structure, and smoother operational handling in live use.</p>
+      </article>
+    </section>
+
+    <div class="footer">
+      © <span id="y"></span> Orion GLE Ltd •
+      <a href="/site-survey-pro-privacy.html">Privacy Policy</a> •
+      <a href="/site-survey-pro-terms.html">Terms &amp; Conditions</a>
+      <div class="footerLegal">Company information: ORION GLE LTD (Company No. 16933963), registered in England and Wales</div>
     </div>
-  </div>
-
-  <div class="card">
-    <strong>Legal and support</strong>
-    <p>
-      Privacy and terms on this page are aligned with the live app release.
-    </p>
-    <div class="btnRow">
-      <a class="appStoreBtn" href="https://apps.apple.com/us/app/site-survey-pro/id6760477100" target="_blank" rel="noopener" aria-label="Download Site Survey Pro on the App Store"><span class="appStoreIcon" aria-hidden="true"></span><span class="appStoreText"><small>Download on the</small><strong>App Store</strong></span></a>
-      <a class="btn secondary" href="/site-survey-pro-privacy.html">Privacy Policy</a>
-      <a class="btn secondary" href="/site-survey-pro-terms.html">Terms &amp; Conditions</a>
-      <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
-    </div>
-  </div>
-
-  <div class="footer">
-    © <span id="year"></span> Orion GLE Ltd
-    <div class="footerLegal">Legal: <a href="/site-survey-pro-privacy.html">Privacy</a> • <a href="/site-survey-pro-terms.html">Terms</a></div>
-    <div class="footerLegal">Company information: ORION GLE LTD (Company No. 16933963), registered in England and Wales</div>
-  </div>
-
+  </main>
 </div>
-<script>document.getElementById("year").textContent=new Date().getFullYear();</script>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
 <script src="/assets/site-config.js"></script>
 <script src="/assets/analytics.js" defer></script>
 <script src="/assets/cookie-consent.js" defer></script>
-<script src="/assets/public-theme.js?v=20260216c" defer></script>
+<script src="/assets/public-theme.js?v=20260323d" defer></script>
 </body>
 </html>

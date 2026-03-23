@@ -3,72 +3,104 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Client Status — Orion GLE Ltd</title>
+<title>Status — Orion GLE Ltd</title>
 <meta name="description" content="Client status and release readiness updates from Orion GLE Ltd.">
-<meta property="og:title" content="Client Status — Orion GLE Ltd">
-<meta property="og:description" content="High-level status updates for active product work.">
+<meta property="og:title" content="Status — Orion GLE Ltd">
+<meta property="og:description" content="High-level progress visibility for active product work.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://website-kappa-six-45.vercel.app/status.html">
-<meta property="og:image" content="https://website-kappa-six-45.vercel.app/assets/optimized/orion-logo-transparent-2400.png">
-<link rel="canonical" href="https://website-kappa-six-45.vercel.app/status.html">
+<meta property="og:url" content="https://oriongle.co.uk/status.html">
+<meta property="og:image" content="https://oriongle.co.uk/assets/optimized/orion-logo-transparent-2400-v2.png">
+<link rel="canonical" href="https://oriongle.co.uk/status.html">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/cookie-consent.css">
-<style>
-:root{--bg:#05070d;--text:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.10);--ok:#34d399;--warn:#f59e0b;--work:#60a5fa;--max:1080px}
-*{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
-.skip{position:absolute;left:-9999px;top:8px;background:#fff;color:#000;padding:8px 10px;border-radius:8px;text-decoration:none}.skip:focus{left:12px;z-index:10000}
-.wrap{max-width:var(--max);margin:0 auto;padding:0 22px}.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--line)}
-.brand img{height:40px}.links{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.links a{color:rgba(255,255,255,.78);text-decoration:none;font-size:14px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
-.hero{padding:46px 0 16px}h1{margin:0 0 10px;font-size:42px}.lead{margin:0;max-width:760px;color:var(--muted);line-height:1.7}
-.tableWrap{margin-top:18px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.03)}table{width:100%;border-collapse:collapse}
-th,td{text-align:left;padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px}th{font-size:12px;color:rgba(255,255,255,.62);text-transform:uppercase;letter-spacing:.05em}
-tr:last-child td{border-bottom:none}.badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700}.badge.ok{background:rgba(52,211,153,.16);color:var(--ok);border:1px solid rgba(52,211,153,.35)}.badge.work{background:rgba(96,165,250,.16);color:var(--work);border:1px solid rgba(96,165,250,.35)}.badge.warn{background:rgba(245,158,11,.16);color:var(--warn);border:1px solid rgba(245,158,11,.35)}
-.note{margin-top:16px;color:rgba(255,255,255,.6);font-size:13px;line-height:1.65}.actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}.btn{display:inline-flex;padding:10px 12px;border-radius:10px;text-decoration:none;border:1px solid var(--line);color:#fff;background:rgba(255,255,255,.03)}
-.footer{border-top:1px solid var(--line);padding:28px 0;margin-top:44px;color:rgba(255,255,255,.55);text-align:center;font-size:13px}.footerLegal{margin-top:8px;color:rgba(255,255,255,.48);line-height:1.55}
-</style>
-<link rel="stylesheet" href="/assets/public-theme.css?v=20260216c">
+<link rel="stylesheet" href="/assets/public-theme.css?v=20260323d">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="wrap">
   <div class="nav" aria-label="Primary">
-    <div class="links"><a href="index.html">Home</a><a href="applications.html">Applications</a><a href="updates.html">Updates</a><a href="/support">Support</a><a href="portal/login.html">Portal</a><a href="contact.html">Contact</a></div>
+    <div class="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="applications.html">Applications</a>
+      <a href="updates.html">Updates</a>
+      <a href="/support">Support</a>
+      <a href="portal/login.html">Portal</a>
+      <a href="contact.html">Contact</a>
+    </div>
   </div>
 
   <main id="main">
-    <section class="hero"><span class="eyebrow">Status</span><h1>Client Status Portal</h1><p class="lead">High-level progress visibility for active product work, release stages, and public-safe delivery status.</p></section>
-    <section class="tableWrap">
-      <table>
-        <thead><tr><th>Project</th><th>Phase</th><th>Status</th><th>Last Update</th><th>Next Milestone</th></tr></thead>
-        <tbody id="statusBody"><tr><td colspan="5">Loading status data...</td></tr></tbody>
-      </table>
+    <section class="hero">
+      <div class="heroSplit alignStart">
+        <div>
+          <span class="eyebrow">Status</span>
+          <h1>Public-safe project status with clearer release visibility.</h1>
+          <p class="heroLead">This page gives a high-level view of active work, release stage, and next milestone without exposing private project detail. Full account-specific information stays inside the portal.</p>
+        </div>
+        <aside class="heroPanel">
+          <div class="sectionKicker">Status guide</div>
+          <div class="statusMatrix">
+            <div class="summaryTile"><span class="statusPill live">Live</span><span>Released and publicly available.</span></div>
+            <div class="summaryTile"><span class="statusPill progress">In Progress</span><span>Active delivery, build, or implementation work.</span></div>
+            <div class="summaryTile"><span class="statusPill review">Pending Review</span><span>Awaiting approval, review, or release-stage signoff.</span></div>
+          </div>
+        </aside>
+      </div>
     </section>
-    <p class="note" id="statusMeta">This portal shows public-safe status only.</p>
-    <div class="actions"><a class="btn" href="portal/login.html">Portal Login</a><a class="btn" href="contact.html">Request private access</a><a class="btn" href="updates.html">Read latest updates</a></div>
+
+    <section class="pageSection">
+      <article class="statusCard callout">
+        <div class="sectionKicker">Status matrix</div>
+        <h2 class="sectionTitle">Current public project state</h2>
+        <p class="sectionIntro" id="statusMeta">This portal shows public-safe status only.</p>
+        <div class="statusTableWrap tableWrap">
+          <table class="statusTable">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Phase</th>
+                <th>Status</th>
+                <th>Last Update</th>
+                <th>Next Milestone</th>
+              </tr>
+            </thead>
+            <tbody id="statusBody"><tr><td colspan="5">Loading status data...</td></tr></tbody>
+          </table>
+        </div>
+        <div class="tightActions">
+          <a class="btn" href="portal/login.html">Portal Login</a>
+          <a class="btn" href="contact.html">Request private access</a>
+          <a class="btn" href="updates.html">Read latest updates</a>
+        </div>
+      </article>
+    </section>
   </main>
 
-  <div class="footer">© <span id="year"></span> Orion GLE Ltd<div class="footerLegal">Legal: <a href="/privacy.html">Privacy</a> • <a href="/cookies.html">Cookies</a> • <a href="/terms.html">Terms</a></div>
-    <div class="footerLegal">Company information: ORION GLE LTD (Company No. 16933963), registered in England and Wales</div></div>
+  <div class="footer">
+    © <span id="year"></span> Orion GLE Ltd
+    <div class="footerLegal">Legal: <a href="/privacy.html">Privacy</a> • <a href="/cookies.html">Cookies</a> • <a href="/terms.html">Terms</a></div>
+    <div class="footerLegal">Company information: ORION GLE LTD (Company No. 16933963), registered in England and Wales</div>
+  </div>
 </div>
 <script src="/assets/site-config.js"></script>
 <script src="/assets/analytics.js" defer></script>
 <script src="/assets/cookie-consent.js" defer></script>
 <script>
-function badgeClass(value){if(value==="live")return"ok";if(value==="pending_review")return"warn";return"work";}
-function badgeText(value){if(value==="live")return"Live";if(value==="pending_review")return"Pending Review";return"In Progress";}
+function badgeClass(value){if(value==='live')return'live';if(value==='pending_review')return'review';return'progress';}
+function badgeText(value){if(value==='live')return'Live';if(value==='pending_review')return'Pending Review';return'In Progress';}
 fetch('/api/status').then(r=>r.json()).then(data=>{
   const tbody=document.getElementById('statusBody');
   tbody.innerHTML='';
   (data.projects||[]).forEach(p=>{
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${p.name}</td><td>${p.phase}</td><td><span class="badge ${badgeClass(p.status)}">${badgeText(p.status)}</span></td><td>${p.last_update}</td><td>${p.next_milestone}</td>`;
+    tr.innerHTML=`<td>${p.name}</td><td>${p.phase}</td><td><span class="statusPill ${badgeClass(p.status)}">${badgeText(p.status)}</span></td><td>${p.last_update}</td><td>${p.next_milestone}</td>`;
     tbody.appendChild(tr);
   });
   document.getElementById('statusMeta').textContent='Last status update: '+(data.updated_at||'N/A');
 }).catch(()=>{document.getElementById('statusBody').innerHTML='<tr><td colspan="5">Unable to load status data.</td></tr>';});
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
-<script src="/assets/public-theme.js?v=20260216c" defer></script>
+<script src="/assets/public-theme.js?v=20260323d" defer></script>
 </body>
 </html>

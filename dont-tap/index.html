@@ -5,229 +5,103 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Don't Tap — Orion GLE Ltd</title>
 <meta name="description" content="Don't Tap by Orion GLE Ltd — live on the App Store, built around reflex timing, streaks, and level progression.">
-
-<style>
-:root{--bg:#05070d;--text:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.10);--a1:#7c3aed;--a2:#22d3ee;--max:1000px;}
-*{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);}
-.wrap{max-width:var(--max);margin:auto;padding:0 24px;}
-.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:22px 0;border-bottom:1px solid var(--line);}
-.nav a{color:rgba(255,255,255,.78);text-decoration:none;font-size:14px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);}
-.nav a:hover{border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.05);}
-.navRight{position:relative;display:flex;align-items:center;gap:10px}
-.settingsBtn{width:42px;height:42px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff;font-size:18px;cursor:pointer}
-.settingsBtn:hover{border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.05)}
-.settingsMenu{position:absolute;top:50px;right:0;min-width:240px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#0b111d;display:none;z-index:40}
-.settingsMenu.open{display:block}
-.settingsMenu a{display:block;padding:9px 10px;border-radius:8px;color:rgba(255,255,255,.82);text-decoration:none;font-size:14px}
-.settingsMenu a:hover{background:rgba(255,255,255,.06);color:#fff}
-.hero{text-align:center;padding:56px 0 36px;}
-.icon{width:120px;height:120px;border-radius:28px;object-fit:cover;border:1px solid rgba(255,255,255,.15);box-shadow:0 30px 60px rgba(0,0,0,.6);}
-h1{margin:28px 0 8px;font-size:44px;}
-.badge{display:inline-block;margin-top:10px;padding:6px 12px;font-size:12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.7);}
-p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-height:1.7;}
-.card{margin:34px auto 0;max-width:760px;border:1px solid var(--line);border-radius:18px;padding:18px;background:rgba(255,255,255,.03);}
-.btn{display:inline-flex;margin-top:14px;gap:10px;align-items:center;justify-content:center;padding:12px 14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--a1),var(--a2));color:#071019;font-weight:800;text-decoration:none;}
-.btnRow{display:flex;flex-wrap:wrap;gap:10px}
-.btn.secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff;}
-.storeBadge{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:54px;
-  padding:12px 18px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.16);
-  background:#000;
-  color:#fff;
-  text-decoration:none;
-  font-weight:700;
-  letter-spacing:.01em;
-  box-shadow:0 12px 30px rgba(0,0,0,.28);
-}
-.storeBadge small{
-  display:block;
-  font-size:11px;
-  line-height:1.1;
-  color:rgba(255,255,255,.76);
-  font-weight:600;
-}
-.storeBadge strong{
-  display:block;
-  font-size:18px;
-  line-height:1.1;
-  color:#fff;
-}
-.storeBadge img{display:block;width:156px;max-width:100%;height:auto;}
-.galleryCard{max-width:980px}
-.galleryGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
-.shot{margin:0;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.25)}
-.shot img{display:block;width:100%;height:auto;transform:none;transition:transform .25s ease}
-.shot:hover img{transform:scale(1.01)}
-.shot figcaption{position:absolute;left:10px;bottom:10px;padding:6px 10px;border-radius:999px;font-size:12px;color:rgba(255,255,255,.86);background:rgba(5,7,13,.72);border:1px solid rgba(255,255,255,.16)}
-@media(max-width:780px){
-  .wrap{padding:0 16px}
-  .nav{padding:16px 0;justify-content:center}
-  .navRight{width:100%;justify-content:center}
-  .hero{padding:34px 0 22px}
-  .icon{width:96px;height:96px;border-radius:24px}
-  h1{margin:20px 0 8px;font-size:34px;line-height:1.08}
-  p{font-size:15px;line-height:1.6}
-  .card{margin:22px auto 0;padding:16px}
-  .btnRow{flex-direction:column}
-  .btn,.btn.secondary,.storeBadge{width:100%;margin-top:0}
-  .galleryGrid{grid-template-columns:1fr}
-}
-.footer{border-top:1px solid var(--line);padding:26px 0;margin-top:44px;color:rgba(255,255,255,.55);text-align:center;font-size:13px;}
-.footer a{color:rgba(255,255,255,.75);text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35)}
-.footer a:hover{color:#fff}
-.footerLegal{margin-top:8px;color:rgba(255,255,255,.48);line-height:1.55;}
-</style>
 <link rel="stylesheet" href="/assets/cookie-consent.css">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/public-theme.css?v=20260216c">
+<link rel="stylesheet" href="/assets/public-theme.css?v=20260323d">
 </head>
 <body>
 <div class="wrap">
   <div class="nav">
-    <a href="/applications.html">← Applications</a>
-    <div class="navRight">
+    <div class="navLinks">
+      <a href="/applications.html">Applications</a>
+      <a href="/support">Support</a>
       <a href="/contact.html">Contact</a>
-      <button class="settingsBtn" id="settingsBtn" type="button" aria-label="Settings" aria-haspopup="true" aria-expanded="false">⚙</button>
-      <div class="settingsMenu" id="settingsMenu" role="menu" aria-label="Don't Tap settings menu">
-        <a href="/dont-tap/privacy.html" role="menuitem">Privacy Policy</a>
-        <a href="/dont-tap/terms.html" role="menuitem">Terms &amp; Conditions</a>
-        <a href="#restore" role="menuitem">Restore Purchases</a>
-        <a href="#settings" role="menuitem">Standard Settings</a>
-        <a href="/cookies.html" role="menuitem">Privacy Settings</a>
+    </div>
+  </div>
+
+  <main class="appShell">
+    <section class="hero">
+      <div class="appHeroGrid alignStart">
+        <article class="appIntroCard">
+          <div class="appHeadline">
+            <img class="icon" src="/assets/apps/dont-tap-512.png" alt="Don't Tap icon" loading="lazy" decoding="async">
+            <div>
+              <span class="eyebrow">Live App</span>
+              <h1>Don't Tap</h1>
+              <div class="appMetaRow">
+                <span class="badge">Live on the App Store</span>
+                <span class="badge">Arcade</span>
+                <span class="badge">Precision timing</span>
+              </div>
+            </div>
+          </div>
+          <p class="appLead">Don't Tap is a live reflex and timing game built around precision taps, fast reactions, streak tracking, and level-based progression. The current release is now available on the App Store with gameplay, restore purchases support, and aligned legal pages.</p>
+          <div class="btnRow" style="margin-top:18px">
+            <a class="appStoreBtn" href="https://apps.apple.com/gb/app/dont-tap/id6760237498" target="_blank" rel="noopener" aria-label="Download Don't Tap on the App Store"><span class="appStoreIcon" aria-hidden="true"></span><span class="appStoreText"><small>Download on the</small><strong>App Store</strong></span></a>
+            <a class="btn" href="/dont-tap/privacy.html">Privacy Policy</a>
+            <a class="btn" href="/dont-tap/terms.html">Terms &amp; Conditions</a>
+          </div>
+        </article>
+
+        <aside class="appSideCard">
+          <div class="sectionKicker">Highlights</div>
+          <div class="appSummaryGrid">
+            <div class="summaryTile"><strong>Core loop</strong><span>Fast one-tap gameplay focused on timing and repeatability.</span></div>
+            <div class="summaryTile"><strong>Progression</strong><span>Level advancement, streak tracking, and stronger runs over time.</span></div>
+            <div class="summaryTile"><strong>Support</strong><span>Restore purchase help and direct email support available.</span></div>
+            <div class="summaryTile"><strong>Release</strong><span>Public App Store release with live product pages and legal links.</span></div>
+          </div>
+        </aside>
       </div>
+    </section>
+
+    <section class="appGalleryCard">
+      <div class="sectionKicker">App Store Screenshots</div>
+      <h2 class="sectionTitle">Live release screens</h2>
+      <div class="appGalleryGrid">
+        <figure class="appShot"><img src="/assets/apps/dont-tap/dont-tap-1.png" alt="Don't Tap gameplay screen" loading="lazy" decoding="async"><figcaption>Gameplay Screen</figcaption></figure>
+        <figure class="appShot"><img src="/assets/apps/dont-tap/dont-tap-2.png" alt="Don't Tap gameplay screen 2" loading="lazy" decoding="async"><figcaption>Gameplay Screen</figcaption></figure>
+        <figure class="appShot"><img src="/assets/apps/dont-tap/dont-tap-3.png" alt="Don't Tap summary screen" loading="lazy" decoding="async"><figcaption>Session Summary</figcaption></figure>
+        <figure class="appShot"><img src="/assets/apps/dont-tap/dont-tap-4.png" alt="Don't Tap main screen" loading="lazy" decoding="async"><figcaption>Main Screen</figcaption></figure>
+        <figure class="appShot"><img src="/assets/apps/dont-tap/dont-tap-5.png" alt="Don't Tap overlay screen" loading="lazy" decoding="async"><figcaption>Progress Overlay</figcaption></figure>
+        <figure class="appShot"><img src="/assets/apps/dont-tap/dont-tap-6.png" alt="Don't Tap overlay screen 2" loading="lazy" decoding="async"><figcaption>Progress Overlay</figcaption></figure>
+        <figure class="appShot"><img src="/assets/apps/dont-tap/dont-tap-7.png" alt="Don't Tap run start screen" loading="lazy" decoding="async"><figcaption>Run Start</figcaption></figure>
+        <figure class="appShot"><img src="/assets/apps/dont-tap/dont-tap-8.png" alt="Don't Tap loading sequence" loading="lazy" decoding="async"><figcaption>Loading Sequence</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="duoGrid">
+      <article class="appSupportCard">
+        <div class="sectionKicker">Legal and support</div>
+        <h2 class="sectionTitle">Need help with the live app?</h2>
+        <p>Privacy and terms on this page are aligned to the live app release. For support, contact Orion GLE directly.</p>
+        <div class="tightActions">
+          <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
+          <a class="btn" href="/support">Support page</a>
+        </div>
+      </article>
+      <article class="appSupportCard">
+        <div class="sectionKicker">Restore Purchases</div>
+        <h2 class="sectionTitle">Purchase recovery route</h2>
+        <p>To restore previous App Store purchases, open the in-app settings and tap <strong>Restore Purchases</strong>. If restore does not complete, email support with your Apple purchase details.</p>
+        <div class="tightActions">
+          <a class="btn" href="mailto:support@oriongle.co.uk?subject=Don't%20Tap%20Restore%20Purchases%20Support">Restore Support</a>
+        </div>
+      </article>
+    </section>
+
+    <div class="footer">
+      © <span id="y"></span> Orion GLE Ltd •
+      <a href="/dont-tap/privacy.html">Privacy Policy</a> •
+      <a href="/dont-tap/terms.html">Terms &amp; Conditions</a>
+      <div class="footerLegal">Company information: ORION GLE LTD (Company No. 16933963), registered in England and Wales</div>
     </div>
-  </div>
-
-  <div class="hero">
-    <img class="icon" src="/assets/apps/dont-tap-512.png" alt="Don't Tap icon" loading="lazy" decoding="async">
-    <h1>Don't Tap</h1>
-    <div class="badge">Live on the App Store</div>
-    <p>
-      Don't Tap is a live reflex and timing game built around precision taps, fast reactions,
-      score progression, streak tracking, and level advancement.
-    </p>
-    <p>
-      The current release is now available on the App Store with core gameplay, progression,
-      restore purchases support, and legal pages aligned to the in-app policy text.
-    </p>
-    <div class="btnRow" style="justify-content:center;margin-top:16px">
-      <a class="appStoreBtn" href="https://apps.apple.com/gb/app/dont-tap/id6760237498" target="_blank" rel="noopener" aria-label="Download Don't Tap on the App Store"><span class="appStoreIcon" aria-hidden="true"></span><span class="appStoreText"><small>Download on the</small><strong>App Store</strong></span></a>
-    </div>
-  </div>
-
-  <div class="card">
-    <strong>Legal and support</strong>
-    <p style="margin:10px 0 0;color:rgba(255,255,255,.72)">
-      Privacy and terms on this page are aligned to the app legal content.
-    </p>
-    <div class="btnRow" style="margin-top:12px">
-      <a class="appStoreBtn" href="https://apps.apple.com/gb/app/dont-tap/id6760237498" target="_blank" rel="noopener" aria-label="Download Don't Tap on the App Store"><span class="appStoreIcon" aria-hidden="true"></span><span class="appStoreText"><small>Download on the</small><strong>App Store</strong></span></a>
-      <a class="btn secondary" href="/dont-tap/privacy.html">Privacy Policy</a>
-      <a class="btn secondary" href="/dont-tap/terms.html">Terms &amp; Conditions</a>
-      <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
-    </div>
-  </div>
-
-  <div class="card galleryCard">
-    <strong>App Store Screenshots</strong>
-    <p style="margin:10px 0 0;color:rgba(255,255,255,.72)">
-      Live release screenshots from the current App Store version.
-    </p>
-    <div class="galleryGrid">
-      <figure class="shot">
-        <img src="/assets/apps/dont-tap/dont-tap-1.png" alt="Don't Tap preview screen 1" loading="lazy" decoding="async">
-        <figcaption>Gameplay Screen</figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/assets/apps/dont-tap/dont-tap-2.png" alt="Don't Tap preview screen 2" loading="lazy" decoding="async">
-        <figcaption>Gameplay Screen</figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/assets/apps/dont-tap/dont-tap-3.png" alt="Don't Tap preview screen 3" loading="lazy" decoding="async">
-        <figcaption>Session Summary</figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/assets/apps/dont-tap/dont-tap-4.png" alt="Don't Tap preview screen 4" loading="lazy" decoding="async">
-        <figcaption>Main Screen</figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/assets/apps/dont-tap/dont-tap-5.png" alt="Don't Tap preview screen 5" loading="lazy" decoding="async">
-        <figcaption>Progress Overlay</figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/assets/apps/dont-tap/dont-tap-6.png" alt="Don't Tap preview screen 6" loading="lazy" decoding="async">
-        <figcaption>Progress Overlay</figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/assets/apps/dont-tap/dont-tap-7.png" alt="Don't Tap preview screen 7" loading="lazy" decoding="async">
-        <figcaption>Run Start</figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/assets/apps/dont-tap/dont-tap-8.png" alt="Don't Tap preview screen 8" loading="lazy" decoding="async">
-        <figcaption>Loading Sequence</figcaption>
-      </figure>
-    </div>
-  </div>
-
-  <div class="card" id="settings">
-    <strong>Standard Settings</strong>
-    <p style="margin:10px 0 0;color:rgba(255,255,255,.72)">
-      In-app settings include:
-    </p>
-    <p style="margin:10px 0 0;color:rgba(255,255,255,.72)">
-      Sound, haptics, gameplay preferences, restore purchases, and legal links.
-    </p>
-  </div>
-
-  <div class="card" id="restore">
-    <strong>Restore Purchases</strong>
-    <p style="margin:10px 0 0;color:rgba(255,255,255,.72)">
-      To restore previous App Store purchases, open the in-app settings and tap <strong>Restore Purchases</strong>.
-    </p>
-    <p style="margin:10px 0 0;color:rgba(255,255,255,.72)">
-      If restore does not complete, contact support with your Apple ID purchase receipt details.
-    </p>
-    <a class="btn" href="mailto:support@oriongle.co.uk?subject=Don't%20Tap%20Restore%20Purchases%20Support">Restore Support</a>
-  </div>
-
-  <div class="footer">
-    © <span id="y"></span> Orion GLE Ltd •
-    <a href="/dont-tap/privacy.html">Privacy Policy</a> •
-    <a href="/dont-tap/terms.html">Terms &amp; Conditions</a>
-    <div class="footerLegal">Company information: ORION GLE LTD (Company No. 16933963), registered in England and Wales</div>
-  </div>
+  </main>
 </div>
-
-<script>document.getElementById("y").textContent=new Date().getFullYear();</script>
-<script>
-const settingsBtn = document.getElementById("settingsBtn");
-const settingsMenu = document.getElementById("settingsMenu");
-settingsBtn.addEventListener("click", function(){
-  const isOpen = settingsMenu.classList.toggle("open");
-  settingsBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
-});
-document.addEventListener("click", function(e){
-  if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) {
-    settingsMenu.classList.remove("open");
-    settingsBtn.setAttribute("aria-expanded", "false");
-  }
-});
-document.addEventListener("keydown", function(e){
-  if (e.key === "Escape") {
-    settingsMenu.classList.remove("open");
-    settingsBtn.setAttribute("aria-expanded", "false");
-  }
-});
-</script>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
 <script src="/assets/site-config.js"></script>
 <script src="/assets/analytics.js" defer></script>
 <script src="/assets/cookie-consent.js" defer></script>
-<script src="/assets/public-theme.js?v=20260216c" defer></script>
+<script src="/assets/public-theme.js?v=20260323d" defer></script>
 </body>
 </html>
