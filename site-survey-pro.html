@@ -114,7 +114,7 @@ p{
 .shots h2{margin:0 0 6px;font-size:24px}
 .shotGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}
 .shot{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:#000;min-height:220px}
-.shot img{width:100%;height:100%;display:block;object-fit:cover;filter:blur(6px) saturate(1.05) brightness(.84);transform:scale(1.03)}
+.shot img{width:100%;height:100%;display:block;object-fit:cover;transform:none}
 .shotTag{position:absolute;left:10px;bottom:10px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.45);font-size:12px;color:rgba(255,255,255,.88)}
 @media(max-width:820px){.shotGrid{grid-template-columns:1fr}}
 .footer{
@@ -147,37 +147,40 @@ p{
   <div class="hero">
     <img class="icon" src="assets/apps/site-survey-pro-512.jpg" alt="Site Survey Pro icon" loading="lazy" decoding="async">
     <h1>Site Survey Pro</h1>
-    <div class="badge">Pre-Release • In Development</div>
-    <div class="storeHint">Coming soon to the App Store</div>
+    <div class="badge">Live on the App Store</div>
+    <div class="storeHint">Available now on the App Store</div>
 
     <p>
-      Site Survey Pro is a practical field-focused application currently in active development.
-      Detailed capabilities will be shared upon public release.
+      Site Survey Pro is a practical field-focused application built for structured site capture,
+      survey records, and on-site operational workflows.
     </p>
+    <div class="btnRow" style="justify-content:center;margin-top:16px">
+      <a class="btn" href="https://apps.apple.com/us/app/site-survey-pro/id6760477100" target="_blank" rel="noopener">View on the App Store</a>
+    </div>
   </div>
 
   <div class="shots">
-    <h2>Preview Screens</h2>
-    <p style="margin:0;color:rgba(255,255,255,.72)">Early interface previews are intentionally blurred.</p>
+    <h2>App Store Screenshots</h2>
+    <p style="margin:0;color:rgba(255,255,255,.72)">Live release screenshots from the current App Store version.</p>
     <div class="shotGrid">
       <figure class="shot">
-        <img src="/assets/apps/site-survey-pro/previews/site-survey-pro-1.png" alt="Site Survey Pro preview 1" loading="lazy" decoding="async">
-        <figcaption class="shotTag">Field Interface</figcaption>
+        <img src="/assets/apps/site-survey-pro/screenshots/site-survey-pro-live-1.png" alt="Site Survey Pro App Store screenshot 1" loading="lazy" decoding="async">
+        <figcaption class="shotTag">Site Overview</figcaption>
       </figure>
       <figure class="shot">
-        <img src="/assets/apps/site-survey-pro/previews/site-survey-pro-2.png" alt="Site Survey Pro preview 2" loading="lazy" decoding="async">
-        <figcaption class="shotTag">Data Capture View</figcaption>
+        <img src="/assets/apps/site-survey-pro/screenshots/site-survey-pro-live-2.png" alt="Site Survey Pro App Store screenshot 2" loading="lazy" decoding="async">
+        <figcaption class="shotTag">Survey Record View</figcaption>
       </figure>
     </div>
   </div>
 
   <div class="card">
-    <strong>Early access and legal</strong>
+    <strong>Legal and support</strong>
     <p>
-      For beta participation or partnership discussions,
-      contact Orion GLE directly.
+      Privacy and terms on this page are aligned with the live app release.
     </p>
     <div class="btnRow">
+      <a class="btn secondary" href="https://apps.apple.com/us/app/site-survey-pro/id6760477100" target="_blank" rel="noopener">App Store</a>
       <a class="btn secondary" href="/site-survey-pro-privacy.html">Privacy Policy</a>
       <a class="btn secondary" href="/site-survey-pro-terms.html">Terms &amp; Conditions</a>
       <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
