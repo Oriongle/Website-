@@ -30,13 +30,53 @@ p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-heig
 .btn{display:inline-flex;margin-top:14px;gap:10px;align-items:center;justify-content:center;padding:12px 14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--a1),var(--a2));color:#071019;font-weight:800;text-decoration:none;}
 .btnRow{display:flex;flex-wrap:wrap;gap:10px}
 .btn.secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff;}
+.storeBadge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:54px;
+  padding:12px 18px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.16);
+  background:#000;
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  letter-spacing:.01em;
+  box-shadow:0 12px 30px rgba(0,0,0,.28);
+}
+.storeBadge small{
+  display:block;
+  font-size:11px;
+  line-height:1.1;
+  color:rgba(255,255,255,.76);
+  font-weight:600;
+}
+.storeBadge strong{
+  display:block;
+  font-size:18px;
+  line-height:1.1;
+  color:#fff;
+}
 .galleryCard{max-width:980px}
 .galleryGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
 .shot{margin:0;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.25)}
 .shot img{display:block;width:100%;height:auto;transform:none;transition:transform .25s ease}
 .shot:hover img{transform:scale(1.01)}
 .shot figcaption{position:absolute;left:10px;bottom:10px;padding:6px 10px;border-radius:999px;font-size:12px;color:rgba(255,255,255,.86);background:rgba(5,7,13,.72);border:1px solid rgba(255,255,255,.16)}
-@media(max-width:780px){.galleryGrid{grid-template-columns:1fr}}
+@media(max-width:780px){
+  .wrap{padding:0 16px}
+  .nav{padding:16px 0;justify-content:center}
+  .navRight{width:100%;justify-content:center}
+  .hero{padding:34px 0 22px}
+  .icon{width:96px;height:96px;border-radius:24px}
+  h1{margin:20px 0 8px;font-size:34px;line-height:1.08}
+  p{font-size:15px;line-height:1.6}
+  .card{margin:22px auto 0;padding:16px}
+  .btnRow{flex-direction:column}
+  .btn,.btn.secondary,.storeBadge{width:100%;margin-top:0}
+  .galleryGrid{grid-template-columns:1fr}
+}
 .footer{border-top:1px solid var(--line);padding:26px 0;margin-top:44px;color:rgba(255,255,255,.55);text-align:center;font-size:13px;}
 .footer a{color:rgba(255,255,255,.75);text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35)}
 .footer a:hover{color:#fff}
@@ -76,7 +116,9 @@ p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-heig
       restore purchases support, and legal pages aligned to the in-app policy text.
     </p>
     <div class="btnRow" style="justify-content:center;margin-top:16px">
-      <a class="btn" href="https://apps.apple.com/gb/app/dont-tap/id6760237498" target="_blank" rel="noopener">View on the App Store</a>
+      <a class="storeBadge" href="https://apps.apple.com/gb/app/dont-tap/id6760237498" target="_blank" rel="noopener" aria-label="Download Don't Tap on the App Store">
+        <span><small>Download on the</small><strong>App Store</strong></span>
+      </a>
     </div>
   </div>
 
@@ -86,7 +128,9 @@ p{max-width:760px;margin:18px auto 0;font-size:17px;color:var(--muted);line-heig
       Privacy and terms on this page are aligned to the app legal content.
     </p>
     <div class="btnRow" style="margin-top:12px">
-      <a class="btn secondary" href="https://apps.apple.com/gb/app/dont-tap/id6760237498" target="_blank" rel="noopener">App Store</a>
+      <a class="storeBadge" href="https://apps.apple.com/gb/app/dont-tap/id6760237498" target="_blank" rel="noopener" aria-label="Open Don't Tap in the App Store">
+        <span><small>Download on the</small><strong>App Store</strong></span>
+      </a>
       <a class="btn secondary" href="/dont-tap/privacy.html">Privacy Policy</a>
       <a class="btn secondary" href="/dont-tap/terms.html">Terms &amp; Conditions</a>
       <a class="btn" href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a>
