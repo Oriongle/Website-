@@ -4,147 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Applications — Orion GLE Ltd</title>
-<meta name="description" content="Orion GLE Ltd application portfolio — pre-release previews." />
+<meta name="description" content="Orion GLE Ltd application portfolio, including live App Store releases and upcoming launches." />
 <meta property="og:title" content="Applications — Orion GLE Ltd">
-<meta property="og:description" content="Early-stage products in development from Orion GLE Ltd.">
+<meta property="og:description" content="Live App Store products and upcoming Orion GLE launches.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://website-kappa-six-45.vercel.app/applications.html">
-<meta property="og:image" content="https://website-kappa-six-45.vercel.app/assets/optimized/orion-logo-transparent-2400.png">
-<link rel="canonical" href="https://website-kappa-six-45.vercel.app/applications.html">
-<link rel="stylesheet" href="/assets/cookie-consent.css">
-
-<style>
-:root{
-  --bg:#05070d; --text:#fff; --muted:rgba(255,255,255,.72);
-  --line:rgba(255,255,255,.10); --a1:#7c3aed; --a2:#22d3ee; --max:1100px;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);}
-.skip{position:absolute;left:-9999px;top:8px;background:#fff;color:#000;padding:8px 10px;border-radius:8px;text-decoration:none}
-.skip:focus{left:12px;z-index:10000}
-a:focus,button:focus{outline:2px solid #22d3ee;outline-offset:2px}
-.wrap{max-width:var(--max);margin:0 auto;padding:0 22px;}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--line);}
-.brand{display:flex;gap:12px;align-items:center;text-decoration:none;color:var(--text);}
-.brand img{height:40px;width:auto;display:block}
-.links{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.links a{color:rgba(255,255,255,.78);text-decoration:none;font-size:14px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);}
-.links a:hover{border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.05);}
-
-.hero{padding:44px 0 14px;}
-h1{margin:0 0 10px;font-size:40px;}
-p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
-
-.grid{display:grid;gap:14px;margin-top:18px;}
-@media(min-width:900px){.grid{grid-template-columns:repeat(3,1fr);}}
-.sectionBlock{margin-top:28px;}
-.sectionHeader{margin:0 0 10px;}
-.sectionTitle{margin:0;font-size:24px;line-height:1.15;}
-.sectionIntro{margin:6px 0 0;color:rgba(255,255,255,.62);font-size:14px;line-height:1.65;}
-
-.card{
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:rgba(255,255,255,.03);
-  padding:18px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  min-height: 260px;
-}
-.top{display:flex;gap:12px;align-items:center;}
-.icon{
-  width:54px;height:54px;border-radius:14px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.04);
-  object-fit:cover;
-}
-.titleRow{display:flex;flex-direction:column;gap:2px;}
-.card h3{margin:0;font-size:18px;}
-.meta{color:rgba(255,255,255,.55);font-size:12px;}
-.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.6;}
-
-.badgeRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px;}
-.badge{
-  font-size:12px;color:rgba(255,255,255,.72);
-  padding:6px 10px;border-radius:999px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.03);
-}
-
-.btnRow{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}
-.btn{
-  text-decoration:none;
-  display:inline-flex;align-items:center;justify-content:center;
-  padding:11px 14px;border-radius:12px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.04);
-  color:var(--text);
-  font-weight:600;
-}
-.btn.primary{border:none;background:linear-gradient(135deg,var(--a1),var(--a2));color:#071019;}
-.btn:hover{transform:translateY(-1px);}
-.storeBadge{
-  text-decoration:none;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:0;
-  border:none;
-  background:transparent;
-  box-shadow:none;
-}
-.storeBadge small{
-  display:block;
-  font-size:11px;
-  line-height:1.1;
-  color:rgba(255,255,255,.76);
-  font-weight:600;
-}
-.storeBadge strong{
-  display:block;
-  font-size:18px;
-  line-height:1.1;
-  color:#fff;
-}
-.storeBadge img{display:block;width:156px;max-width:100%;height:auto;}
-
-.note{
-  margin-top:18px;
-  color:rgba(255,255,255,.55);
-  font-size:13px;
-}
-.footer{border-top:1px solid var(--line);padding:28px 0;margin-top:44px;color:rgba(255,255,255,.55);text-align:center;font-size:13px;}
-.footerLegal{margin-top:8px;color:rgba(255,255,255,.48);line-height:1.55;}
-@media(max-width:780px){
-  .wrap{padding:0 16px;}
-  .nav{padding:16px 0;justify-content:center;}
-  .links{justify-content:center;}
-  .hero{padding:30px 0 10px;}
-  h1{font-size:34px;line-height:1.08;}
-  p{font-size:15px;line-height:1.6;}
-  .sectionBlock{margin-top:22px;}
-  .sectionTitle{font-size:22px;}
-  .sectionIntro{font-size:13px;line-height:1.55;}
-  .grid{gap:12px;margin-top:14px;}
-  .card{padding:16px;min-height:auto;gap:10px;}
-  .top{align-items:flex-start;}
-  .icon{width:50px;height:50px;border-radius:12px;}
-  .card h3{font-size:17px;}
-  .badgeRow{gap:6px;}
-  .btnRow{flex-direction:column;}
-  .btn,.storeBadge{width:100%;}
-}
-</style>
+<meta property="og:url" content="https://oriongle.co.uk/applications.html">
+<meta property="og:image" content="https://oriongle.co.uk/assets/optimized/orion-logo-transparent-2400-v2.png">
+<link rel="canonical" href="https://oriongle.co.uk/applications.html">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/public-theme.css?v=20260216c">
+<link rel="stylesheet" href="/assets/cookie-consent.css">
+<link rel="stylesheet" href="/assets/public-theme.css?v=20260323a">
 </head>
-
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="wrap">
   <div class="nav">
-    <div class="links">
+    <div class="navLinks">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="updates.html">Updates</a>
@@ -155,44 +30,44 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
   </div>
 
   <main id="main">
-  <div class="hero">
-    <span class="eyebrow">Applications</span>
-    <h1>Applications</h1>
-    <p>Explore Orion GLE products by release stage, from live App Store releases to products in review and upcoming launches.</p>
-    <!-- Refresh marker: applications buttons sync -->
-
-    <section class="sectionBlock" aria-labelledby="apps-spotlight">
-      <div class="sectionHeader">
-        <h2 class="sectionTitle" id="apps-spotlight">Studio Spotlight</h2>
-        <p class="sectionIntro">A mix of live App Store releases and products moving toward launch across workflow, focus, field, and consumer categories.</p>
-      </div>
-      <div class="metricGrid">
-        <article class="card callout featurePanel">
-          <div class="meta">Released</div>
-          <h3 class="cardTitle">App Store products with support pages in place</h3>
-          <p>Live launches are linked directly to the App Store and backed by support, legal pages, and release screenshots.</p>
-        </article>
-        <article class="card featurePanel">
-          <div class="meta">Pipeline</div>
-          <h3 class="cardTitle">Products in review and staged release</h3>
-          <p>Upcoming launches stay visible while still keeping the level of detail appropriate for the current stage.</p>
-        </article>
-        <article class="card featurePanel">
-          <div class="meta">Approach</div>
-          <h3 class="cardTitle">One product system, not disconnected pages</h3>
-          <p>Each product sits inside the same Orion GLE support, release, and legal structure for consistency and trust.</p>
-        </article>
+    <section class="hero">
+      <div class="heroSplit alignStart">
+        <div>
+          <span class="eyebrow">Applications</span>
+          <h1>Released products first. Upcoming launches clearly staged.</h1>
+          <p class="heroLead">The Orion GLE product range now sits in a cleaner release structure, with live App Store apps grouped separately from products still moving through build, review, or staging.</p>
+          <div class="quickPills">
+            <span class="quickPill">Live products</span>
+            <span class="quickPill">App Store links</span>
+            <span class="quickPill">Support and legal pages</span>
+          </div>
+        </div>
+        <aside class="heroPanel">
+          <div class="sectionKicker">At a glance</div>
+          <div class="visualStack">
+            <div class="card featurePanel">
+              <div class="metricNumber">3</div>
+              <h3 class="cardTitle">Live now</h3>
+              <p>Products available on the App Store with public-facing support and legal routes.</p>
+            </div>
+            <div class="card featurePanel">
+              <div class="metricNumber">3</div>
+              <h3 class="cardTitle">Coming soon</h3>
+              <p>Upcoming launches in review or active development with controlled public detail.</p>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <section class="sectionBlock" aria-labelledby="apps-live">
+    <section class="pageSection">
       <div class="sectionHeader">
-        <h2 class="sectionTitle" id="apps-live">Live</h2>
-        <p class="sectionIntro">Available now on the App Store with direct download buttons, support access, and legal pages.</p>
+        <div class="sectionKicker">Live</div>
+        <h2 class="sectionTitle">Live on the App Store</h2>
+        <p class="sectionIntro">Released products with direct App Store access, support pages, and legal coverage already in place.</p>
       </div>
-
-      <div class="grid">
-        <div class="card">
+      <div class="appGrid">
+        <article class="card appCard">
           <div class="top">
             <img class="icon" src="assets/apps/balloon-popop-512.png" alt="Balloon Popop icon" loading="lazy" decoding="async">
             <div class="titleRow">
@@ -205,18 +80,19 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
             <span class="badge">Arcade</span>
             <span class="badge">App Store: Live</span>
           </div>
-          <p>An arcade balloon popping game in active development, with level progression and gameplay-focused scoring.</p>
+          <p>An arcade balloon popping game with colourful presentation, level-based progression, and gameplay built around clear feedback and repeatable play.</p>
           <div class="btnRow">
             <a class="btn primary" href="/balloon-popop.html">View</a>
-            <a class="storeBadge" href="https://apps.apple.com/gb/app/balloon-popop/id6760238506" target="_blank" rel="noopener" aria-label="Download Balloon Popop on the App Store">
-              <img src="/assets/app-store-badge.png" alt="Download on the App Store">
+            <a class="appStoreBtn" href="https://apps.apple.com/gb/app/balloon-popop/id6760238506" target="_blank" rel="noopener" aria-label="Download Balloon Popop on the App Store">
+              <span class="appStoreIcon" aria-hidden="true"></span>
+              <span class="appStoreText"><small>Download on the</small><strong>App Store</strong></span>
             </a>
             <a class="btn" href="/balloon-popop-privacy.html">Privacy</a>
             <a class="btn" href="/balloon-popop-terms.html">Terms</a>
           </div>
-        </div>
+        </article>
 
-        <div class="card">
+        <article class="card appCard">
           <div class="top">
             <img class="icon" src="assets/apps/dont-tap-512.png" alt="Don't Tap icon" loading="lazy" decoding="async">
             <div class="titleRow">
@@ -229,18 +105,19 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
             <span class="badge">Arcade</span>
             <span class="badge">App Store: Live</span>
           </div>
-          <p>A reflex and timing game focused on fast reactions, score progression, and repeatable sessions.</p>
+          <p>A reflex and timing game focused on speed, precision, and repeatable runs with clean one-tap mechanics and competitive progression.</p>
           <div class="btnRow">
             <a class="btn primary" href="/dont-tap/">View</a>
-            <a class="storeBadge" href="https://apps.apple.com/gb/app/dont-tap/id6760237498" target="_blank" rel="noopener" aria-label="Download Don't Tap on the App Store">
-              <img src="/assets/app-store-badge.png" alt="Download on the App Store">
+            <a class="appStoreBtn" href="https://apps.apple.com/gb/app/dont-tap/id6760237498" target="_blank" rel="noopener" aria-label="Download Don't Tap on the App Store">
+              <span class="appStoreIcon" aria-hidden="true"></span>
+              <span class="appStoreText"><small>Download on the</small><strong>App Store</strong></span>
             </a>
             <a class="btn" href="/dont-tap/privacy.html">Privacy</a>
             <a class="btn" href="/dont-tap/terms.html">Terms</a>
           </div>
-        </div>
+        </article>
 
-        <div class="card">
+        <article class="card appCard">
           <div class="top">
             <img class="icon" src="assets/apps/site-survey-pro-512.jpg" alt="Site Survey Pro icon" loading="lazy" decoding="async">
             <div class="titleRow">
@@ -253,27 +130,28 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
             <span class="badge">Field tools</span>
             <span class="badge">App Store: Live</span>
           </div>
-          <p>A practical field survey product now live on the App Store, built for site capture, structured records, and operational workflow support.</p>
+          <p>A field survey product for structured records, site capture, and practical operational workflow support in live use.</p>
           <div class="btnRow">
-            <a class="btn primary" href="site-survey-pro.html">View</a>
-            <a class="storeBadge" href="https://apps.apple.com/us/app/site-survey-pro/id6760477100" target="_blank" rel="noopener" aria-label="Download Site Survey Pro on the App Store">
-              <img src="/assets/app-store-badge.png" alt="Download on the App Store">
+            <a class="btn primary" href="/site-survey-pro.html">View</a>
+            <a class="appStoreBtn" href="https://apps.apple.com/us/app/site-survey-pro/id6760477100" target="_blank" rel="noopener" aria-label="Download Site Survey Pro on the App Store">
+              <span class="appStoreIcon" aria-hidden="true"></span>
+              <span class="appStoreText"><small>Download on the</small><strong>App Store</strong></span>
             </a>
             <a class="btn" href="/site-survey-pro-privacy.html">Privacy</a>
             <a class="btn" href="/site-survey-pro-terms.html">Terms</a>
           </div>
-        </div>
+        </article>
       </div>
     </section>
 
-    <section class="sectionBlock" aria-labelledby="apps-coming-soon">
+    <section class="pageSection">
       <div class="sectionHeader">
-        <h2 class="sectionTitle" id="apps-coming-soon">Coming Soon</h2>
-        <p class="sectionIntro">Products in active build, pre-release staging, or Apple review ahead of public launch.</p>
+        <div class="sectionKicker">Coming Soon</div>
+        <h2 class="sectionTitle">In development or in review</h2>
+        <p class="sectionIntro">Products still moving toward public release, with only the level of detail that fits the current stage.</p>
       </div>
-
-      <div class="grid">
-        <div class="card">
+      <div class="appGrid">
+        <article class="card appCard">
           <div class="top">
             <img class="icon" src="assets/apps/fieldnexus-512.png" alt="FieldNexus icon" loading="lazy" decoding="async">
             <div class="titleRow">
@@ -286,16 +164,16 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
             <span class="badge">Field operations</span>
             <span class="badge">App Store: Coming soon</span>
           </div>
-          <p>A field workflow product designed to support operational teams with practical job, site, and delivery management.</p>
+          <p>A field workflow product designed for site operations, practical job management, and clearer coordination in the field.</p>
           <div class="btnRow">
             <a class="btn primary" href="/fieldnexus.html">View</a>
             <a class="btn" href="https://fieldnexus.co.uk" target="_blank" rel="noopener">Website</a>
             <a class="btn" href="/fieldnexus-privacy.html">Privacy</a>
             <a class="btn" href="/fieldnexus-terms.html">Terms</a>
           </div>
-        </div>
+        </article>
 
-        <div class="card">
+        <article class="card appCard">
           <div class="top">
             <img class="icon" src="assets/apps/taskhawk-512.jpg" alt="TaskHawk icon" loading="lazy" decoding="async">
             <div class="titleRow">
@@ -308,16 +186,16 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
             <span class="badge">Workflow</span>
             <span class="badge">App Store: Coming soon</span>
           </div>
-          <p>A workflow-focused product in active build. We’ll share full details once it’s ready for public launch.</p>
+          <p>A workflow-led product in active build, focused on structure, operational clarity, and commercial usability.</p>
           <div class="btnRow">
-            <a class="btn primary" href="taskhawk.html">View</a>
+            <a class="btn primary" href="/taskhawk.html">View</a>
             <a class="btn" href="https://www.taskhawk.co.uk" target="_blank" rel="noopener">Website</a>
             <a class="btn" href="/taskhawk-privacy.html">Privacy</a>
             <a class="btn" href="/taskhawk-terms.html">Terms</a>
           </div>
-        </div>
+        </article>
 
-        <div class="card">
+        <article class="card appCard">
           <div class="top">
             <img class="icon" src="assets/apps/vow.png" alt="VOW Focus icon" loading="lazy" decoding="async">
             <div class="titleRow">
@@ -327,23 +205,20 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
           </div>
           <div class="badgeRow">
             <span class="badge">Awaiting Apple Review</span>
-            <span class="badge">Mobile</span>
+            <span class="badge">Focus</span>
             <span class="badge">App Store: In Review</span>
           </div>
-          <p>A focused, minimalist product now submitted to Apple and currently awaiting review. Public release details will follow once approval is complete.</p>
+          <p>A minimalist focus product built around consistency, commitment, and distraction-free session design.</p>
           <div class="btnRow">
             <a class="btn primary" href="/vow/">View</a>
             <a class="btn" href="/vow/privacy.html">Privacy</a>
             <a class="btn" href="/vow/terms.html">Terms</a>
           </div>
-        </div>
+        </article>
       </div>
     </section>
 
-    <div class="note">
-      Partnerships / enquiries: <a href="mailto:support@oriongle.co.uk" style="color:#fff;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35)">support@oriongle.co.uk</a>
-    </div>
-  </div>
+    <div class="note">Partnerships and enquiries: <a href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a></div>
   </main>
 
   <div class="footer">
@@ -352,11 +227,10 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
     <div class="footerLegal">Company information: ORION GLE LTD (Company No. 16933963), registered in England and Wales</div>
   </div>
 </div>
-
-<script>document.getElementById("year").textContent=new Date().getFullYear();</script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 <script src="/assets/site-config.js"></script>
 <script src="/assets/analytics.js" defer></script>
 <script src="/assets/cookie-consent.js" defer></script>
-<script src="/assets/public-theme.js?v=20260216c" defer></script>
+<script src="/assets/public-theme.js?v=20260323a" defer></script>
 </body>
 </html>
