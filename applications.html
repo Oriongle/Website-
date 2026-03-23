@@ -37,6 +37,10 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
 
 .grid{display:grid;gap:14px;margin-top:18px;}
 @media(min-width:900px){.grid{grid-template-columns:repeat(3,1fr);}}
+.sectionBlock{margin-top:28px;}
+.sectionHeader{margin:0 0 10px;}
+.sectionTitle{margin:0;font-size:24px;line-height:1.15;}
+.sectionIntro{margin:6px 0 0;color:rgba(255,255,255,.62);font-size:14px;line-height:1.65;}
 
 .card{
   border:1px solid var(--line);
@@ -123,6 +127,9 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
   .hero{padding:30px 0 10px;}
   h1{font-size:34px;line-height:1.08;}
   p{font-size:15px;line-height:1.6;}
+  .sectionBlock{margin-top:22px;}
+  .sectionTitle{font-size:22px;}
+  .sectionIntro{font-size:13px;line-height:1.55;}
   .grid{gap:12px;margin-top:14px;}
   .card{padding:16px;min-height:auto;gap:10px;}
   .top{align-items:flex-start;}
@@ -154,147 +161,163 @@ p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:16px;}
   <main id="main">
   <div class="hero">
     <h1>Applications</h1>
-    <p>Early-stage products in development. Limited public detail until release.</p>
+    <p>Explore Orion GLE products by release stage, with live App Store downloads first and upcoming launches grouped below.</p>
     <!-- Refresh marker: applications buttons sync -->
 
-    <div class="grid">
-      <div class="card">
-        <div class="top">
-          <img class="icon" src="assets/apps/balloon-popop-512.png" alt="Balloon Popop icon" loading="lazy" decoding="async">
-          <div class="titleRow">
-            <h3>Balloon Popop</h3>
-            <div class="meta">Live on the App Store</div>
-          </div>
-        </div>
-        <div class="badgeRow">
-          <span class="badge">Now available</span>
-          <span class="badge">Arcade</span>
-          <span class="badge">App Store: Live</span>
-        </div>
-        <p>An arcade balloon popping game in active development, with level progression and gameplay-focused scoring.</p>
-        <div class="btnRow">
-          <a class="btn primary" href="/balloon-popop.html">View</a>
-          <a class="storeBadge" href="https://apps.apple.com/gb/app/balloon-popop/id6760238506" target="_blank" rel="noopener" aria-label="Download Balloon Popop on the App Store">
-            <span><small>Download on the</small><strong>App Store</strong></span>
-          </a>
-          <a class="btn" href="/balloon-popop-privacy.html">Privacy</a>
-          <a class="btn" href="/balloon-popop-terms.html">Terms</a>
-        </div>
+    <section class="sectionBlock" aria-labelledby="apps-live">
+      <div class="sectionHeader">
+        <h2 class="sectionTitle" id="apps-live">Live</h2>
+        <p class="sectionIntro">Available now on the App Store with direct download buttons, support access, and legal pages.</p>
       </div>
 
-      <div class="card">
-        <div class="top">
-          <img class="icon" src="assets/apps/dont-tap-512.png" alt="Don't Tap icon" loading="lazy" decoding="async">
-          <div class="titleRow">
-            <h3>Don't Tap</h3>
-            <div class="meta">Live on the App Store</div>
+      <div class="grid">
+        <div class="card">
+          <div class="top">
+            <img class="icon" src="assets/apps/balloon-popop-512.png" alt="Balloon Popop icon" loading="lazy" decoding="async">
+            <div class="titleRow">
+              <h3>Balloon Popop</h3>
+              <div class="meta">Live on the App Store</div>
+            </div>
+          </div>
+          <div class="badgeRow">
+            <span class="badge">Now available</span>
+            <span class="badge">Arcade</span>
+            <span class="badge">App Store: Live</span>
+          </div>
+          <p>An arcade balloon popping game in active development, with level progression and gameplay-focused scoring.</p>
+          <div class="btnRow">
+            <a class="btn primary" href="/balloon-popop.html">View</a>
+            <a class="storeBadge" href="https://apps.apple.com/gb/app/balloon-popop/id6760238506" target="_blank" rel="noopener" aria-label="Download Balloon Popop on the App Store">
+              <span><small>Download on the</small><strong>App Store</strong></span>
+            </a>
+            <a class="btn" href="/balloon-popop-privacy.html">Privacy</a>
+            <a class="btn" href="/balloon-popop-terms.html">Terms</a>
           </div>
         </div>
-        <div class="badgeRow">
-          <span class="badge">Now available</span>
-          <span class="badge">Arcade</span>
-          <span class="badge">App Store: Live</span>
+
+        <div class="card">
+          <div class="top">
+            <img class="icon" src="assets/apps/dont-tap-512.png" alt="Don't Tap icon" loading="lazy" decoding="async">
+            <div class="titleRow">
+              <h3>Don't Tap</h3>
+              <div class="meta">Live on the App Store</div>
+            </div>
+          </div>
+          <div class="badgeRow">
+            <span class="badge">Now available</span>
+            <span class="badge">Arcade</span>
+            <span class="badge">App Store: Live</span>
+          </div>
+          <p>A reflex and timing game focused on fast reactions, score progression, and repeatable sessions.</p>
+          <div class="btnRow">
+            <a class="btn primary" href="/dont-tap/">View</a>
+            <a class="storeBadge" href="https://apps.apple.com/gb/app/dont-tap/id6760237498" target="_blank" rel="noopener" aria-label="Download Don't Tap on the App Store">
+              <span><small>Download on the</small><strong>App Store</strong></span>
+            </a>
+            <a class="btn" href="/dont-tap/privacy.html">Privacy</a>
+            <a class="btn" href="/dont-tap/terms.html">Terms</a>
+          </div>
         </div>
-        <p>A reflex and timing game focused on fast reactions, score progression, and repeatable sessions.</p>
-        <div class="btnRow">
-          <a class="btn primary" href="/dont-tap/">View</a>
-          <a class="storeBadge" href="https://apps.apple.com/gb/app/dont-tap/id6760237498" target="_blank" rel="noopener" aria-label="Download Don't Tap on the App Store">
-            <span><small>Download on the</small><strong>App Store</strong></span>
-          </a>
-          <a class="btn" href="/dont-tap/privacy.html">Privacy</a>
-          <a class="btn" href="/dont-tap/terms.html">Terms</a>
+
+        <div class="card">
+          <div class="top">
+            <img class="icon" src="assets/apps/site-survey-pro-512.jpg" alt="Site Survey Pro icon" loading="lazy" decoding="async">
+            <div class="titleRow">
+              <h3>Site Survey Pro</h3>
+              <div class="meta">Live on the App Store</div>
+            </div>
+          </div>
+          <div class="badgeRow">
+            <span class="badge">Now available</span>
+            <span class="badge">Field tools</span>
+            <span class="badge">App Store: Live</span>
+          </div>
+          <p>A practical field survey product now live on the App Store, built for site capture, structured records, and operational workflow support.</p>
+          <div class="btnRow">
+            <a class="btn primary" href="site-survey-pro.html">View</a>
+            <a class="storeBadge" href="https://apps.apple.com/us/app/site-survey-pro/id6760477100" target="_blank" rel="noopener" aria-label="Download Site Survey Pro on the App Store">
+              <span><small>Download on the</small><strong>App Store</strong></span>
+            </a>
+            <a class="btn" href="/site-survey-pro-privacy.html">Privacy</a>
+            <a class="btn" href="/site-survey-pro-terms.html">Terms</a>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <section class="sectionBlock" aria-labelledby="apps-coming-soon">
+      <div class="sectionHeader">
+        <h2 class="sectionTitle" id="apps-coming-soon">Coming Soon</h2>
+        <p class="sectionIntro">Products in active build, pre-release staging, or Apple review ahead of public launch.</p>
       </div>
 
-      <div class="card">
-        <div class="top">
-          <img class="icon" src="assets/apps/fieldnexus-512.png" alt="FieldNexus icon" loading="lazy" decoding="async">
-          <div class="titleRow">
-            <h3>FieldNexus</h3>
-            <div class="meta">Pre-release</div>
+      <div class="grid">
+        <div class="card">
+          <div class="top">
+            <img class="icon" src="assets/apps/fieldnexus-512.png" alt="FieldNexus icon" loading="lazy" decoding="async">
+            <div class="titleRow">
+              <h3>FieldNexus</h3>
+              <div class="meta">Pre-release</div>
+            </div>
+          </div>
+          <div class="badgeRow">
+            <span class="badge">In development</span>
+            <span class="badge">Field operations</span>
+            <span class="badge">App Store: Coming soon</span>
+          </div>
+          <p>A field workflow product designed to support operational teams with practical job, site, and delivery management.</p>
+          <div class="btnRow">
+            <a class="btn primary" href="/fieldnexus.html">View</a>
+            <a class="btn" href="https://fieldnexus.co.uk" target="_blank" rel="noopener">Website</a>
+            <a class="btn" href="/fieldnexus-privacy.html">Privacy</a>
+            <a class="btn" href="/fieldnexus-terms.html">Terms</a>
           </div>
         </div>
-        <div class="badgeRow">
-          <span class="badge">In development</span>
-          <span class="badge">Field operations</span>
-          <span class="badge">App Store: Coming soon</span>
-        </div>
-        <p>A field workflow product designed to support operational teams with practical job, site, and delivery management.</p>
-        <div class="btnRow">
-          <a class="btn primary" href="/fieldnexus.html">View</a>
-          <a class="btn" href="https://fieldnexus.co.uk" target="_blank" rel="noopener">Website</a>
-          <a class="btn" href="/fieldnexus-privacy.html">Privacy</a>
-          <a class="btn" href="/fieldnexus-terms.html">Terms</a>
-        </div>
-      </div>
 
-      <div class="card">
-        <div class="top">
-          <img class="icon" src="assets/apps/site-survey-pro-512.jpg" alt="Site Survey Pro icon" loading="lazy" decoding="async">
-          <div class="titleRow">
-            <h3>Site Survey Pro</h3>
-            <div class="meta">Live on the App Store</div>
+        <div class="card">
+          <div class="top">
+            <img class="icon" src="assets/apps/taskhawk-512.jpg" alt="TaskHawk icon" loading="lazy" decoding="async">
+            <div class="titleRow">
+              <h3>TaskHawk</h3>
+              <div class="meta">Pre-release</div>
+            </div>
+          </div>
+          <div class="badgeRow">
+            <span class="badge">In development</span>
+            <span class="badge">Workflow</span>
+            <span class="badge">App Store: Coming soon</span>
+          </div>
+          <p>A workflow-focused product in active build. We’ll share full details once it’s ready for public launch.</p>
+          <div class="btnRow">
+            <a class="btn primary" href="taskhawk.html">View</a>
+            <a class="btn" href="https://www.taskhawk.co.uk" target="_blank" rel="noopener">Website</a>
+            <a class="btn" href="/taskhawk-privacy.html">Privacy</a>
+            <a class="btn" href="/taskhawk-terms.html">Terms</a>
           </div>
         </div>
-        <div class="badgeRow">
-          <span class="badge">Now available</span>
-          <span class="badge">Field tools</span>
-          <span class="badge">App Store: Live</span>
-        </div>
-        <p>A practical field survey product now live on the App Store, built for site capture, structured records, and operational workflow support.</p>
-        <div class="btnRow">
-          <a class="btn primary" href="site-survey-pro.html">View</a>
-          <a class="storeBadge" href="https://apps.apple.com/us/app/site-survey-pro/id6760477100" target="_blank" rel="noopener" aria-label="Download Site Survey Pro on the App Store">
-            <span><small>Download on the</small><strong>App Store</strong></span>
-          </a>
-          <a class="btn" href="/site-survey-pro-privacy.html">Privacy</a>
-          <a class="btn" href="/site-survey-pro-terms.html">Terms</a>
-        </div>
-      </div>
 
-      <div class="card">
-        <div class="top">
-          <img class="icon" src="assets/apps/taskhawk-512.jpg" alt="TaskHawk icon" loading="lazy" decoding="async">
-          <div class="titleRow">
-            <h3>TaskHawk</h3>
-            <div class="meta">Pre-release</div>
+        <div class="card">
+          <div class="top">
+            <img class="icon" src="assets/apps/vow.png" alt="VOW Focus icon" loading="lazy" decoding="async">
+            <div class="titleRow">
+              <h3>VOW Focus</h3>
+              <div class="meta">Submitted to Apple</div>
+            </div>
+          </div>
+          <div class="badgeRow">
+            <span class="badge">Awaiting Apple Review</span>
+            <span class="badge">Mobile</span>
+            <span class="badge">App Store: In Review</span>
+          </div>
+          <p>A focused, minimalist product now submitted to Apple and currently awaiting review. Public release details will follow once approval is complete.</p>
+          <div class="btnRow">
+            <a class="btn primary" href="/vow/">View</a>
+            <a class="btn" href="/vow/privacy.html">Privacy</a>
+            <a class="btn" href="/vow/terms.html">Terms</a>
           </div>
         </div>
-        <div class="badgeRow">
-          <span class="badge">In development</span>
-          <span class="badge">Workflow</span>
-          <span class="badge">App Store: Coming soon</span>
-        </div>
-        <p>A workflow-focused product in active build. We’ll share full details once it’s ready for public launch.</p>
-        <div class="btnRow">
-          <a class="btn primary" href="taskhawk.html">View</a>
-          <a class="btn" href="https://www.taskhawk.co.uk" target="_blank" rel="noopener">Website</a>
-          <a class="btn" href="/taskhawk-privacy.html">Privacy</a>
-          <a class="btn" href="/taskhawk-terms.html">Terms</a>
-        </div>
       </div>
-
-      <div class="card">
-        <div class="top">
-          <img class="icon" src="assets/apps/vow.png" alt="VOW Focus icon" loading="lazy" decoding="async">
-          <div class="titleRow">
-            <h3>VOW Focus</h3>
-            <div class="meta">Submitted to Apple</div>
-          </div>
-        </div>
-        <div class="badgeRow">
-          <span class="badge">Awaiting Apple Review</span>
-          <span class="badge">Mobile</span>
-          <span class="badge">App Store: In Review</span>
-        </div>
-        <p>A focused, minimalist product now submitted to Apple and currently awaiting review. Public release details will follow once approval is complete.</p>
-        <div class="btnRow">
-          <a class="btn primary" href="/vow/">View</a>
-          <a class="btn" href="/vow/privacy.html">Privacy</a>
-          <a class="btn" href="/vow/terms.html">Terms</a>
-        </div>
-      </div>
-    </div>
+    </section>
 
     <div class="note">
       Partnerships / enquiries: <a href="mailto:support@oriongle.co.uk" style="color:#fff;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35)">support@oriongle.co.uk</a>
