@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Updates — Orion GLE Ltd</title>
-<meta name="description" content="Latest product and company updates from Orion GLE Ltd.">
+<meta name="description" content="Latest product and studio updates from Orion GLE Ltd.">
 <meta property="og:title" content="Updates — Orion GLE Ltd">
 <meta property="og:description" content="Launch notes, release progress, and product updates from Orion GLE Ltd.">
 <meta property="og:type" content="website">
@@ -13,7 +13,7 @@
 <link rel="canonical" href="https://oriongle.co.uk/updates.html">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/cookie-consent.css">
-<link rel="stylesheet" href="/assets/public-theme.css?v=20260323e">
+<link rel="stylesheet" href="/assets/public-theme.css?v=20260725a">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -34,8 +34,8 @@
       <div class="heroSplit alignStart">
         <div>
           <span class="eyebrow">Updates</span>
-          <h1>Launch notes, product progress, and business updates in one feed.</h1>
-          <p class="heroLead">This page tracks the public side of Orion GLE activity, including live releases, upcoming launches, and product-facing improvements worth surfacing outside the client portal.</p>
+          <h1>Launch notes, release movement, and studio progress in one public feed.</h1>
+          <p class="heroLead">This page tracks the public side of Orion GLE activity, including live releases, upcoming launches, and product-facing changes worth surfacing outside the portal.</p>
         </div>
         <aside class="heroPanel">
           <div class="sectionKicker">Feed focus</div>
@@ -46,7 +46,7 @@
             </div>
             <div class="card featurePanel">
               <h3 class="cardTitle">Studio changes</h3>
-              <p>Public app-page improvements, support updates, and changes to the Orion GLE release presence.</p>
+              <p>Support-page work, legal updates, public launch improvements, and portfolio changes.</p>
             </div>
           </div>
         </aside>
@@ -57,7 +57,7 @@
       <article class="card callout">
         <div class="sectionKicker">Public feed</div>
         <h2 class="sectionTitle">Recent updates</h2>
-        <p class="sectionIntro">Only public-safe updates appear here. Deeper client delivery detail stays inside the portal and status systems.</p>
+        <p class="sectionIntro">Only public-safe updates appear here. Deeper client delivery detail stays inside the portal and account-specific systems.</p>
         <p class="inlineUtility">Internal publishing helper: <a href="/update-admin.html">/update-admin.html</a></p>
       </article>
       <div id="updatesGrid" class="updateFeed">
@@ -84,13 +84,13 @@ fetch('/data/updates.json').then(r=>r.json()).then(items=>{
     el.className='updateCard';
     const date=item.date||'Update';
     const cat=item.category||'General';
-    const cta=item.cta_href?`<a class="btn" href="${item.cta_href}">${item.cta_label||'Read more'}</a>`:'';
-    el.innerHTML=`<div class="meta">${date} • ${cat}</div><h3 class="cardTitle">${item.title}</h3><p>${item.body}</p>${cta}`;
+    const cta=item.cta_href?`<a class=\"btn\" href=\"${item.cta_href}\">${item.cta_label||'Read more'}</a>`:'';
+    el.innerHTML=`<div class=\"meta\">${date} • ${cat}</div><h3 class=\"cardTitle\">${item.title}</h3><p>${item.body}</p>${cta}`;
     grid.appendChild(el);
   });
-}).catch(()=>{document.getElementById('updatesGrid').innerHTML='<article class="updateCard"><p>Unable to load updates.</p></article>';});
+}).catch(()=>{document.getElementById('updatesGrid').innerHTML='<article class=\"updateCard\"><p>Unable to load updates.</p></article>';});
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
-<script src="/assets/public-theme.js?v=20260323e" defer></script>
+<script src="/assets/public-theme.js?v=20260725a" defer></script>
 </body>
 </html>

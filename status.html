@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Status — Orion GLE Ltd</title>
-<meta name="description" content="Client status and release readiness updates from Orion GLE Ltd.">
+<meta name="description" content="Public project status and release readiness updates from Orion GLE Ltd.">
 <meta property="og:title" content="Status — Orion GLE Ltd">
-<meta property="og:description" content="High-level progress visibility for active product work.">
+<meta property="og:description" content="High-level progress visibility for active Orion GLE product work.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://oriongle.co.uk/status.html">
 <meta property="og:image" content="https://oriongle.co.uk/assets/optimized/orion-logo-transparent-2400-v2.png">
 <link rel="canonical" href="https://oriongle.co.uk/status.html">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/cookie-consent.css">
-<link rel="stylesheet" href="/assets/public-theme.css?v=20260323e">
+<link rel="stylesheet" href="/assets/public-theme.css?v=20260725a">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -35,8 +35,8 @@
       <div class="heroSplit alignStart">
         <div>
           <span class="eyebrow">Status</span>
-          <h1>Public-safe project status with clearer release visibility.</h1>
-          <p class="heroLead">This page gives a high-level view of active work, release stage, and next milestone without exposing private project detail. Full account-specific information stays inside the portal.</p>
+          <h1>Public-safe project status with a cleaner view of what is live, moving, or waiting.</h1>
+          <p class="heroLead">This page gives a high-level picture of active work, release stage, and next milestones without exposing private client detail. Account-specific information stays inside the portal.</p>
         </div>
         <aside class="heroPanel">
           <div class="sectionKicker">Status guide</div>
@@ -53,7 +53,7 @@
       <article class="statusCard callout">
         <div class="sectionKicker">Status matrix</div>
         <h2 class="sectionTitle">Current public project state</h2>
-        <p class="sectionIntro" id="statusMeta">This portal shows public-safe status only.</p>
+        <p class="sectionIntro" id="statusMeta">This view shows public-safe status only.</p>
         <div class="statusTableWrap tableWrap">
           <table class="statusTable">
             <thead>
@@ -69,7 +69,7 @@
           </table>
         </div>
         <div class="tightActions">
-          <a class="btn" href="portal/login.html">Portal Login</a>
+          <a class="btn" href="portal/login.html">Portal login</a>
           <a class="btn" href="contact.html">Request private access</a>
           <a class="btn" href="updates.html">Read latest updates</a>
         </div>
@@ -94,13 +94,13 @@ fetch('/api/status').then(r=>r.json()).then(data=>{
   tbody.innerHTML='';
   (data.projects||[]).forEach(p=>{
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${p.name}</td><td>${p.phase}</td><td><span class="statusPill ${badgeClass(p.status)}">${badgeText(p.status)}</span></td><td>${p.last_update}</td><td>${p.next_milestone}</td>`;
+    tr.innerHTML=`<td>${p.name}</td><td>${p.phase}</td><td><span class=\"statusPill ${badgeClass(p.status)}\">${badgeText(p.status)}</span></td><td>${p.last_update}</td><td>${p.next_milestone}</td>`;
     tbody.appendChild(tr);
   });
   document.getElementById('statusMeta').textContent='Last status update: '+(data.updated_at||'N/A');
-}).catch(()=>{document.getElementById('statusBody').innerHTML='<tr><td colspan="5">Unable to load status data.</td></tr>';});
+}).catch(()=>{document.getElementById('statusBody').innerHTML='<tr><td colspan=\"5\">Unable to load status data.</td></tr>';});
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
-<script src="/assets/public-theme.js?v=20260323e" defer></script>
+<script src="/assets/public-theme.js?v=20260725a" defer></script>
 </body>
 </html>
