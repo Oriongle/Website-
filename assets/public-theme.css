@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
   --bg: #07111d;
@@ -7,8 +7,8 @@
   --surface: rgba(13, 22, 36, 0.78);
   --surface-strong: rgba(9, 16, 27, 0.94);
   --surface-soft: rgba(154, 196, 255, 0.06);
-  --card: linear-gradient(180deg, rgba(18, 29, 47, 0.92), rgba(8, 14, 23, 0.98));
-  --card-alt: linear-gradient(180deg, rgba(16, 34, 58, 0.96), rgba(10, 18, 31, 0.98));
+  --card: linear-gradient(180deg, rgba(16, 26, 42, 0.9), rgba(9, 15, 25, 0.97));
+  --card-alt: linear-gradient(180deg, rgba(15, 29, 48, 0.94), rgba(9, 16, 27, 0.98));
   --line: rgba(166, 193, 233, 0.14);
   --line-strong: rgba(166, 193, 233, 0.28);
   --text: #f4f8ff;
@@ -20,8 +20,8 @@
   --accent-3: #ffd074;
   --accent-4: #7f8cff;
   --danger: #ff7d96;
-  --shadow: 0 26px 90px rgba(0, 0, 0, 0.34);
-  --shadow-soft: 0 18px 50px rgba(0, 0, 0, 0.22);
+  --shadow: 0 24px 72px rgba(0, 0, 0, 0.28);
+  --shadow-soft: 0 16px 36px rgba(0, 0, 0, 0.18);
   --radius-xxl: 36px;
   --radius-xl: 28px;
   --radius-lg: 22px;
@@ -43,10 +43,10 @@ body {
   font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   color: var(--text) !important;
   background:
-    radial-gradient(circle at 10% 0%, rgba(127, 140, 255, 0.17), transparent 24%),
-    radial-gradient(circle at 90% 10%, rgba(102, 183, 255, 0.16), transparent 24%),
-    radial-gradient(circle at 50% 100%, rgba(137, 240, 208, 0.11), transparent 22%),
-    linear-gradient(180deg, #060e18 0%, #0b1524 38%, #07111d 100%) !important;
+    radial-gradient(circle at 10% 0%, rgba(127, 140, 255, 0.11), transparent 24%),
+    radial-gradient(circle at 90% 10%, rgba(102, 183, 255, 0.1), transparent 24%),
+    radial-gradient(circle at 50% 100%, rgba(137, 240, 208, 0.07), transparent 22%),
+    linear-gradient(180deg, #060d17 0%, #0a1422 38%, #07111d 100%) !important;
 }
 
 body::before,
@@ -62,7 +62,7 @@ body::before {
     linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
   background-size: 64px 64px;
-  opacity: 0.14;
+  opacity: 0.08;
   mask-image: linear-gradient(180deg, rgba(0,0,0,0.7), transparent 92%);
 }
 
@@ -116,8 +116,8 @@ a:hover { text-decoration-color: rgba(137, 240, 208, 0.9); }
   margin: 18px 0 26px;
   padding: 14px 18px !important;
   border: 1px solid rgba(166, 193, 233, 0.12) !important;
-  border-radius: 22px !important;
-  background: linear-gradient(180deg, rgba(12, 20, 33, 0.9), rgba(8, 14, 24, 0.78)) !important;
+  border-radius: 18px !important;
+  background: linear-gradient(180deg, rgba(11, 18, 30, 0.82), rgba(8, 13, 22, 0.72)) !important;
   backdrop-filter: blur(18px);
   box-shadow: 0 16px 40px rgba(0,0,0,0.22);
 }
@@ -146,15 +146,15 @@ button,
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 46px;
-  padding: 11px 16px !important;
-  border-radius: 14px !important;
+  min-height: 42px;
+  padding: 10px 15px !important;
+  border-radius: 12px !important;
   border: 1px solid var(--line) !important;
   background: rgba(255,255,255,0.03) !important;
   color: var(--text) !important;
   text-decoration: none !important;
-  font-size: 14px !important;
-  font-weight: 700 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
   letter-spacing: -0.01em !important;
   transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease, color .18s ease;
   cursor: pointer;
@@ -170,7 +170,7 @@ button:hover,
 .subtleBtn:hover,
 .folderNameBtn:hover {
   transform: translateY(-1px);
-  background: rgba(255,255,255,0.08) !important;
+  background: rgba(255,255,255,0.055) !important;
   border-color: rgba(137, 240, 208, 0.3) !important;
   box-shadow: 0 12px 28px rgba(0,0,0,0.18);
 }
@@ -180,10 +180,10 @@ a.btn.primary,
 a.cta.primary,
 button[type='submit'],
 .chooserBtn.primary {
-  background: linear-gradient(135deg, #89f0d0, #66b7ff) !important;
+  background: linear-gradient(135deg, #83dfca, #61aef3) !important;
   color: var(--ink) !important;
   border-color: transparent !important;
-  box-shadow: 0 18px 32px rgba(102, 183, 255, 0.18);
+  box-shadow: 0 14px 24px rgba(102, 183, 255, 0.14);
 }
 
 button[type='submit'] { min-height: 56px; }
@@ -213,7 +213,7 @@ div.hero,
 .statCard,
 .heroPanel {
   border: 1px solid var(--line) !important;
-  border-radius: var(--radius-xl) !important;
+  border-radius: 24px !important;
   background: var(--card) !important;
   box-shadow: var(--shadow-soft);
 }
@@ -223,9 +223,9 @@ section.hero,
 div.hero {
   position: relative;
   overflow: hidden;
-  padding: 56px !important;
+  padding: 48px !important;
   background:
-    linear-gradient(135deg, rgba(10, 17, 27, 0.96), rgba(17, 31, 52, 0.92) 52%, rgba(8, 14, 23, 0.98)) !important;
+    linear-gradient(135deg, rgba(10, 17, 27, 0.94), rgba(15, 27, 44, 0.9) 52%, rgba(8, 14, 23, 0.98)) !important;
   box-shadow: var(--shadow);
 }
 
@@ -241,9 +241,9 @@ div.hero {
 
 .hero::before {
   background:
-    radial-gradient(circle at 14% 18%, rgba(137, 240, 208, 0.11), transparent 22%),
-    radial-gradient(circle at 85% 16%, rgba(102, 183, 255, 0.15), transparent 22%),
-    linear-gradient(120deg, rgba(255,255,255,0.04), transparent 38%, rgba(255,255,255,0.02) 70%, transparent);
+    radial-gradient(circle at 14% 18%, rgba(137, 240, 208, 0.07), transparent 22%),
+    radial-gradient(circle at 85% 16%, rgba(102, 183, 255, 0.09), transparent 22%),
+    linear-gradient(120deg, rgba(255,255,255,0.025), transparent 38%, rgba(255,255,255,0.015) 70%, transparent);
 }
 
 .hero > *,
@@ -274,7 +274,6 @@ div.hero {
   text-transform: uppercase !important;
 }
 
-.hero h1,
 h1,
 h2,
 h3,
@@ -285,31 +284,34 @@ h3,
 .metricNumber,
 .stat,
 .kpi {
-  font-family: 'Space Grotesk', 'Instrument Sans', sans-serif !important;
+  font-family: 'Plus Jakarta Sans', 'Instrument Sans', sans-serif !important;
   color: var(--text) !important;
-  letter-spacing: -0.05em !important;
+  letter-spacing: -0.04em !important;
   margin-top: 0;
 }
 
 h1 {
-  font-size: clamp(2.9rem, 7vw, 5.8rem) !important;
-  line-height: 0.95 !important;
-  margin: 18px 0 !important;
-  max-width: 11ch;
+  font-size: clamp(2.35rem, 5.7vw, 4.7rem) !important;
+  line-height: 1.02 !important;
+  margin: 16px 0 !important;
+  max-width: 13ch;
+  font-weight: 700 !important;
 }
 
 h2,
 .sectionTitle {
-  font-size: clamp(1.8rem, 3vw, 3rem) !important;
-  line-height: 1 !important;
+  font-size: clamp(1.55rem, 2.3vw, 2.45rem) !important;
+  line-height: 1.08 !important;
   margin: 0 0 14px !important;
+  font-weight: 700 !important;
 }
 
 h3,
 .cardTitle {
-  font-size: 1.32rem !important;
-  line-height: 1.08 !important;
+  font-size: 1.16rem !important;
+  line-height: 1.18 !important;
   margin: 0 0 10px !important;
+  font-weight: 700 !important;
 }
 
 p,
@@ -334,14 +336,14 @@ figcaption,
 .summaryTile span,
 .miniAppCard span {
   color: var(--text-soft) !important;
-  font-size: 1rem !important;
-  line-height: 1.65 !important;
+  font-size: 0.985rem !important;
+  line-height: 1.7 !important;
 }
 
 .heroLead {
   max-width: 60ch;
-  font-size: 1.12rem !important;
-  color: #e4ecf8 !important;
+  font-size: 1.02rem !important;
+  color: #dce7f5 !important;
 }
 
 .sectionIntro { max-width: 62ch; }
@@ -359,7 +361,7 @@ figcaption,
 .tightStats,
 .metricGrid {
   display: grid;
-  gap: 22px;
+  gap: 20px;
 }
 
 .heroSplit,
@@ -378,15 +380,15 @@ figcaption,
 .metricGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 .pageSection {
-  margin-top: 30px;
+  margin-top: 28px;
   padding: 0;
 }
 
 .sectionHeader {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 22px;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
 .card,
@@ -401,7 +403,7 @@ figcaption,
 .supportBlock,
 .infoBlock {
   position: relative;
-  padding: 26px !important;
+  padding: 22px !important;
 }
 
 .card::before,
@@ -413,25 +415,25 @@ figcaption,
 .summaryTile::before,
 .supportBlock::before,
 .infoBlock::before {
-  background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 22%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), transparent 22%);
 }
 
 .callout {
   background:
-    radial-gradient(circle at 100% 0%, rgba(255, 208, 116, 0.12), transparent 26%),
-    linear-gradient(160deg, rgba(17, 31, 52, 0.98), rgba(9, 15, 25, 0.98)) !important;
+    radial-gradient(circle at 100% 0%, rgba(255, 208, 116, 0.08), transparent 26%),
+    linear-gradient(160deg, rgba(16, 28, 45, 0.97), rgba(9, 15, 25, 0.98)) !important;
 }
 
 .featurePanel {
   background:
-    radial-gradient(circle at 0% 100%, rgba(127, 140, 255, 0.14), transparent 22%),
-    linear-gradient(180deg, rgba(14, 24, 39, 0.96), rgba(8, 14, 23, 0.98)) !important;
+    radial-gradient(circle at 0% 100%, rgba(127, 140, 255, 0.09), transparent 22%),
+    linear-gradient(180deg, rgba(13, 22, 35, 0.95), rgba(8, 14, 23, 0.98)) !important;
 }
 
 .metricNumber {
   display: inline-block;
   margin-bottom: 12px;
-  font-size: clamp(2rem, 4vw, 3.8rem) !important;
+  font-size: clamp(1.75rem, 3.1vw, 3rem) !important;
   line-height: 0.95 !important;
 }
 
@@ -448,12 +450,12 @@ figcaption {
 .brandLockup {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
   margin-bottom: 18px;
 }
 
 .homeLogo {
-  width: min(100%, 760px);
+  width: min(100%, 700px);
   max-width: 100%;
   height: auto;
   margin: 0 auto 12px;
@@ -467,7 +469,7 @@ figcaption {
 
 .brandLockupText strong {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1rem;
+  font-size: 0.94rem;
   letter-spacing: -0.03em;
 }
 
@@ -481,18 +483,18 @@ figcaption {
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .ctaRow,
 .btnRow,
 .tightActions,
-.actions { margin-top: 20px; }
+.actions { margin-top: 16px; }
 
 .heroPanel {
-  padding: 22px !important;
+  padding: 20px !important;
   background:
-    linear-gradient(180deg, rgba(8, 14, 24, 0.92), rgba(13, 24, 41, 0.92)) !important;
+    linear-gradient(180deg, rgba(8, 14, 24, 0.86), rgba(12, 21, 36, 0.9)) !important;
 }
 
 .miniAppCard,
@@ -501,10 +503,10 @@ figcaption {
 .statusTableWrap,
 .appShot {
   position: relative;
-  padding: 18px !important;
-  border: 1px solid rgba(166, 193, 233, 0.12) !important;
-  border-radius: 18px !important;
-  background: rgba(255,255,255,0.03) !important;
+  padding: 16px !important;
+  border: 1px solid rgba(166, 193, 233, 0.1) !important;
+  border-radius: 16px !important;
+  background: rgba(255,255,255,0.022) !important;
 }
 
 .miniAppCard {
@@ -518,7 +520,7 @@ figcaption {
 
 .cleanList {
   display: grid;
-  gap: 12px;
+  gap: 10px;
   margin: 0;
   padding-left: 18px;
 }
@@ -538,9 +540,9 @@ figcaption {
 .appHeadline { align-items: center; }
 
 .icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 18px;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
   object-fit: cover;
   box-shadow: 0 14px 30px rgba(0,0,0,0.2);
 }
@@ -560,15 +562,15 @@ figcaption {
   align-items: center;
   gap: 10px;
   width: auto !important;
-  min-width: 198px;
-  min-height: 52px;
-  padding: 10px 16px !important;
-  border-radius: 14px !important;
+  min-width: 176px;
+  min-height: 46px;
+  padding: 8px 14px !important;
+  border-radius: 12px !important;
   border: 1px solid rgba(255,255,255,0.12) !important;
   background: linear-gradient(180deg, #141414, #050505) !important;
   color: #fff !important;
   text-decoration: none !important;
-  box-shadow: 0 12px 26px rgba(0,0,0,0.26);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.22);
 }
 
 .appStoreBtn:hover {
@@ -578,7 +580,7 @@ figcaption {
 }
 
 .appStoreIcon {
-  font-size: 1.45rem;
+  font-size: 1.2rem;
   line-height: 1;
 }
 
@@ -588,14 +590,14 @@ figcaption {
 }
 
 .appStoreText small {
-  font-size: 0.66rem;
+  font-size: 0.6rem;
   opacity: 0.78;
   letter-spacing: 0.04em;
 }
 
 .appStoreText strong {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1rem;
+  font-size: 0.9rem;
   letter-spacing: -0.02em;
 }
 
@@ -691,9 +693,9 @@ figcaption {
 .appGalleryCard {
   position: relative;
   overflow: hidden;
-  padding: 28px !important;
+  padding: 24px !important;
   background:
-    radial-gradient(circle at 100% 0%, rgba(102, 183, 255, 0.11), transparent 22%),
+    radial-gradient(circle at 100% 0%, rgba(102, 183, 255, 0.08), transparent 22%),
     linear-gradient(180deg, rgba(13, 22, 36, 0.95), rgba(8, 14, 23, 0.98)) !important;
 }
 
@@ -741,7 +743,7 @@ textarea {
 
 form {
   display: grid;
-  gap: 18px;
+  gap: 16px;
 }
 
 .turnstileWrap {
@@ -760,8 +762,8 @@ label {
 .status.err { color: #ffb2bd !important; }
 
 .footer {
-  margin-top: 42px;
-  padding: 28px 0 0;
+  margin-top: 36px;
+  padding: 24px 0 0;
   border-top: 1px solid rgba(166, 193, 233, 0.12);
   text-align: center;
 }
@@ -788,7 +790,7 @@ label {
 .studioRail,
 .contactRail {
   display: grid;
-  gap: 22px;
+  gap: 18px;
 }
 
 .homeSpotlight { grid-template-columns: 1.1fr 0.9fr; }
@@ -821,8 +823,8 @@ label {
   .nav[aria-label='Primary'] {
     top: 10px;
     margin: 12px 0 18px;
-    padding: 12px !important;
-    border-radius: 18px !important;
+    padding: 11px !important;
+    border-radius: 16px !important;
   }
 
   .navLinks,
@@ -849,14 +851,14 @@ label {
   .hero,
   section.hero,
   div.hero,
-  .appGalleryCard { padding: 26px !important; }
+  .appGalleryCard { padding: 24px !important; }
 
   h1 {
-    font-size: clamp(2.25rem, 12vw, 3.8rem) !important;
+    font-size: clamp(2rem, 10.5vw, 3.25rem) !important;
     max-width: none;
   }
 
-  .heroLead { font-size: 1rem !important; }
+  .heroLead { font-size: 0.98rem !important; }
 
   .brandLockup {
     flex-direction: column;
@@ -864,7 +866,7 @@ label {
   }
 
   .homeLogo {
-    width: min(100%, 560px);
+    width: min(100%, 520px);
     margin: 0 0 4px;
   }
 
@@ -896,7 +898,7 @@ label {
   .supportBlock,
   .infoBlock,
   .heroPanel {
-    padding: 20px !important;
+    padding: 18px !important;
   }
 
   .top,
@@ -905,9 +907,9 @@ label {
   }
 
   .icon {
-    width: 58px;
-    height: 58px;
-    border-radius: 16px;
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
   }
 
   .appStoreBtn {
@@ -952,19 +954,19 @@ label {
   .hero,
   section.hero,
   div.hero,
-  .appGalleryCard { padding: 22px !important; }
+  .appGalleryCard { padding: 20px !important; }
 
   h1 {
-    font-size: clamp(2rem, 12vw, 3rem) !important;
-    letter-spacing: -0.06em !important;
+    font-size: clamp(1.8rem, 11vw, 2.7rem) !important;
+    letter-spacing: -0.045em !important;
   }
 
   h2,
   .sectionTitle {
-    font-size: clamp(1.6rem, 9vw, 2.2rem) !important;
+    font-size: clamp(1.45rem, 8vw, 1.95rem) !important;
   }
 
-  .homeLogo { width: min(100%, 500px); }
+  .homeLogo { width: min(100%, 460px); }
 
   .brandLockupText span,
   .footerLegal,
