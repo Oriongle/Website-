@@ -13,7 +13,7 @@
 <link rel="canonical" href="https://oriongle.co.uk/contact.html">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/cookie-consent.css">
-<link rel="stylesheet" href="/assets/public-theme.css?v=20260725a">
+<link rel="stylesheet" href="/assets/public-theme.css?v=20260801a">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -35,19 +35,33 @@
       <div class="heroSplit alignStart">
         <div>
           <span class="eyebrow">Contact Orion GLE</span>
-          <h1>Tell us what needs building, fixing, releasing, or cleaning up.</h1>
-          <p class="heroLead">Use the contact form for new Apple app work, launch support, rollout questions, TestFlight requests, or product help. Messages should be direct, practical, and clear enough that we can move to the next sensible step quickly.</p>
+          <h1>Tell us what needs building, releasing, improving, or supporting next.</h1>
+          <p class="heroLead">Use the contact form for Apple app projects, support requests, rollout questions, TestFlight enquiries, or product clean-up work. Keep it direct and practical. If we can see what exists now and what stronger looks like, we can move faster.</p>
+          <div class="ctaRow">
+            <a class="cta primary" href="mailto:support@oriongle.co.uk">Email support</a>
+            <a class="cta" href="applications.html">See live apps</a>
+          </div>
         </div>
         <aside class="heroPanel">
           <div class="sectionKicker">Best route</div>
           <div class="visualStack">
-            <div class="card featurePanel">
+            <div class="featurePanel">
               <h3 class="cardTitle">Direct email</h3>
               <p><a href="mailto:support@oriongle.co.uk">support@oriongle.co.uk</a></p>
             </div>
-            <div class="card featurePanel">
-              <h3 class="cardTitle">Best starting detail</h3>
-              <p>Tell us what already exists, what feels weak, and what you want the finished result to feel like.</p>
+            <div class="miniAppCard">
+              <div class="quickPill">Good brief</div>
+              <div>
+                <strong>What exists now?</strong>
+                <span>Tell us what is already built, what feels weak, and what the stronger version needs to achieve.</span>
+              </div>
+            </div>
+            <div class="miniAppCard">
+              <div class="quickPill">Useful detail</div>
+              <div>
+                <strong>Help us move faster</strong>
+                <span>If it is support, include the app and issue. If it is a project, include the target outcome and current state.</span>
+              </div>
             </div>
           </div>
         </aside>
@@ -58,7 +72,7 @@
       <div class="card">
         <div class="sectionKicker">Contact form</div>
         <h2 class="sectionTitle">Start the conversation properly</h2>
-        <p class="sectionIntro">Use this for project work, support, TestFlight requests, or product questions.</p>
+        <p class="sectionIntro">Use this for new app work, launch support, TestFlight requests, or live product questions.</p>
         <form id="contactForm" novalidate>
           <label>
             Your name
@@ -80,10 +94,11 @@
           </label>
 
           <label>
-            App (for TestFlight)
+            App (for TestFlight or support)
             <select id="app" name="app">
               <option value="Not specified">Not specified</option>
               <option value="Balloon Popop">Balloon Popop</option>
+              <option value="BidPilot">BidPilot</option>
               <option value="Don't Tap">Don't Tap</option>
               <option value="FieldNexus">FieldNexus</option>
               <option value="ObsticleDash">ObsticleDash</option>
@@ -109,18 +124,18 @@
       </div>
 
       <div class="visualStack">
-        <aside class="card featurePanel">
+        <aside class="callout">
           <div class="sectionKicker">Typical topics</div>
           <ul class="cleanList">
-            <li>New Apple app work and launch-ready release systems</li>
-            <li>App Store support, support-page structure, and rollout help</li>
-            <li>Redesign work for products that feel dated or commercially weak</li>
-            <li>Client support, rollout cleanup, and practical next-stage improvements</li>
+            <li>Apple app projects and launch-ready release shaping</li>
+            <li>Support routes, App Store pages, and product clean-up work</li>
+            <li>TestFlight access and pre-release product enquiries</li>
+            <li>Live app support, rollout fixes, and next-stage improvements</li>
           </ul>
         </aside>
-        <aside class="card callout">
-          <div class="sectionKicker">Useful detail</div>
-          <p>If it is a product issue, include the app name, device, and what is going wrong. If it is a project enquiry, include what you already have and what you want the stronger version to look like.</p>
+        <aside class="featurePanel">
+          <div class="sectionKicker">Support note</div>
+          <p>For a product issue, include the app name, device, and what is happening. For project work, include what already exists and what the stronger outcome should feel like.</p>
         </aside>
       </div>
     </section>
@@ -136,7 +151,7 @@
 <script>
 const form = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
-const submitButton = form.querySelector(\"button[type='submit']\");
+const submitButton = form.querySelector("button[type='submit']");
 let turnstileToken = '';
 
 function loadTurnstile() {
@@ -192,6 +207,6 @@ document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 <script src="/assets/analytics.js" defer></script>
 <script src="/assets/cookie-consent.js" defer></script>
-<script src="/assets/public-theme.js?v=20260725a" defer></script>
+<script src="/assets/public-theme.js?v=20260801a" defer></script>
 </body>
 </html>

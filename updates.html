@@ -13,7 +13,7 @@
 <link rel="canonical" href="https://oriongle.co.uk/updates.html">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/cookie-consent.css">
-<link rel="stylesheet" href="/assets/public-theme.css?v=20260725a">
+<link rel="stylesheet" href="/assets/public-theme.css?v=20260801a">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -58,7 +58,6 @@
         <div class="sectionKicker">Public feed</div>
         <h2 class="sectionTitle">Recent updates</h2>
         <p class="sectionIntro">Only public-safe updates appear here. Deeper client delivery detail stays inside the portal and account-specific systems.</p>
-        <p class="inlineUtility">Internal publishing helper: <a href="/update-admin.html">/update-admin.html</a></p>
       </article>
       <div id="updatesGrid" class="updateFeed">
         <article class="updateCard"><p>Loading updates...</p></article>
@@ -91,6 +90,6 @@ fetch('/data/updates.json').then(r=>r.json()).then(items=>{
 }).catch(()=>{document.getElementById('updatesGrid').innerHTML='<article class=\"updateCard\"><p>Unable to load updates.</p></article>';});
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
-<script src="/assets/public-theme.js?v=20260725a" defer></script>
+<script src="/assets/public-theme.js?v=20260801a" defer></script>
 </body>
 </html>
